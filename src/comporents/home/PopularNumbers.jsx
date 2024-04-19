@@ -1,7 +1,11 @@
 import React from 'react'
 import HeadingTitle from '../general/HeadingTitle'
+import { useNavigate } from 'react-router-dom';
 
 const PopularNumbers = () => {
+
+  const router = useNavigate();
+
 
   const numbers = [
     '05427895412',
@@ -37,15 +41,13 @@ const PopularNumbers = () => {
         <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
           {
             numbers.slice(0, 12).map((item, i) => (
-              <div key={i} className='border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-bold bg-gray-200 w-1/3 md:w-1/4'>
-                {item}
-              </div>
+              <div key={i} onClick={()=> router(`/number/${item}`) } className='border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-bold bg-gray-200 w-1/3 md:w-1/4'>
+                 {item}
+               </div>
             ))
           }
 
         </div>
-
-
       </div>
 
       
@@ -56,9 +58,9 @@ const PopularNumbers = () => {
         <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
           {
             numbers.slice(0, 12).map((item, i) => (
-              <div key={i} className='border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-bold bg-gray-200 w-1/3 md:w-1/4'>
-                {item}
-              </div>
+              <div key={i} onClick={()=> router(`/number/${item}`) } className='border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-bold bg-gray-200 w-1/3 md:w-1/4'>
+                 {item}
+               </div>
             ))
           }
 

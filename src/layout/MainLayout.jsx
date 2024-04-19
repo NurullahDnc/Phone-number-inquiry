@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
-import Header from '../comporents/navbar/Header'
+import Navbar from '../comporents/navbar/Navbar'
+import Footer from '../comporents/footer/Footer'
 
-const AdminLayout = ({ children }) => {
+const MainLayout = ({ children }) => {
 
 
 
   return (
     <>
-      adnavbar
-        {children}
-      adfooter
+      <Navbar />
+      {children}
+      <Footer />
 
     </>
   )
 }
 
-export default AdminLayout
+export default MainLayout
 

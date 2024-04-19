@@ -24,7 +24,7 @@ const BlogSection = () => {
         {/* Veri dizisini map fonksiyonu ile dönerek liste öğelerini oluşturun */}
         <ol>
           {data.slice(0, 3).map((item, index) => (
-            <li key={index} className='text-[18px] text-gray-800 flex py-1'>
+            <li key={index} className='text-[18px] dark:text-gray-400 text-gray-800 flex py-1'>
               <FaLocationArrow size={20} className='text-textMain mx-1 mt-1' />
               {item}
             </li>

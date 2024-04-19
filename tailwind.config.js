@@ -3,6 +3,7 @@ module.exports = {
     "./src/**/*",
     "./node_modules/flowbite/**/*.js"
   ],
+  darkMode: 'class',
   theme: {
     colors: {
       transparent: 'transparent',
