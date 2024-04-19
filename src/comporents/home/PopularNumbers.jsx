@@ -53,7 +53,7 @@ const PopularNumbers = () => {
       
 
       <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg rounded-lg'>
-        <HeadingTitle small title="En Çok Yorum Yapılan Numaralar" />
+        <HeadingTitle small title="En Son Yorum Yapılan Numaralar" />
 
         <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
           {

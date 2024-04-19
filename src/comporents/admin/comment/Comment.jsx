@@ -10,13 +10,12 @@ const Comment = () => {
 
   const [data, setData] = useState([]);
  
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios('http://localhost:5000/comment');
          setData(res.data.data)
-      } catch (error) {
+       } catch (error) {
         console.log(error);
 
       }
@@ -45,6 +44,7 @@ const Comment = () => {
      const handleDelete = async (id) => {
       try {
           const res = await axios.delete(`http://localhost:5000/comment/delete/${id}`)
+          setData(prevData => prevData.filter(item => item._id !== id ))
           toast.success(res.data.message)
           
       } catch (error) {
@@ -104,8 +104,8 @@ const Comment = () => {
                   <td class="px-6 py-4">
                     {item.comment}
                   </td>
-                  <td class="px-6 py-4">
-                    {item.status}
+                  <td class={`px-6 py-4 ${item.status === "uncertain" ? "text-gray-500" : item.status === "trustworthy" ? "text-green-700" : item.status === "dangerous" ? "text-red-700": "" } `}>
+                  {item.status === "uncertain" ? "Belirsiz" : item.status === "trustworthy" ? "Güvenilir" : item.status === "dangerous"? "Tehlikeli" :"" }
                   </td>
                   <td class="px-6 py-4" onClick={() => handleDelete(item._id)}>
                     <a href="#" class="font-medium text-red-800 dark:text-blue-500 hover:underline"> <AiTwotoneDelete size={25} /> </a>

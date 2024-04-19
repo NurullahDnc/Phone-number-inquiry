@@ -7,7 +7,7 @@ import Button from '../general/Button';
 import HeadingTitle from '../general/HeadingTitle';
 import Comment from '../general/Comment';
 import ReactPaginate from 'react-paginate';
-import Faq from '../general/Faq';
+import Faq from '../faq/Faq';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -18,30 +18,40 @@ import { toast } from 'react-toastify';
 
 const Detail = () => {
 
-  const [data, setData] = useState([
-    { title: "Görüntüleme Görüntüleme Sayısı", value: 15550 },
+  const [comdata, setComData] = useState([
     { title: "Yorum Sayısı", value: 15550 },
     { title: "Belirsiz Yorum Sayısı", value: 15550 },
     { title: "Tehlikeli Yorum Sayısı", value: 15550 },
     { title: "Ülke", value: "Türkey" },
   ]);
 
+  const [data , setdata] = useState([])
 
+  const uncertain = data.filter((item)=> item.status === "uncertain" )
+  const trustworthy = data.filter((item)=> item.status === "trustworthy" )
+  const dangerous = data.filter((item)=> item.status === "dangerous" )
+
+
+  
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const { id } = useParams()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/comment/${id}`);
-         const valueFromResponse = res.data.value; // Örneğin, gelen verinin içinde "value" adında bir anahtar varsa
-        setData(prevData => prevData.map(item => ({ ...item, value: valueFromResponse })));
+        const res = await axios.get(`http://localhost:5000/comment`);
+        setdata(res.data.data)
+        console.log("res", res.data.data);
+
+        
+        const valueFromResponse = res.data.value; // Örneğin, gelen verinin içinde "value" adında bir anahtar varsa
+        setComData(prevData => prevData.map(item => ({ ...item, value: valueFromResponse })));
       } catch (error) {
         console.log(error);
 
       }
     }
-
+ 
     fetchData()
   }, [])
 
@@ -126,24 +136,7 @@ const Detail = () => {
     }
   ];
 
-  const exampleFaq = [
-    {
-      title: "Bazı telefon numaraları neden yorumlara kapalı?",
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, earum. Rem hic minus doloremque voluptas praesentium asperiores soluta cupiditate aperiam animi optio, maiores pariatur doloribus eligendi, similique in modi explicabo.'
-    },
-    {
-      title: "Bazı telefon numaraları neden yorumlara kapalı?",
-      description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    },
-    {
-      title: "Bazı telefon numaraları neden yorumlara kapalı?",
-      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    },
-    {
-      title: "Bazı telefon numaraları neden yorumlara kapalı?",
-      description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    }
-  ];
+
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
@@ -173,7 +166,7 @@ const Detail = () => {
         <div className=' w-full md:w-3/4 px-3 md:mx-12 '>
 
           {
-            data.map((item, i) => (
+            comdata.map((item, i) => (
               <Table title={item.title} text={item.value} />
 
             ))
@@ -193,6 +186,7 @@ const Detail = () => {
 
               <div className='flex justify-between items-center'>
                 <Select id={"status"} option={seleted} register={register} errors={errors} required />
+                
                 <Button btnText={"Yorum Yap"} />
 
               </div>
@@ -231,12 +225,8 @@ const Detail = () => {
             />
           </div>
 
-          {
-            exampleFaq.map((item, i) => (
-
-              <Faq key={i} title={item.title} description={item.description} />
-            ))
-          }
+          <Faq />
+            
         </div>
 
 

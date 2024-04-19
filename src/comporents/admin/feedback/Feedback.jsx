@@ -9,15 +9,7 @@ import ReactPaginate from 'react-paginate';
 const Feedback = () => {
 
   const [data, setData] = useState([]);
-  const [commentId, setCommentId] = useState({});
-
-  useEffect(() => {
-    data.map((item) => {
-      setCommentId(item.comment?._id);
-    });
-  }, [data]);
-
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +33,7 @@ const Feedback = () => {
   const datas = data.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
+  console.log("datas", datas);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % data.length;
@@ -50,17 +43,28 @@ const Feedback = () => {
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, commentId) => {
     //yorum ve geri bilidiirmi siliyor
+    console.log("com", commentId);
     try {
-      const res = await axios.delete(`http://localhost:5000/comment/delete/${commentId}`)
-
+      
+      const res = await axios.delete(`http://localhost:5000/commentFeedback/delete/${id}`)
       toast.success(res.data.message)
-      await axios.delete(`http://localhost:5000/commentFeedback/delete/${id}`)
+      setData(prevData => prevData.filter(item => item._id !== id ))
 
     } catch (error) {
       toast.error(error.response.data.error)
     }
+    
+    try {
+      const res = await axios.delete(`http://localhost:5000/comment/delete/${commentId}`)
+      // toast.success(res.data.message)
+    
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
+
+  
   }
 
   return (
@@ -110,17 +114,17 @@ const Feedback = () => {
                   </td>
 
                   <td class="px-6 py-4">
-                    {item.comment?.number}
+                    {item.comment?.number? item.comment?.number: "Yorum Bulunamadı"}
                   </td>
                   <td class="px-6 py-4">
-                    {item.comment?.comment}
+                    {item.comment?.comment? item.comment?.comment: "Yorum Bulunamadı" }
                   </td>
 
-                  <td class="px-6 py-4">
-                    {item.comment?.status === "uncertain" ? "Belirsiz" : item.comment?.status === "trustworthy" ? "Güvenilir" : "Tehlikeli"}
+                  <td class={`px-6 py-4 ${item.comment?.status === "uncertain" ? "text-gray-500" : item.comment?.status === "trustworthy" ? "text-green-700" : item.comment?.status === "dangerous" ? "text-red-700": "" } `}>
+                  {item.comment?.status === "uncertain" ? "Belirsiz" : item.comment?.status === "trustworthy" ? "Güvenilir" : item.comment?.status === "dangerous"? "Tehlikeli" :"Yorum Bulunamadı" }
                   </td>
 
-                  <td class="px-6 py-4" onClick={() => handleDelete(item._id)}>
+                  <td class="px-6 py-4" onClick={() => handleDelete(item._id, item.comment?._id)}>
                     <a href="#" class="font-medium text-red-800 dark:text-blue-500 hover:underline"> <AiTwotoneDelete size={25} /> </a>
                   </td>
                 </tr>
