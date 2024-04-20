@@ -4,7 +4,7 @@ import React from 'react'
 const Input = ({ register, required, errors, id, title, placeholder, option, defaultValue, type, onChange, value }) => {
      return (
 
-        <div class=" flex-none md:w-[50%] w-full pr-5 ">
+        <div class=" flex-none my-2 w-full ">
             <p className='dark:text-gray-200'>{title} </p>
             <input
                 id={id}

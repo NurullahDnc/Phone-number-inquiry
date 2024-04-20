@@ -44,7 +44,7 @@ const Navbar = () => {
         }, {
             id: "7",
             title: "Sıkça Sorulan Sorular",
-            url: "/admin/sss",
+            url: "/admin/faq",
             icon: GiHamburgerMenu
         }
         , {

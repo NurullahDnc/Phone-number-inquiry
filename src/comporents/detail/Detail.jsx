@@ -26,6 +26,8 @@ const Detail = () => {
   ]);
 
   const [data , setdata] = useState([])
+  const [selectedComment, setSelectedComment] = useState(null);
+
 
   const uncertain = data.filter((item)=> item.status === "uncertain" )
   const trustworthy = data.filter((item)=> item.status === "trustworthy" )
@@ -35,27 +37,46 @@ const Detail = () => {
   
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const { id } = useParams()
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/comment`);
         setdata(res.data.data)
-        console.log("res", res.data.data);
 
-        
-        const valueFromResponse = res.data.value; // Örneğin, gelen verinin içinde "value" adında bir anahtar varsa
-        setComData(prevData => prevData.map(item => ({ ...item, value: valueFromResponse })));
+        const foundData = res.data.data.find((item) => item.number.number == id);
+        console.log("foundData", foundData._id);
+        setSelectedComment(foundData.number.number);
+ 
+        // const valueFromResponse = res.data.value; // Örneğin, gelen verinin içinde "value" adında bir anahtar varsa
+        // setComData(prevData => prevData.map(item => ({ ...item, value: valueFromResponse })));
       } catch (error) {
         console.log(error);
 
       }
     }
- 
+    
     fetchData()
   }, [])
 
+  console.log("selectedComment", selectedComment);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/comment/${selectedComment}`);
+        console.log("rescommnum", res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+    fetchData();
+  }, [selectedComment]); // selectedComment değiştiğinde useEffect tekrar çalışacak
+  
+
   const handleClick = async (data) => {
+    console.log("datacom", data);
      const datas = {
       "number": id,
       "comment": data.comment,
@@ -240,3 +261,27 @@ const Detail = () => {
 }
 
 export default Detail
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(`http://localhost:5000/number`);
+        
+  //       const foundData = res.data.data.find((item) => item.number == id);
+  //       console.log(foundData);
+
+  //       setdata(res.data.data)
+  //       console.log("res", res.data.data);
+
+        
+  //       const valueFromResponse = res.data.value; // Örneğin, gelen verinin içinde "value" adında bir anahtar varsa
+  //       setComData(prevData => prevData.map(item => ({ ...item, value: valueFromResponse })));
+  //     } catch (error) {
+  //       console.log(error);
+
+  //     }
+  //   }
+    
+  //   fetchData()
+  // }, [])

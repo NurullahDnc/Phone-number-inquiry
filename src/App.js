@@ -17,6 +17,7 @@ import CommentPage from './pages/CommentAdminPage';
 import PrivacyPolicyAdminPage from './pages/PrivacyPolicyAdminPage';
 import FeedbackAdminPage from './pages/FeedbackAdminPage';
 import BlogAdminPage from './pages/BlogAdminPage';
+import FaqAdminPage from './pages/FaqAdminPage';
 
 
 
@@ -74,7 +75,7 @@ theme="light"
                 <Route path="/feedback" element={<FeedbackAdminPage />} />
                 <Route path="/privacyPolicy" element={<PrivacyPolicyAdminPage />} />
                 <Route path="/blog" element={<BlogAdminPage />} />
-
+                <Route path="/faq" element={<FaqAdminPage />} />
 
                   <Route path="*" element={<div >Sayfa Bulunamadı</div>} />
                 </Routes>

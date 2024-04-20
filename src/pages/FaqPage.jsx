@@ -3,7 +3,7 @@ import Faqs from '../comporents/faq/Faq'
 
 const FaqPage = () => {
   return (
-    <div>
+    <div className='md:px-24'>
       <Faqs />
     </div>
   )

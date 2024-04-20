@@ -6,51 +6,7 @@ import axios from 'axios';
 
 const Comments = () => {
 
-    // const exampleComments = [
-    //     {
-    //         number: '543452652',
-    //         country: 'Turkey',
-    //         status: 'dangerous',
-    //         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, earum. Rem hic minus doloremque voluptas praesentium asperiores soluta cupiditate aperiam animi optio, maiores pariatur doloribus eligendi, similique in modi explicabo.'
-    //     },
-    //     {
-    //         number: '1234567890',
-    //         country: 'USA',
-    //         status: 'trustworthy',
-    //         description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    //     },
-    //     {
-    //         number: '9876543210',
-    //         country: 'UK',
-    //         status: 'uncertain',
-    //         description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-    //     },
-    //     {
-    //         number: '5555555555',
-    //         country: 'Germany',
-    //         status: 'dangerous',
-    //         description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.'
-    //     },
-    //     {
-    //         number: '9999999999',
-    //         country: 'France',
-    //         status: 'trustworthy',
-    //         description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
-    //     },
-    //     {
-    //         number: '5555555555',
-    //         country: 'Germany',
-    //         status: 'dangerous',
-    //         description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.'
-    //     },
-    //     {
-    //         number: '9999999999',
-    //         country: 'France',
-    //         status: 'trustworthy',
-    //         description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
-    //     }
-    // ];
-
+    
     const [comment, setComment] = useState([]);
      useEffect(() => {
         const fetchData = async () => {
@@ -83,6 +39,7 @@ const Comments = () => {
                             key={index}
                             id={item._id}
                             number={item.number?.number}
+                            numberId={item.number?._id}
                             country={item.number?.countryName}
                             status={item.status}
                             description={item.comment}

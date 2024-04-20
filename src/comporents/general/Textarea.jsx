@@ -2,7 +2,7 @@ import React from 'react';
 
 const Textarea = ({ id, required, title, placeholder, rows, register, errors }) => {
     return (
-        <div className='my-3'>
+        <div className='my-2'>
             <p className='dark:text-gray-200'>{title} </p>
             <textarea
                 id={id}

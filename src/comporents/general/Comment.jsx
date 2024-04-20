@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Maps from '../detail/Maps';
 
 
-const Comment = ({ id, number, country, status, description, onClick }) => {
+const Comment = ({ id, number,numberId, country, status, description, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useNavigate();
-
 
   return (
     <div className={` ${isHovered ? 'hovered' : ''}`}>

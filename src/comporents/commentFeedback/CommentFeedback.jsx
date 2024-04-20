@@ -33,17 +33,15 @@ const CommentFeedback = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-5">
       <div className=' text-center py-8 flex justify-center items-center'>
-        <h1 className='font-bold text-2xl dark:text-gray-400'>Yorumu kaldırılacak telefon numarası: </h1> <span className='text-2xl px-3 dark:text-gray-100'>{id}</span>
+        <h1 className='font-bold text-sm md:text-2xl dark:text-gray-400'>Telefon Numarası: </h1> <span className='text-sm md:text-2xl px-3 dark:text-gray-100'>{id}</span>
       </div>
 
       <form onSubmit={handleSubmit(handleClick)} encType="multipart/form-data">
-        <div className='md:flex pb-3'>
-          <Input id="surname" type="text" title="Ad Soyad" placeholder={`Ad Soyad Giriniz`} rows={7} register={register} errors={errors} required />
+           <Input id="surname" type="text" title="Ad Soyad" placeholder={`Ad Soyad Giriniz`} rows={7} register={register} errors={errors} required />
           <Input id="mail" type="text" title="E-Posta" placeholder={`E-Posta Giriniz`} rows={7} register={register} errors={errors} required />
 
-        </div>
         <Textarea id="description" type="text" title="Acıklama" placeholder={`Bu telefon numarasına ait yorumun kaldırılması için nedeniniz Yazınız`} rows={7} register={register} errors={errors} required />
-
+ 
         <Button right btnText="Gönder" />
       </form>
     </div>

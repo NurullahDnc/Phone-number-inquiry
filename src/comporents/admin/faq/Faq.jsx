@@ -12,18 +12,19 @@ import Input from '../../general/Input';
 import { useNavigate } from 'react-router-dom'
 
 
-const PrivacyPolicy = () => {
+const Faq = () => {
 
   const [data, setData] = useState([]);
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedPrivacyPolicy, setSelectedPrivacyPolicy] = useState(false);
+  const [selectedFaq, setSelectedFaq] = useState(false);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/privacyPolicy');
+        const res = await axios('http://localhost:5000/faq');
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -50,58 +51,93 @@ const PrivacyPolicy = () => {
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:5000/faq/delete/${id}`)
+      toast.success(res.data.message)
+      // Silme işlemi başarılı olduğunda veriyi güncelle
+      setData(prevData => prevData.filter(item => item._id !== id));
+
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
+  }
+
   const handleUpdate = async (id) => {
-    //secilen blog bul, state at
-    const selectedPrivacyPolicys = data.find(blog => blog._id === id);
-    setSelectedPrivacyPolicy(selectedPrivacyPolicys);
+    const selectedFaqs = data.find(blog => blog._id === id);
+    setSelectedFaq(selectedFaqs);
     setIsUpdateModalOpen(true);
   }
 
-  const updatePrivacyPolicy = async (data) => {
+  const updateFaq = async (data) => {
 
     const updatedata = {
-      privacyStatement: data.privacyStatement,
-      dataAccess: data.dataAccess,
-      dataProtection: data.dataProtection,
-      contact: data.contact,
+        title: data.title,
+        description: data.description,
+   
     };
-
-
+  
     try {
-      const response = await axios.put(`http://localhost:5000/privacyPolicy/update/${selectedPrivacyPolicy._id}`, updatedata);
+      const response = await axios.put(`http://localhost:5000/faq/update/${selectedFaq._id}`, updatedata);
       toast.success(response.data.message);
-      const newData = await axios('http://localhost:5000/privacyPolicy');
+      const newData = await axios('http://localhost:5000/faq');
       setData(newData.data.data);
 
       setIsUpdateModalOpen(false);
-      setSelectedPrivacyPolicy(null);
+      setSelectedFaq(null);
+
+    } catch (error) {
+        console.error(error);
+      toast.error(error.response.data.error);
+    }
+  }
+
+  useEffect(() => {
+    if (selectedFaq) {
+      setValue('id', selectedFaq.id);
+      setValue('image', selectedFaq.image);
+      setValue('description', selectedFaq.description);
+      setValue('title', selectedFaq.title);
+
+
+    }
+  }, [selectedFaq, setValue]);
+
+  const createfaq = async (data) => {
+
+    const createdata = {
+        title: data.title,
+        description: data.description,
+   
+    };
+
+    try {
+      setIsCreateModalOpen(false);
+      const response = await axios.post(`http://localhost:5000/faq/create`, createdata);
+      toast.success(response.data.message)
+
+      //create isleimden sonra guncel veriyi al
+      const newData = await axios('http://localhost:5000/faq');
+      setData(newData.data.data);
 
     } catch (error) {
       toast.error(error.response.data.error);
     }
   }
-  useEffect(() => {
-    // Seçilen blog değiştiğinde formdaki inputların değerlerini set et, update icin
-    if (selectedPrivacyPolicy) {
-      setValue('id', selectedPrivacyPolicy.id);
-      setValue('privacyStatement', selectedPrivacyPolicy.privacyStatement);
-      setValue('dataAccess', selectedPrivacyPolicy.dataAccess);
-      setValue('dataProtection', selectedPrivacyPolicy.dataProtection);
-      setValue('contact', selectedPrivacyPolicy.contact);
-
-
-
-    }
-  }, [selectedPrivacyPolicy, setValue]);
+  //create elementi
+  const createElement = (
+    <form onSubmit={handleSubmit(createfaq)} encType="multipart/form-data">
+      <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
+      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
+       <Button btnText={"Oda ekle"} />
+    </form>
+  )
 
   const updateElement = (
-    <form onSubmit={handleSubmit(updatePrivacyPolicy)} encType="multipart/form-data">
-      <Textarea id="privacyStatement" title="gizlilik Bildirimi" type="text" placeholder="gizlilik Bildirimi" register={register} errors={errors} required />
-      <Textarea id="dataAccess" title="veri Erişimi" type="text" placeholder="veri Erişimi" register={register} errors={errors} required />
-      <Textarea id="dataProtection" title="veri koruması" type="text" placeholder="veri koruması" register={register} errors={errors} required />
-      <Textarea id="contact" title="iletisim" type="text" placeholder="iletisim" register={register} errors={errors} required />
-
-      <Button btnText={"Veri Politikası Güncelle"} />
+    <form onSubmit={handleSubmit(updateFaq)} encType="multipart/form-data">
+       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
+      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
+   <Button btnText={"Oda ekle"} />
     </form>
   )
 
@@ -118,19 +154,16 @@ const PrivacyPolicy = () => {
                 id
               </th>
               <th scope="col" class="px-6 py-3">
-                Gizlilik Bildirimi
+                Başlık
               </th>
               <th scope="col" class="px-6 py-3">
-                Veri Erişimi
-              </th>
-              <th scope="col" class="px-6 py-3">
-                veri Koruması
-              </th>
-              <th scope="col" class="px-6 py-3">
-                iletişim
+                Açıklama
               </th>
               <th scope="col" class="px-6 py-3">
                 Güncelle
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Sil
               </th>
 
             </tr>
@@ -144,19 +177,16 @@ const PrivacyPolicy = () => {
                     {item._id}
                   </td>
                   <td class="px-6 py-4">
-                    {item.privacyStatement}
+                    {item.title}
                   </td>
                   <td class="px-6 py-4">
-                    {item.dataAccess}
-                  </td>
-                  <td class="px-6 py-4">
-                    {item.dataProtection}
-                  </td>
-                  <td class="px-6 py-4">
-                    {item.contact}
+                    {item.description}
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
                     <a href="#" class="font-medium text-textMain dark:text-blue-500 hover:underline"> <RxUpdate size={25} /> </a>
+                  </td>
+                  <td class="px-6 py-4" onClick={() => handleDelete(item._id)}>
+                    <a href="#" class="font-medium text-red-800 dark:text-blue-500 hover:underline"> <AiTwotoneDelete size={25} /> </a>
                   </td>
 
                 </tr>
@@ -176,10 +206,21 @@ const PrivacyPolicy = () => {
           renderOnZeroPageCount={null}
         />
       </div>
+      <Button onClick={() => setIsCreateModalOpen(true)} btnText={"Soru Ekle"} />
+
+      <Modal
+        isOpen={isCreateModalOpen}
+        title="Soru Olustur"
+        bodyElement={createElement}
+        onClose={() => setIsCreateModalOpen(!isCreateModalOpen)}
+        btnNull
+        modals
+
+      />
 
       <Modal
         isOpen={isUpdateModalOpen}
-        title="Veri Politikasını Güncelle"
+        title="Soru Güncelle"
         bodyElement={updateElement}
         onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
         btnNull
@@ -191,4 +232,4 @@ const PrivacyPolicy = () => {
   )
 }
 
-export default PrivacyPolicy
+export default Faq
