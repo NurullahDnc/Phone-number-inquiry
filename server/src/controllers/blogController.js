@@ -6,7 +6,7 @@ import {
 import fs from "fs"
 
 const createBlog = async (req, res) => {
- 
+
     try {
         //cloudinary kayıt et image'yi
         const result = await cloudinary.uploader.upload(
@@ -137,13 +137,13 @@ const updateBlog = async (req, res) => {
         const photo = await Blog.findById(req.params.id);
 
         let image = req.body.image;
-        if(!req.body.image){
-        //resim yukleme
-        const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
-image = result.secure_url;
-    }
-    // Eski fotoğrafın id'sini al
-    const imagePublicId = photo.image_id;
+        if (!req.body.image) {
+            //resim yukleme
+            const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+            image = result.secure_url;
+        }
+        // Eski fotoğrafın id'sini al
+        const imagePublicId = photo.image_id;
 
         const updatedBlog = await Blog.findByIdAndUpdate(
             id, {
@@ -157,8 +157,8 @@ image = result.secure_url;
                 runValidators: true
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
-        if(!req.body.image){
-         fs.unlinkSync(req.files.image.tempFilePath)
+        if (!req.body.image) {
+            fs.unlinkSync(req.files.image.tempFilePath)
         }
         res.status(200).json({
             updatedBlog,

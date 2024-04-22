@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { authToken } from "../../util/secret";
 
 const Detail = () => {
   const [commentData, setCommentData] = useState([
@@ -156,7 +155,7 @@ const Detail = () => {
   useEffect(() => {
     const handleLookup = async () => {
       try {
-        const encodedAuthToken = btoa(authToken); // Kullanıcı adı ve parolayı base64 ile kodla
+        const encodedAuthToken = btoa("authToken"); // Kullanıcı adı ve parolayı base64 ile kodla
 
         const response = await axios.get(`https://lookups.twilio.com/v2/PhoneNumbers/+${id}`, {
           headers: {
@@ -176,7 +175,9 @@ const Detail = () => {
     handleLookup();
   }, [countryList]);
 
+  const da = process.env.AUTH_TOKEN
 
+  console.log("undefined", da);
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 

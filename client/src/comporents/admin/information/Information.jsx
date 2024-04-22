@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AiTwotoneDelete } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
 import { toast } from 'react-toastify'
@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Information = () => {
+  const [fileSelected, setFileSelected] = useState(false);
+  const imageRef = useRef();
 
   const [data, setData] = useState([]);
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -71,24 +73,29 @@ const Information = () => {
   }
 
   const updateInformation = async (data) => {
+    console.log("data", data);
 
     const { title, description, image } = data;
-    //guncellenmis verilier formData at 
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    if (image[0]) {
+
+    if (imageRef.current && imageRef.current.value) {
+      formData.append("image", imageRef.current.value);
+    }
+    else if (image[0]) {
       formData.append('image', image[0]);
     }
- 
+
     try {
-        const response = await axios.put(`http://localhost:5000/information/update/${selectedinformation._id}`, formData);
-        toast.success(response.data.message);
+      const response = await axios.put(`http://localhost:5000/information/update/${selectedinformation._id}`, formData);
+      toast.success(response.data.message);
       const newData = await axios('http://localhost:5000/information');
       setData(newData.data.data);
 
       setIsUpdateModalOpen(false);
-      selectedinformation(null);
+      setSelectedinformation(null);
 
     } catch (error) {
       toast.error(error.response.data.error);
@@ -115,6 +122,7 @@ const Information = () => {
     formData.append('description', data.description);
 
     try {
+
       setIsCreateModalOpen(false);
       const response = await axios.post(`http://localhost:5000/information/create`, formData);
       toast.success(response.data.message)
@@ -124,6 +132,7 @@ const Information = () => {
       setData(newData.data.data);
 
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.error);
     }
   }
@@ -139,9 +148,10 @@ const Information = () => {
 
   const updateElement = (
     <form onSubmit={handleSubmit(updateInformation)} encType="multipart/form-data">
-      <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required  />
-      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required  />
-      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} required  />
+      <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
+      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
+      {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
+      {selectedinformation && selectedinformation.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedinformation.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
       <Button btnText={"Bilgi Güncelle"} />
     </form>
   )
@@ -235,7 +245,7 @@ const Information = () => {
         isOpen={isUpdateModalOpen}
         title="Bilgi Güncelle"
         bodyElement={updateElement}
-        onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+        onClose={() => { setIsUpdateModalOpen(!isUpdateModalOpen) }}
         btnNull
         modals
 

@@ -8,7 +8,7 @@ import fs from "fs"
 const createLogo = async (req, res) => {
 
     console.log(req.body);
- 
+
     try {
         //cloudinary kayıt et image'yi
         const result = await cloudinary.uploader.upload(
@@ -17,10 +17,10 @@ const createLogo = async (req, res) => {
                 folder: 'numericquery',
             }
         );
-console.log("res", result);
+
         const {
             logo,
-            
+
         } = req.body;
 
         await Logo.create({
@@ -36,10 +36,10 @@ console.log("res", result);
         res.status(200).json({
             success: true,
             message: "başarıyla oluşturuldu.",
-         });
+        });
 
     } catch (error) {
-        
+
         res.status(400).json({
             success: false,
             error: error.message
@@ -76,20 +76,25 @@ const updateLogo = async (req, res) => {
 
         const {
             logo,
-         } = req.body;
+        } = req.body;
 
- 
-         const photo = await Logo.findById(req.params.id);
-        //resim yukleme
-        const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
 
+        const photo = await Logo.findById(req.params.id);
+
+        let image = req.body.image;
+
+        if (!image) {
+            //resim yukleme
+            const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+            image = result.secure_url;
+        }
         // Eski fotoğrafın id'sini al
         const imagePublicId = photo.image_id;
 
         const updatedLogo = await Logo.findByIdAndUpdate(
             id, {
                 logo,
-                image: result.secure_url,
+                image,
                 image_id: imagePublicId
 
             }, {
@@ -98,8 +103,9 @@ const updateLogo = async (req, res) => {
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
 
-        fs.unlinkSync(req.files.image.tempFilePath)
-
+        if (!image) {
+            fs.unlinkSync(req.files.image.tempFilePath)
+        }
         res.status(200).json({
             data: updatedLogo,
             message: "logo başarıyla Güncellendi"
@@ -117,5 +123,5 @@ export {
     createLogo,
     updateLogo,
     getLogo,
-    
+
 }

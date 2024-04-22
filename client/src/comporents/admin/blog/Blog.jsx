@@ -13,8 +13,8 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Blog = () => {
-  const [fileSelected,setFileSelected] = useState(false);
-const imageRef = useRef();
+  const [fileSelected, setFileSelected] = useState(false);
+  const imageRef = useRef();
   const [data, setData] = useState([]);
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -80,12 +80,13 @@ const imageRef = useRef();
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    if(imageRef.current && imageRef.current.value){
+    if (imageRef.current && imageRef.current.value) {
       formData.append("image", imageRef.current.value);
     }
     else if (image[0]) {
       formData.append('image', image[0]);
     }
+
 
     try {
       // const response = await axios.put(`http://localhost:5000/blog/update/662250965b8d666b7848ec8b`, formData);
@@ -133,7 +134,7 @@ const imageRef = useRef();
     } catch (error) {
       toast.error(error.response.data.error);
     }
-  } 
+  }
   //create elementi
   const createElement = (
     <form onSubmit={handleSubmit(createBlog)} encType="multipart/form-data">
@@ -148,9 +149,10 @@ const imageRef = useRef();
     <form onSubmit={handleSubmit(updateBlog)} encType="multipart/form-data">
       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-      {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)}/>}
-      {selectedBlog && selectedBlog.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedBlog.image || ""} placeholder="Varsa Eklemek İstedikleriniz"  />}
-      {selectedBlog && selectedBlog.image && !fileSelected && <img src={selectedBlog.image}></img>}
+      {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
+      {selectedBlog && selectedBlog.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedBlog.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
+
+      {/* {selectedBlog && selectedBlog.image && !fileSelected && <img src={selectedBlog.image}></img>} */}
       <Button btnText={"Blog ekle"} />
     </form>
   )
@@ -244,7 +246,7 @@ const imageRef = useRef();
         isOpen={isUpdateModalOpen}
         title="Blog Güncelle"
         bodyElement={updateElement}
-        onClose={() => {setFileSelected(false); setIsUpdateModalOpen(!isUpdateModalOpen);}}
+        onClose={() => { setFileSelected(false); setIsUpdateModalOpen(!isUpdateModalOpen); }}
         btnNull
         modals
 

@@ -6,7 +6,7 @@ import {
 import fs from "fs"
 
 const createInformation = async (req, res) => {
- 
+
     try {
         //cloudinary kayıt et image'yi
         const result = await cloudinary.uploader.upload(
@@ -115,11 +115,16 @@ const updateInformation = async (req, res) => {
             description,
         } = req.body;
 
-        
-        const photo = await Information.findById(req.params.id);
-        //resim yukleme
-        const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
 
+        const photo = await Information.findById(req.params.id);
+
+        let image = req.body.image;
+
+        if (!image) {
+            //resim yukleme
+            const result = await cloudinary.uploader.upload(req.files.image.tempFilePath);
+            image = result.secure_url;
+        }
         // Eski fotoğrafın id'sini al
         const imagePublicId = photo.image_id;
 
@@ -127,7 +132,7 @@ const updateInformation = async (req, res) => {
             id, {
                 title,
                 description,
-                image: result.secure_url,
+                image,
                 image_id: imagePublicId
 
             }, {
@@ -136,7 +141,9 @@ const updateInformation = async (req, res) => {
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
 
-        fs.unlinkSync(req.files.image.tempFilePath)
+        if (!image) {
+            fs.unlinkSync(req.files.image.tempFilePath)
+        }
 
         res.status(200).json({
             updatedInformation,
@@ -156,5 +163,5 @@ export {
     getInformation,
     deleteInformation,
     updateInformation
- 
+
 }

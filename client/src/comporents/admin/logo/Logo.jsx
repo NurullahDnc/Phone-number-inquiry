@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AiTwotoneDelete } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
 import { toast } from 'react-toastify'
@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Logo = () => {
+    const [fileSelected, setFileSelected] = useState(false);
+    const imageRef = useRef();
 
     const [data, setData] = useState([]);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -60,7 +62,14 @@ const Logo = () => {
 
         const formData = new FormData();
         formData.append('logo', data.logo);
-        formData.append('image', data.image[0]);
+        if (imageRef.current && imageRef.current.value) {
+            formData.append("image", imageRef.current.value);
+          }
+          else if (data.image[0]) {
+            formData.append('image', data.image[0]);
+          }
+
+          console.log("for", formData);
 
         try {
             const response = await axios.put(`http://localhost:5000/logo/update/${selectedLogo._id}`, formData);
@@ -87,7 +96,8 @@ const Logo = () => {
     const updateElement = (
         <form onSubmit={handleSubmit(updateLogo)} encType="multipart/form-data">
             <Input id="logo" title="Logo Giriniz" type="text" placeholder="Logo Giriniz" register={register} errors={errors} required />
-            <Input id="image" title="Gorsel Ekle" type="file" placeholder="Logo Güncelle" register={register} errors={errors} required />
+            {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
+            {selectedLogo && selectedLogo.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedLogo.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
 
             <Button btnText={"Logo Güncelle"} />
         </form>

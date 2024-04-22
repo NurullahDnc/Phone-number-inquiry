@@ -93,7 +93,7 @@ const getComment = async (req, res) => {
 const getCommentNumber = async (req, res) => {
 
     try {
-        const id = req.params.id;ss
+        const id = req.params.id;
         const comments = (await Comment.find({
             number: id
         }).populate("number")).reverse();
