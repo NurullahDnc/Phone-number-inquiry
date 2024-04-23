@@ -14,7 +14,7 @@ const Number = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/number');
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/number`);
                 setData(res.data.data)
             } catch (error) {
                 console.log(error);
@@ -45,7 +45,7 @@ const Number = () => {
     //number delete
     const handleDelete = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:5000/number/delete/${id}`)
+            const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/number/delete/${id}`)
             setData(prevData => prevData.filter(item => item._id !== id ))
             toast.success(res.data.message)
             

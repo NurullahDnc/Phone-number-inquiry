@@ -9,7 +9,7 @@ const Detail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios(`http://localhost:5000/blog/${id}`);
+                const res = await axios(`${process.env.REACT_APP_BASE_URL}/blog/${id}`);
                 setData(res.data.data)
             } catch (error) {
                 console.log(error);

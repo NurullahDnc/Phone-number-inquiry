@@ -26,7 +26,7 @@ const Information = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/information');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -55,7 +55,7 @@ const Information = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/information/delete/${id}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/information/delete/${id}`)
       toast.success(res.data.message)
       // Silme işlemi başarılı olduğunda veriyi güncelle
       setData(prevData => prevData.filter(item => item._id !== id));
@@ -89,9 +89,9 @@ const Information = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:5000/information/update/${selectedinformation._id}`, formData);
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/information/update/${selectedinformation._id}`, formData);
       toast.success(response.data.message);
-      const newData = await axios('http://localhost:5000/information');
+      const newData = await axios('${process.env.REACT_APP_BASE_URL}/information');
       setData(newData.data.data);
 
       setIsUpdateModalOpen(false);
@@ -124,11 +124,11 @@ const Information = () => {
     try {
 
       setIsCreateModalOpen(false);
-      const response = await axios.post(`http://localhost:5000/information/create`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/information/create`, formData);
       toast.success(response.data.message)
 
       //create isleimden sonra guncel veriyi al
-      const newData = await axios('http://localhost:5000/information');
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
       setData(newData.data.data);
 
     } catch (error) {

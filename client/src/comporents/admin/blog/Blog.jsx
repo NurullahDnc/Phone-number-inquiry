@@ -25,7 +25,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/blog');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/blog`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -54,7 +54,7 @@ const Blog = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/blog/delete/${id}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/blog/delete/${id}`)
       toast.success(res.data.message)
       // Silme işlemi başarılı olduğunda veriyi güncelle
       setData(prevData => prevData.filter(item => item._id !== id));
@@ -90,7 +90,7 @@ const Blog = () => {
 
     try {
       // const response = await axios.put(`http://localhost:5000/blog/update/662250965b8d666b7848ec8b`, formData);
-      const response = await axios.put(`http://localhost:5000/blog/update/${selectedBlog._id}`, formData);
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/blog/update/${selectedBlog._id}`, formData);
       toast.success(response.data.message);
       const newData = await axios('http://localhost:5000/blog');
       setData(newData.data.data);
@@ -124,11 +124,11 @@ const Blog = () => {
 
     try {
       setIsCreateModalOpen(false);
-      const response = await axios.post(`http://localhost:5000/blog/create`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/blog/create`, formData);
       toast.success(response.data.message)
 
       //create isleimden sonra guncel veriyi al
-      const newData = await axios('http://localhost:5000/blog');
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/blog`);
       setData(newData.data.data);
 
     } catch (error) {

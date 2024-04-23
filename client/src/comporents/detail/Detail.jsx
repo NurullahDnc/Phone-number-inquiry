@@ -13,6 +13,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 
+const clientId = process.env.REACT_APP_BASE_URL;
+
+
 const Detail = () => {
   const [commentData, setCommentData] = useState([
     { title: "Yorum Sayısı", value: 0 },
@@ -22,7 +25,7 @@ const Detail = () => {
     { title: "Son Yorum Tarihi", value: 0 },
     { title: "Konum", value: "" },
   ]);
-
+console.log(clientId);
   const [selectedPhone, setSelectedPhone] = useState(null);
   const [commentList, setCommentList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState([]);
@@ -38,7 +41,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/number`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/number`);
         //istenilen numarayı bul
         const findNumber = res.data.data.find((item) => item.number == id);
         setPhoneNumber(findNumber)
@@ -48,11 +51,10 @@ const Detail = () => {
         // setSelectedPhone(findNumber?.number ?? id);
         setSelectedPhone(findNumber && findNumber.number ? findNumber.number : id);
 
-        console.log("finnum");
 
 
         if (findNumber) {
-          const comments = await axios.get(`http://localhost:5000/comment/${findNumber._id}`);
+          const comments = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${findNumber._id}`);
           setCommentList(comments.data.data);
         } else {
           // console.error("Numara bulunamadı veya tanımsız");
@@ -74,7 +76,7 @@ const Detail = () => {
         }
 
         if (phoneNumber) {
-          const res = await axios.get(`http://localhost:5000/comment/${phoneNumber._id}`);
+          const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
           setCommentList(res.data.data)
 
           //yorum bilgilerini state atıyoruz, yorum adet alıyoruz, uste de data state yorumlaı atıyoruz
@@ -109,14 +111,14 @@ const Detail = () => {
       countryCode: filterCountry?.callingCodes[0],
     };
     try {
-      const res = await axios.post("http://localhost:5000/comment/create", commentData);
+      const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/comment/create`, commentData);
       toast.success(res.data.message);
 
       setValue('comment', '');
 
       //güncel veri getirme
       try {
-        const res = await axios.get(`http://localhost:5000/comment/${phoneNumber._id}`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
         setCommentList(res.data.data)
       } catch (error) {
         console.log("yorum yuklenmedi:", error);
@@ -155,7 +157,7 @@ const Detail = () => {
   useEffect(() => {
     const handleLookup = async () => {
       try {
-        const encodedAuthToken = btoa("authToken"); // Kullanıcı adı ve parolayı base64 ile kodla
+        const encodedAuthToken = btoa(process.env.REACT_APP_API_KEY); // Kullanıcı adı ve parolayı base64 ile kodla
 
         const response = await axios.get(`https://lookups.twilio.com/v2/PhoneNumbers/+${id}`, {
           headers: {
@@ -175,9 +177,8 @@ const Detail = () => {
     handleLookup();
   }, [countryList]);
 
-  const da = process.env.AUTH_TOKEN
 
-  console.log("undefined", da);
+
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 

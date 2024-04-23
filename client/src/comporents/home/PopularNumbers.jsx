@@ -38,7 +38,7 @@ const PopularNumbers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/comment');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/comment`);
          setData(res.data.data)
          console.log(res.data.data);
 

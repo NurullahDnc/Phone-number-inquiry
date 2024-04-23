@@ -13,7 +13,7 @@ const Feedback = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/commentFeedback');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/commentFeedback`);
         setData(res.data.data)
        } catch (error) {
         console.log(error);
@@ -49,7 +49,7 @@ const Feedback = () => {
 
     try {
       
-      const res = await axios.delete(`http://localhost:5000/commentFeedback/delete/${id}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/commentFeedback/delete/${id}`)
       toast.success(res.data.message)
       setData(prevData => prevData.filter(item => item._id !== id ))
 
@@ -58,7 +58,7 @@ const Feedback = () => {
     }
     
     try {
-      const res = await axios.delete(`http://localhost:5000/comment/delete/${commentId}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/comment/delete/${commentId}`)
       // toast.success(res.data.message)
     
     } catch (error) {

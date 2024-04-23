@@ -13,7 +13,7 @@ const Comment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/comment');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/comment`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -43,7 +43,7 @@ const Comment = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/comment/delete/${id}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/comment/delete/${id}`)
       setData(prevData => prevData.filter(item => item._id !== id))
       toast.success(res.data.message)
 

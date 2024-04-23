@@ -22,7 +22,7 @@ const Information = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/information');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);

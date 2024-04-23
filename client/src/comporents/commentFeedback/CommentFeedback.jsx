@@ -20,7 +20,7 @@ const CommentFeedback = () => {
       description: data.description
     }
     try {
-      const res = await axios.post(`http://localhost:5000/commentFeedback/create`, formData);
+      const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/commentFeedback/create`, formData);
       toast.success(res.data.message);
 
       setValue('surname', '');

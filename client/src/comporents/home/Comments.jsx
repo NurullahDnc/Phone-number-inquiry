@@ -11,7 +11,7 @@ const Comments = () => {
      useEffect(() => {
         const fetchData = async () => {
           try {
-            const res = await axios.get(`http://localhost:5000/comment`);
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment`);
             setComment(res.data.data)
         } catch (error) {
             console.log(error);

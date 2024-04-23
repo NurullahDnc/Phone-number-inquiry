@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios('http://localhost:5000/privacyPolicy');
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/privacyPolicy`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -68,9 +68,9 @@ const PrivacyPolicy = () => {
 
 
     try {
-      const response = await axios.put(`http://localhost:5000/privacyPolicy/update/${selectedPrivacyPolicy._id}`, updatedata);
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/privacyPolicy/update/${selectedPrivacyPolicy._id}`, updatedata);
       toast.success(response.data.message);
-      const newData = await axios('http://localhost:5000/privacyPolicy');
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/privacyPolicy`);
       setData(newData.data.data);
 
       setIsUpdateModalOpen(false);

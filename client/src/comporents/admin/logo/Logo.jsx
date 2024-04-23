@@ -25,7 +25,7 @@ const Logo = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios('http://localhost:5000/logo');
+                const res = await axios(`${process.env.REACT_APP_BASE_URL}/logo`);
                 setData(res.data.data)
             } catch (error) {
                 console.log(error);
@@ -72,9 +72,9 @@ const Logo = () => {
           console.log("for", formData);
 
         try {
-            const response = await axios.put(`http://localhost:5000/logo/update/${selectedLogo._id}`, formData);
+            const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/logo/update/${selectedLogo._id}`, formData);
             toast.success(response.data.message);
-            const newData = await axios('http://localhost:5000/logo');
+            const newData = await axios(`${process.env.REACT_APP_BASE_URL}/logo`);
             setData(newData.data.data);
 
             setIsUpdateModalOpen(false);
