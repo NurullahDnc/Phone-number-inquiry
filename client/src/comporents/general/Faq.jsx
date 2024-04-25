@@ -11,18 +11,18 @@ const Faq = ({title, description}) => {
   return (
     <div>
       <div id="accordion-open" data-accordion="open">
-        <h2 id="accordion-open-heading-1">
+        <h2 className='md:px-2' id="accordion-open-heading-1">
           <button
             type="button"
-            className="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+            className="flex items-center justify-between w-full py-2 md:py-5 px-1 font-medium rtl:text-right text-gray-600 border border-b-0 border-gray-200 rounded-t-xl dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
             data-accordion-target="#accordion-open-body-1"
             aria-expanded="true"
             aria-controls="accordion-open-body-1"
             onClick={toggleDropdown}
           >
-            <span className="flex ">
+            <span className="flex md:text-[17px] ">
               <svg
-                className="w-5 h-5 me-2 shrink-0"
+                className="w-5 h-5 me-2 text-2xl shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -51,21 +51,20 @@ const Faq = ({title, description}) => {
               />
             </svg>
           </button>
-        </h2>
+        </h2>  
         <div
           id="accordion-open-body-1"
           className={`${
             isOpen ? 'block' : 'hidden'
-          } p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900`}
+          } p-2 md:p-4  border-gray-200 dark:border-gray-700 dark:bg-gray-900`}
           aria-labelledby="accordion-open-heading-1"
         >
-          <div className="mb-2 text-md indent-3 text-gray-500 dark:text-gray-400">
+          <div className="mb-2 text-[16px] md:text-md indent-3 text-gray-500 dark:text-gray-400">
            {description}
           </div>
           
         </div>
       </div>
-
 
     </div>
   );

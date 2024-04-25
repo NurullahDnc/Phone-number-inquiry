@@ -3,9 +3,9 @@ import * as PrivacyPolicyController from '../controllers/privacyPolicyController
  
 const route = express.Router();
 
-route.route("/create").post( PrivacyPolicyController.createPrivacyPolicy)
+// route.route("/create").post( PrivacyPolicyController.createPrivacyPolicy)
 route.route("/").get( PrivacyPolicyController.getPrivacyPolicy)
-route.route("/delete/:id").delete( PrivacyPolicyController.deletePrivacyPolicy)
+// route.route("/delete/:id").delete( PrivacyPolicyController.deletePrivacyPolicy)
 route.route("/update/:id").put( PrivacyPolicyController.updatePrivacyPolicy)
 
 

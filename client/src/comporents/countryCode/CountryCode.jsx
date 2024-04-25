@@ -28,13 +28,7 @@ const CountryCode = () => {
 
         fetchData();
     }, []);
-
-    const phoneUtil = PhoneNumberUtil.getInstance();
-    const phoneNumberss = phoneUtil.parse('5551234567', 'TR');
-    
-    const isValid = phoneUtil.isValidNumber(phoneNumberss);
-    console.log('Is valid:', isValid);
-
+ 
      return (
         <div className='w-full m-auto md:w-2/3 flex flex-col p-3'>
             <div className="pb-4  dark:bg-gray-900">
@@ -48,7 +42,7 @@ const CountryCode = () => {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input onChange={e => setSearchTerm(e.target.value)} type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
+                        <input onChange={e => setSearchTerm(e.target.value)} type="text" id="table-search" className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ülke Ara" />
                     </div>
                 </div>
             </div>

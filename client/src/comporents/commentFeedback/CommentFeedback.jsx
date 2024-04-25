@@ -29,7 +29,7 @@ const CommentFeedback = () => {
 
     } catch (error) {
       toast.error(error.response.data.error);
-      console.log("hata", error);
+      console.log(error);
     }
 
   }

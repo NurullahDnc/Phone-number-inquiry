@@ -57,8 +57,10 @@ const PrivacyPolicy = () => {
     setIsUpdateModalOpen(true);
   }
 
+
   const updatePrivacyPolicy = async (data) => {
 
+    
     const updatedata = {
       privacyStatement: data.privacyStatement,
       dataAccess: data.dataAccess,
@@ -78,6 +80,7 @@ const PrivacyPolicy = () => {
 
     } catch (error) {
       toast.error(error.response.data.error);
+      console.log(Error);
     }
   }
   useEffect(() => {

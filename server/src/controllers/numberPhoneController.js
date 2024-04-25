@@ -31,9 +31,8 @@ const NumberDelete = async (req, res) => {
             message: "başarıyla Silindi."
         })
     } catch (error) {
-        // console.log(error);
         res.status(500).json({
-            error: "hata oluştu."
+            error: error.message
         });
     }
 }

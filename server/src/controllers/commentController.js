@@ -3,6 +3,7 @@ import Comment from "../models/commentModel.js";
 import mongoose from 'mongoose'
 
 const createNumber = async (req, res) => {
+    console.log(req.body);
     try {
         const {
             comment,

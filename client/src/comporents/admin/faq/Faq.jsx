@@ -59,7 +59,7 @@ const Faq = () => {
       setData(prevData => prevData.filter(item => item._id !== id));
 
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     }
   }
 
@@ -88,8 +88,8 @@ const Faq = () => {
 
     } catch (error) {
         console.error(error);
-      toast.error(error.response.data.error);
-    }
+        toast.error(error.response.data.error);
+      }
   }
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const Faq = () => {
     <form onSubmit={handleSubmit(createfaq)} encType="multipart/form-data">
       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-       <Button btnText={"Oda ekle"} />
+       <Button btnText={"Soru ekle"} />
     </form>
   )
 
@@ -137,7 +137,7 @@ const Faq = () => {
     <form onSubmit={handleSubmit(updateFaq)} encType="multipart/form-data">
        <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-   <Button btnText={"Oda ekle"} />
+   <Button btnText={"Soru Güncelle"} />
     </form>
   )
 

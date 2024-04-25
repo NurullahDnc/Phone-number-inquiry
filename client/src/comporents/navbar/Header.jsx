@@ -17,16 +17,11 @@ const Header = () => {
     }
    
     return (
-        <div className="relative h-[400px] bg-red-500 overflow-hidden">
-            <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjokq96ldStBkILxxCXf_dZdJnslonPlmgytkKxPFdTg&s"
-                alt="Header Image"
-                className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 flex justify-center items-center  ">
-                <div className="md:w-[50%] w-[95%] text-center">
-                    <h1 className="text-4xl mb-1">TELEFON NUMARASINI BUL</h1>
-                    <p class="mb-8 text-lg font-normal text-black lg:text-xl  dark:text-gray-200">Sizi arayan numaranın kime ait olduğunu   diğer kullanıcılarının yorumlarına bakarak öğrenin.</p>
+         
+             <div className=' px-2 md:px-0 '  >
+                    <div className="w-[100%] h-full text-center">
+                    <h1 className="md:text-3xl text-2xl text-white font-bold mb-1">TELEFON NUMARASINI BUL</h1>
+                    <p class="mb-8 text-lg font-normal text-gray-200 lg:text-lg  dark:text-gray-200">Sizi arayan numaranın kime ait olduğunu   diğer kullanıcılarının yorumlarına bakarak öğrenin.</p>
 
                     <form class="max-w-md mx-auto" onSubmit={HandleClick}>
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -41,8 +36,7 @@ const Header = () => {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+             </div>
     );
 };
 

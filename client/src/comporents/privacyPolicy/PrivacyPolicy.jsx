@@ -29,9 +29,9 @@ const PrivacyPolicy = () => {
 
       {
         data.map((item, i) => (
-          <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div class="bg-gray-100 dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-md">
             <HeadingTitle xSmall title={"Gizlilik Politikası"} />
-            <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">
+            <p class="text-sm text-gray-800 dark:text-gray-300 mb-2">
               {item.privacyStatement}
             </p>
             <HeadingTitle xSmall title={"Kişisel verilere kimin erişimi vardır?"} />

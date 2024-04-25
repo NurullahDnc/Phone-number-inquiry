@@ -75,7 +75,7 @@ const updateFaq = async (req, res) => {
         if (!updateFaq) {
             return res.status(404).json({
                 success: false,
-                message: "bulunamadı."
+                error: "bulunamadı."
             });
         }
 

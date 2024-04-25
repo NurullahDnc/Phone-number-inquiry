@@ -61,7 +61,7 @@ const Logo = () => {
     const updateLogo = async (data) => {
 
         const formData = new FormData();
-        formData.append('logo', data.logo);
+
         if (imageRef.current && imageRef.current.value) {
             formData.append("image", imageRef.current.value);
           }
@@ -69,7 +69,6 @@ const Logo = () => {
             formData.append('image', data.image[0]);
           }
 
-          console.log("for", formData);
 
         try {
             const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/logo/update/${selectedLogo._id}`, formData);

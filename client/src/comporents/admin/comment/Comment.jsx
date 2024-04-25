@@ -4,9 +4,10 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
 import { toast } from 'react-toastify'
 import ReactPaginate from 'react-paginate';
+import TextClip from '../../general/TextClip';
 
 
-const Comment = () => {
+const Comment = ({ initialData, title }) => {
 
   const [data, setData] = useState([]);
 
@@ -48,7 +49,7 @@ const Comment = () => {
       toast.success(res.data.message)
 
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     }
   }
 
@@ -57,6 +58,7 @@ const Comment = () => {
 
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <p className='text-lg py-2 '>{initialData && title}</p>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -86,7 +88,34 @@ const Comment = () => {
           </thead>
 
           <tbody>
-            {
+            {initialData && initialData.length > 0 ? (
+              datas.slice(0, 4).map((item) => (
+                <tr key={item._id} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {item._id}
+                  </td>
+                  <td class="px-6 py-4">
+                    {item.number?.countryCode}
+                  </td>
+                  <td class="px-6 py-4">
+                    {item.number?.countryName}
+                  </td>
+                  <td class="px-6 py-4">
+                    {item.number?.number}
+                  </td>
+                  <td class="px-6 py-4">
+                    <TextClip text={item.comment} />
+                  </td>
+                  <td class={`px-6 py-4 ${item.status === "uncertain" ? "text-gray-500" : item.status === "trustworthy" ? "text-green-700" : item.status === "dangerous" ? "text-red-700" : ""} `}>
+                    {item.status === "uncertain" ? "Belirsiz" : item.status === "trustworthy" ? "Güvenilir" : item.status === "dangerous" ? "Tehlikeli" : ""}
+                  </td>
+                  <td class="px-6 py-4" onClick={() => handleDelete(item._id)}>
+                    <a href="#" class="font-medium text-red-800 dark:text-blue-500 hover:underline"> <AiTwotoneDelete size={25} /> </a>
+                  </td>
+
+                </tr>
+              ))
+            ) : (
               datas.map((item) => (
                 <tr key={item._id} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -113,6 +142,9 @@ const Comment = () => {
 
                 </tr>
               ))
+            )
+
+
             }
 
           </tbody>

@@ -157,8 +157,10 @@ const updateBlog = async (req, res) => {
                 runValidators: true
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
-        if (!req.body.image) {
-            fs.unlinkSync(req.files.image.tempFilePath)
+
+        // Dosyayı sil
+        if (req.files && req.files.image) {
+            fs.unlinkSync(req.files.image.tempFilePath);
         }
         res.status(200).json({
             updatedBlog,

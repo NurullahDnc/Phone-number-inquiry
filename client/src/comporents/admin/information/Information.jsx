@@ -35,6 +35,7 @@ const Information = () => {
     fetchData()
   }, [])
 
+
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -50,7 +51,7 @@ const Information = () => {
     setItemOffset(newOffset);
   };
 
-
+  
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const handleDelete = async (id) => {
@@ -61,7 +62,7 @@ const Information = () => {
       setData(prevData => prevData.filter(item => item._id !== id));
 
     } catch (error) {
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     }
   }
 
@@ -73,34 +74,33 @@ const Information = () => {
   }
 
   const updateInformation = async (data) => {
-    console.log("data", data);
-
     const { title, description, image } = data;
-
+  
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-
-    if (imageRef.current && imageRef.current.value) {
-      formData.append("image", imageRef.current.value);
-    }
-    else if (image[0]) {
+  
+    // Yeni resim seçildiyse veya güncelleme yapılıyorsa
+    if (image[0] || fileSelected) {
       formData.append('image', image[0]);
     }
-
+  
     try {
       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/information/update/${selectedinformation._id}`, formData);
       toast.success(response.data.message);
-      const newData = await axios('${process.env.REACT_APP_BASE_URL}/information');
+  
+      // Veriyi güncelle
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
       setData(newData.data.data);
-
+  
       setIsUpdateModalOpen(false);
       setSelectedinformation(null);
-
+      setFileSelected(false); // Dosyanın tekrar seçilmediğinden emin olun
     } catch (error) {
       toast.error(error.response.data.error);
     }
   }
+  
 
   useEffect(() => {
     // Seçilen blog değiştiğinde formdaki inputların değerlerini set et, update icin
@@ -123,9 +123,9 @@ const Information = () => {
 
     try {
 
-      setIsCreateModalOpen(false);
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/information/create`, formData);
-      toast.success(response.data.message)
+      setIsCreateModalOpen(false);
+      toast.success(response.data.message) 
 
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
@@ -141,7 +141,7 @@ const Information = () => {
     <form onSubmit={handleSubmit(createInformation)} encType="multipart/form-data">
       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} required />
+      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors}  />
       <Button btnText={"Bilgi ekle"} />
     </form>
   )
@@ -152,6 +152,7 @@ const Information = () => {
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
       {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
       {selectedinformation && selectedinformation.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedinformation.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
+    
       <Button btnText={"Bilgi Güncelle"} />
     </form>
   )

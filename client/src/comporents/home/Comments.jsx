@@ -23,8 +23,8 @@ const Comments = () => {
       }, [])
 
     return (
-        <div>
-            <HeadingTitle title="Son Eklenen Yorumlar" center />
+        <div className='mt-3'>
+            <HeadingTitle small title="Son Eklenen Yorumlar" center />
             <div className='md:flex justify-between  ' >
 
                 <div className='shadow-lg flex justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 '>

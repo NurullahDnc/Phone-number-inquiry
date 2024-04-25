@@ -4,10 +4,18 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdSpaceDashboard } from 'react-icons/md';
 import { CgLogOut } from "react-icons/cg";
 import { Link } from 'react-router-dom';
+import { MdFeedback } from "react-icons/md";
+import { IoNewspaper } from "react-icons/io5";
+import { MdPolicy } from "react-icons/md";
+import { FaQuestionCircle } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa6";
+import { FaComment } from "react-icons/fa";
+import { IoCall } from "react-icons/io5";
 
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const data = [
         {
@@ -19,38 +27,38 @@ const Navbar = () => {
             id: "2",
             title: "Numaralar",
             url: "/admin/number",
-            icon: GiHamburgerMenu
+            icon: IoCall
         }, {
             id: "3",
             title: "Yorumlar",
             url: "/admin/comment",
-            icon: GiHamburgerMenu
+            icon: FaComment
         }, {
             id: "4",
             title: "Geri Bildirimler",
             url: "/admin/feedback",
-            icon: GiHamburgerMenu
+            icon: MdFeedback
         }, {
             id: "5",
             title: "Blog",
             url: "/admin/blog",
-            icon: GiHamburgerMenu
+            icon: IoNewspaper
         },
         {
             id: "6",
             title: "Gizlilik Politikası",
             url: "/admin/privacyPolicy",
-            icon: GiHamburgerMenu
+            icon: MdPolicy
         }, {
             id: "7",
             title: "Sıkça Sorulan Sorular",
             url: "/admin/faq",
-            icon: GiHamburgerMenu
+            icon: FaQuestionCircle
         },{
             id: "8",
             title: "Bilgi",
             url: "/admin/information",
-            icon: GiHamburgerMenu
+            icon: FaInfoCircle
         },{
             id: "9",
             title: "Logo",
@@ -61,7 +69,7 @@ const Navbar = () => {
             id: "10",
             title: "Siteye Git",
             url: "/",
-            icon: GiHamburgerMenu
+            icon: FaArrowLeft
         }
     ]
     
@@ -78,15 +86,15 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div class="py-4 overflow-y-auto">
+            <div class="py-4 ml-2 overflow-y-auto">
                 <ul class="space-y-2 font-medium">
 
                     {
                         data.map((item) => (
                             <li key={item.id}>
                                 <Link to={item.url} class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        {item.icon && <item.icon size={25} />}
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                                        {item.icon && <item.icon size={22} />}
                                     </svg>
                                     <span class="ms-3 text-[18px] "> {item.title} </span>
                                 </Link>
@@ -96,10 +104,10 @@ const Navbar = () => {
 
                     <li>
                         <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                            <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                 <CgLogOut size={25} />
                             </svg>
-                            <span class="ms-3  "> Cıkıs </span>
+                            <span class="ms-3"> Cıkıs Yap </span>
                         </a>
                     </li>
 

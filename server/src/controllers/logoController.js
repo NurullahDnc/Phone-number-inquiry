@@ -7,8 +7,6 @@ import fs from "fs"
 
 const createLogo = async (req, res) => {
 
-    console.log(req.body);
-
     try {
         //cloudinary kayıt et image'yi
         const result = await cloudinary.uploader.upload(
@@ -79,7 +77,7 @@ const updateLogo = async (req, res) => {
         } = req.body;
 
 
-        const photo = await Logo.findById(req.params.id);
+        const photo = await Logo.findById(id);
 
         let image = req.body.image;
 
@@ -103,9 +101,12 @@ const updateLogo = async (req, res) => {
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
 
-        if (!image) {
-            fs.unlinkSync(req.files.image.tempFilePath)
+        // Dosyayı sil
+        if (req.files && req.files.image) {
+            fs.unlinkSync(req.files.image.tempFilePath);
         }
+
+
         res.status(200).json({
             data: updatedLogo,
             message: "logo başarıyla Güncellendi"
@@ -120,7 +121,7 @@ const updateLogo = async (req, res) => {
 
 
 export {
-    createLogo,
+    // createLogo,
     updateLogo,
     getLogo,
 

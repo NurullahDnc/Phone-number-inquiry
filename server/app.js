@@ -13,6 +13,8 @@ import NumberPhoneRoute from './src/routes/numberPhoneRoute.js'
 import CommentFeedbackRoute from './src/routes/commentFeedbackRoute.js'
 import LogoRoute from './src/routes/logoRoute.js'
 import InformationRoute from './src/routes/informationRoute.js'
+import AuthRoute from './src/routes/authRoute.js'
+
 
 
 
@@ -57,6 +59,8 @@ app.use("/number", NumberPhoneRoute)
 app.use("/commentFeedback", CommentFeedbackRoute)
 app.use("/logo", LogoRoute)
 app.use("/information", InformationRoute)
+app.use("/auth", AuthRoute)
+
 
 
 

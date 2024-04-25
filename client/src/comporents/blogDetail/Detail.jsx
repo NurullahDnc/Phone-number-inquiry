@@ -23,7 +23,7 @@ const Detail = () => {
             {
                 data.map((item) => (
                     <div key={item._id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                        <img className="w-full h-64 object-cover object-center" src={item.image} alt="image Yuklenmedi" />
+                        <img className="w-full h-[400px] object-cover object-center" src={item.image} alt="image Yuklenmedi" />
                         <div className="p-6">
                             <h2 className="text-3xl font-semibold text-gray-800">{item.title} </h2>
                             <p className="mt-2 text-gray-600">{item.description} </p>

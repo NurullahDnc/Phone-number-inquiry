@@ -21,9 +21,9 @@ const Faqs = () => {
     }, [])
 
     return (
-        <div className=' p-2 m-auto my-3 '>
+        <div className=' p-2 m-auto  md:my-3 '>
 
-            <HeadingTitle title="Sık sorulan sorular" />
+            <HeadingTitle small title="Sık sorulan sorular" />
             {
                 data.map((item, i) => (
 

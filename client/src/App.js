@@ -20,6 +20,7 @@ import BlogAdminPage from './pages/BlogAdminPage';
 import FaqAdminPage from './pages/FaqAdminPage';
 import InformationAdminPage from './pages/InformationAdminPage';
 import LogoAdminPage from './pages/LogoAdminPage';
+import LoginAdminPage from './pages/LoginAdminPage';
 
 
 
@@ -57,14 +58,17 @@ theme="light"
                 <Route path="/countrycode" element={<CountryCodePage />} />
                 <Route path="/faq" element={<FaqPage />} />
                 <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
+                <Route path="/adminlogin" element={<LoginAdminPage />} />
 
 
 
-                <Route path="*" element={<div>Sayfa Bulunamadı</div>} />
                 </Routes>
               </MainLayout>
             }
           />
+ 
+    <Route path="/adminlogin" element={<LoginAdminPage />} />
+ 
 
           <Route
             path="/admin/*"

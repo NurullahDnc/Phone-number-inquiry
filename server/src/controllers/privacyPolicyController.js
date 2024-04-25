@@ -3,7 +3,6 @@ import PrivacyPolicy from "../models/privacyPolicyModel.js"
 
 
 const createPrivacyPolicy = async (req, res) => {
-    console.log("re", req.body);
     try {
         await PrivacyPolicy.create(req.body)
 
@@ -57,9 +56,8 @@ const deletePrivacyPolicy = async (req, res) => {
 
  
 const updatePrivacyPolicy = async (req, res) => {
-    console.log(req.body);
     const id = req.params.id;
-    console.log(idss);
+
     const {
         privacyStatement,
         dataAccess,
@@ -85,14 +83,14 @@ const updatePrivacyPolicy = async (req, res) => {
         if (!updatedPolicy) {
             return res.status(404).json({
                 success: false,
-                message: "Policy not found."
+                error: "Politika Bulunamadı."
             });
         }
 
         res.status(200).json({
             success: true,
             data: updatedPolicy,
-            message: "Policy successfully updated."
+            message: "Başarıyla Güncellendi."
         });
     } catch (error) {
         res.status(500).json({
@@ -107,8 +105,8 @@ const updatePrivacyPolicy = async (req, res) => {
 
 
 export {
-    createPrivacyPolicy,
-    deletePrivacyPolicy,
+    // createPrivacyPolicy,
+    // deletePrivacyPolicy,
     getPrivacyPolicy,
     updatePrivacyPolicy,
 }

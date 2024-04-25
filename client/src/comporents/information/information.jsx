@@ -17,7 +17,7 @@ const Information = () => {
   ];
 
   const [data, setData] = useState([]);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,31 +32,35 @@ const Information = () => {
   }, [])
 
   return (
-   <div>
-     <div className='md:flex my-1 md:my-3 md:p-5 '>
-      <div className='w-2/2 md:w-1/2 mb-5 md:p-5'>
-        <HeadingTitle title="Gebeld ile numara sorgulamak artık çok kolay" />
+    <div>
+      <div className='md:flex my-1 md:my-3 md:p-5 '>
+        <div className='w-2/2 md:w-1/2 mb-5 md:p-5'>
+          <HeadingTitle small title="Gebeld ile numara sorgulamak artık çok kolay" />
 
-        {/* Veri dizisini map fonksiyonu ile dönerek liste öğelerini oluşturun */}
-        <ol>
-          {data.slice(0, 3).map((item, index) => (
-            <li key={index} className='text-[18px] dark:text-gray-400 text-gray-800 flex py-1'>
-              <FaLocationArrow size={20} className='text-textMain mx-1 mt-1' />
-              {item.description}
-            </li>
-          ))}
-        </ol>
-        <Button btnText="Daha Fazla" />
-      </div>  
-      <div className=' w-2/2 md:w-1/2 h-[400px]'>
-        <img src='https://www.geofind-tr.com/assets/img/himg/webp/Mockup%20imagen%201_4.webp' alt='Image' className='object-contain w-full h-full' />
-      </div>
-    </div>
-          <div className='w-full h-52 shadow-lg flex justify-center items-center '>
-            Ads
+          {/* Veri dizisini map fonksiyonu ile dönerek liste öğelerini oluşturun */}
+          <ol>
+            {data.slice(0, 4).map((item, index) => (
+              <li key={index} className='text-[18px] dark:text-gray-400 text-gray-800 flex py-1'>
+                <FaLocationArrow size={20} className='text-textMain mx-1 mt-1' />
+                {item.description}
+              </li>
+            ))}
+          </ol>
+          {/* <Button btnText="Daha Fazla" /> */}
+        </div>
+        {
+          data.slice(0, 1).map((item) => (
+            <div className=' w-2/2 md:w-1/2 h-[300px] md:h-[400px] '>
+            <img src={item.image} alt='Image' className='object-contain p-5 md:p-1 w-full h-full' />
           </div>
-    
-   </div>
+          ))
+        }
+      </div>
+      <div className='w-full h-52 shadow-lg flex justify-center items-center '>
+        Ads
+      </div>
+
+    </div>
   );
 }
 

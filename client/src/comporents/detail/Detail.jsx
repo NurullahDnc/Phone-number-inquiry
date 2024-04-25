@@ -13,7 +13,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 
-const clientId = process.env.REACT_APP_BASE_URL;
 
 
 const Detail = () => {
@@ -25,7 +24,6 @@ const Detail = () => {
     { title: "Son Yorum Tarihi", value: 0 },
     { title: "Konum", value: "" },
   ]);
-console.log(clientId);
   const [selectedPhone, setSelectedPhone] = useState(null);
   const [commentList, setCommentList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState([]);
@@ -34,8 +32,13 @@ console.log(clientId);
   const [countryList, setCountryList] = useState();
   const [filterCountry, setFilterCountry] = useState();
 
+  const { PhoneNumberUtil } = require('google-libphonenumber');
+  const phoneNumberUtil = PhoneNumberUtil.getInstance();
+  const [phoneNumberInfo, setPhoneNumberInfo] = useState(null);
 
+  const phoneNumbers = `+${id.trim()}`; 
 
+ 
 
   //db number getiriyor, params.id karsılastırıp numaranın id buluyor, alta numara id gore yorumları getiriyor
   useEffect(() => {
@@ -59,7 +62,7 @@ console.log(clientId);
         } else {
           // console.error("Numara bulunamadı veya tanımsız");
         }
-      } catch (error) {
+      } catch (error) {           
         toast.error(error.response.data.error);
       }
     };
@@ -78,7 +81,7 @@ console.log(clientId);
         if (phoneNumber) {
           const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
           setCommentList(res.data.data)
-
+      
           //yorum bilgilerini state atıyoruz, yorum adet alıyoruz, uste de data state yorumlaı atıyoruz
           setCommentData([
             { title: "Yorum Sayısı", value: res.data.data?.length || 0 },
@@ -102,34 +105,39 @@ console.log(clientId);
 
 
   const handleClick = async (data) => {
-
-    const commentData = {
+    // Yorum verisi oluşturulur
+    let commentData = {
       number: selectedPhone,
       comment: data.comment,
       status: data.status,
-      countryName: filterCountry?.name,
-      countryCode: filterCountry?.callingCodes[0],
     };
+  
+    // Eğer filtre ülke seçilmişse, yorum verisine ülke bilgisi eklenir
+    if (filterCountry) {
+      commentData.countryName = filterCountry.name;
+      commentData.countryCode = filterCountry.callingCodes[0];
+    }
+  
     try {
+      // Yorum verisi API'ye gönderilir
       const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/comment/create`, commentData);
       toast.success(res.data.message);
-
+  
       setValue('comment', '');
-
-      //güncel veri getirme
+  
+      // Güncel veri yeniden getirilir
       try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
         setCommentList(res.data.data)
       } catch (error) {
-        console.log("yorum yuklenmedi:", error);
+        console.error(error);
       }
-
     } catch (error) {
-      toast.error(error.response.data);
       toast.error(error.response.data.error);
-      console.log("hata", error);
+      console.error(error);
     }
   };
+  
 
   const seleted = [
     { value: "uncertain", label: "Belirsiz" },
@@ -146,6 +154,7 @@ console.log(clientId);
         const res = await axios.get("https://restcountries.com/v2/all");
         setCountryList(res.data);
 
+
       } catch (error) {
         console.log(error);
       }
@@ -155,27 +164,37 @@ console.log(clientId);
   }, []);
 
   useEffect(() => {
-    const handleLookup = async () => {
-      try {
-        const encodedAuthToken = btoa(process.env.REACT_APP_API_KEY); // Kullanıcı adı ve parolayı base64 ile kodla
+    try {
+      const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
+      const countryCode = parsedPhoneNumber.getCountryCode();
+      const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
 
-        const response = await axios.get(`https://lookups.twilio.com/v2/PhoneNumbers/+${id}`, {
-          headers: {
-            'Authorization': `Basic ${encodedAuthToken}`
-          }
+       if (regionCode === 'AR') {
+         const turkey = countryList.find(country => country.alpha2Code === 'TR');
+
+        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
+        setPhoneNumberInfo({
+          countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
+          regionCode: 'TR',  
+          country: turkey.name 
         });
+      } else {
 
-        const filterCountrys = countryList.find((item) => item.alpha2Code === response.data.country_code);
+        const foundCountry = countryList.find(country => country.alpha2Code === regionCode);
 
-        setFilterCountry(filterCountrys)
-
-      } catch (error) {
-        console.error("Error fetching country information:", error);
+        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet          
+        setPhoneNumberInfo({
+          countryCode,
+          regionCode,
+          country: foundCountry ? foundCountry.name : "Unknown" // Eğer ülke bulunamazsa "Unknown" olarak ayarla
+        });
       }
-    };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }, [phoneNumber, countryList]);  
+  
 
-    handleLookup();
-  }, [countryList]);
 
 
 
@@ -197,6 +216,7 @@ console.log(clientId);
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
+  
   return (
     <div>
       <div className=" text-center py-8 flex justify-center items-center">
@@ -242,6 +262,7 @@ console.log(clientId);
                 />
 
                 <Button btnText={"Yorum Yap"} />
+                
               </div>
             </form>
           </div>

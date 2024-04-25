@@ -6,15 +6,22 @@ import {
 import fs from "fs"
 
 const createInformation = async (req, res) => {
-
     try {
-        //cloudinary kayıt et image'yi
-        const result = await cloudinary.uploader.upload(
-            req.files.image.tempFilePath, {
-                use_filename: true,
-                folder: 'numericquery',
-            }
-        );
+        let image_url = '';
+        let image_id = '';
+
+        if (req.files && req.files.image) {
+            const result = await cloudinary.uploader.upload(
+                req.files.image.tempFilePath, {
+                    use_filename: true,
+                    folder: 'numericquery',
+                }
+            );
+            image_url = result.secure_url;
+            image_id = result.public_id;
+            // Resim ekledikten sonra sil
+            fs.unlinkSync(req.files.image.tempFilePath);
+        }
 
         const {
             title,
@@ -22,24 +29,19 @@ const createInformation = async (req, res) => {
         } = req.body;
 
         const newInformation = await Information.create({
-            image: result.secure_url,
+            image: image_url,
             title,
             description,
-            image_id: result.public_id,
-
+            image_id: image_id,
         });
-
-        //resim ekledikten sonra sil
-        fs.unlinkSync(req.files.image.tempFilePath)
 
         res.status(200).json({
             success: true,
-            message: "başarıyla oluşturuldu.",
+            message: "Başarıyla oluşturuldu.",
             data: newInformation
         });
 
     } catch (error) {
-
         res.status(400).json({
             success: false,
             error: error.message
@@ -73,15 +75,16 @@ const deleteInformation = async (req, res) => {
         //id gore odayı buluyor
         const photo = await Information.findById(req.params.id);
 
-        if (!photo) return res.status(404).json({
-            error: "Silinecek resim bulunamadı."
-        });
+
 
         //resmin id'sini alıyor
         const imagePublicId = photo.image_id;
 
-        //cloudinary'den resmi siliyor
-        await cloudinary.uploader.destroy(imagePublicId);
+        if (imagePublicId.image_id) {
+
+            //cloudinary'den resmi siliyor
+            await cloudinary.uploader.destroy(imagePublicId);
+        }
 
         // gelen id ve db id gore siliyor
         await Information.findByIdAndDelete({
@@ -141,8 +144,9 @@ const updateInformation = async (req, res) => {
             } // Yeni veriyi döndür ve doğrulayıcıları çalıştır
         );
 
-        if (!image) {
-            fs.unlinkSync(req.files.image.tempFilePath)
+        // Dosyayı sil
+        if (req.files && req.files.image) {
+            fs.unlinkSync(req.files.image.tempFilePath);
         }
 
         res.status(200).json({
