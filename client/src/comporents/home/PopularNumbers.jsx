@@ -43,7 +43,6 @@ const PopularNumbers = () => {
 
   const sortedNumbers = uniqueNumbers.sort((a, b) => b.commentCount - a.commentCount);
 
-  console.log("sortedNumbers", sortedNumbers);
 
   return (
     <div className='w-full   justify-between lg:flex my-10'>

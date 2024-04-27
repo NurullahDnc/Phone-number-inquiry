@@ -11,6 +11,7 @@ import Textarea from '../../general/Textarea';
 import Input from '../../general/Input';
 import { useNavigate } from 'react-router-dom'
 import TextClip from '../../general/TextClip';
+import AuthManage from '../AuthManage';
 
 
 const Blog = ({ initialData, title }) => {
@@ -166,7 +167,7 @@ const Blog = ({ initialData, title }) => {
 
   return (
     <div>
-
+      <AuthManage />
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <p className='text-lg py-2 '>{initialData && title}</p>

@@ -32,13 +32,13 @@ const Footer = () => {
 
           <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
-              <a href="/countrycode" class="hover:underline me-4 md:me-6"> Ülke Kodları</a>
+              <a href="/ulke-alan-kodlari" class="hover:underline me-4 md:me-6"> Ülke Kodları</a>
             </li>
             <li>
-              <a href="/privacyPolicy" class="hover:underline me-4 md:me-6">K.V.K.K Metni</a>
+              <a href="/kisisel-verilerin-korunmasi" class="hover:underline me-4 md:me-6">K.V.K.K Metni</a>
             </li>
             <li>
-              <a href="/faq" class="hover:underline">S.S.S.</a>
+              <a href="/sikca-sorulan-sorular" class="hover:underline">S.S.S.</a>
             </li>
           </ul>
         </div>

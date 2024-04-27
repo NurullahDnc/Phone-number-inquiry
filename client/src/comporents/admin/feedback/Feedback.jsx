@@ -5,6 +5,7 @@ import { RxUpdate } from "react-icons/rx";
 import { toast } from 'react-toastify'
 import ReactPaginate from 'react-paginate';
 import TextClip from '../../general/TextClip';
+import AuthManage from '../AuthManage';
 
 
 const Feedback = ({initialData, title}) => {
@@ -69,6 +70,7 @@ const Feedback = ({initialData, title}) => {
 
   return (
     <div>
+      <AuthManage />
 
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

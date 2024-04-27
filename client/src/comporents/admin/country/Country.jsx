@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { AiTwotoneDelete } from "react-icons/ai";
 import { RxUpdate } from "react-icons/rx";
 import { toast } from 'react-toastify'
@@ -13,19 +13,21 @@ import { useNavigate } from 'react-router-dom'
 import AuthManage from '../AuthManage';
 
 
-const Faq = () => {
+const Country = () => {
+  const [fileSelected, setFileSelected] = useState(false);
+  const imageRef = useRef();
 
   const [data, setData] = useState([]);
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedFaq, setSelectedFaq] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(false);
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios(`${process.env.REACT_APP_BASE_URL}/faq`);
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
         setData(res.data.data)
       } catch (error) {
         console.log(error);
@@ -49,12 +51,12 @@ const Faq = () => {
     setItemOffset(newOffset);
   };
 
-
+  
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/faq/delete/${id}`)
+      const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}/country/delete/${id}`)
       toast.success(res.data.message)
       // Silme işlemi başarılı olduğunda veriyi güncelle
       setData(prevData => prevData.filter(item => item._id !== id));
@@ -65,80 +67,95 @@ const Faq = () => {
   }
 
   const handleUpdate = async (id) => {
-    const selectedFaqs = data.find(blog => blog._id === id);
-    setSelectedFaq(selectedFaqs);
+    //secilen blog bul, state at
+    const selectedinformation = data.find(blog => blog._id === id);
+    setSelectedCountry(selectedinformation);
     setIsUpdateModalOpen(true);
   }
 
-  const updateFaq = async (data) => {
-
-    const updatedata = {
-        title: data.title,
-        description: data.description,
-   
-    };
+  const updateInformation = async (data) => {
+    const { country, code, image } = data;
+  
+    const formData = new FormData();
+    formData.append('country', country);
+    formData.append('code', code);
+  
+    // Yeni resim seçildiyse veya güncelleme yapılıyorsa
+    if (image[0] || fileSelected) {
+      formData.append('image', image[0]);
+    }
   
     try {
-      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/faq/update/${selectedFaq._id}`, updatedata);
+      const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/country/update/${selectedCountry._id}`, formData);
       toast.success(response.data.message);
-      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/faq`);
+  
+      // Veriyi güncelle
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
       setData(newData.data.data);
 
-      setIsUpdateModalOpen(false);
-      setSelectedFaq(null);
+      setValue('country', "");
+      setValue('code', "");
 
+  
+      setIsUpdateModalOpen(false);
+      setSelectedCountry(null);
+      setFileSelected(false); // Dosyanın tekrar seçilmediğinden emin olun
     } catch (error) {
-        console.error(error);
-        toast.error(error.response.data.error);
-      }
+      toast.error(error.response.data.error);
+    }
   }
+  
 
   useEffect(() => {
-    if (selectedFaq) {
-      setValue('id', selectedFaq.id);
-      setValue('image', selectedFaq.image);
-      setValue('description', selectedFaq.description);
-      setValue('title', selectedFaq.title);
-
+    // Seçilen blog değiştiğinde formdaki inputların değerlerini set et, update icin
+    if (selectedCountry) {
+      setValue('id', selectedCountry.id);
+      setValue('image', selectedCountry.image);
+      setValue('country', selectedCountry.country);
+      setValue('code', selectedCountry.code);
 
     }
-  }, [selectedFaq, setValue]);
+  }, [selectedCountry, setValue]);
 
-  const createfaq = async (data) => {
-
-    const createdata = {
-        title: data.title,
-        description: data.description,
-   
-    };
+  const createInformation = async (data) => {
+    const formData = new FormData();
+    formData.append('image', data.image[0]);
+    formData.append('country', data.country);
+    formData.append('code', data.code);
 
     try {
+
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/country/create`, formData);
       setIsCreateModalOpen(false);
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/faq/create`, createdata);
-      toast.success(response.data.message)
+      toast.success(response.data.message) 
 
       //create isleimden sonra guncel veriyi al
-      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/faq`);
+      const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
       setData(newData.data.data);
 
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.error);
     }
   }
   //create elementi
   const createElement = (
-    <form onSubmit={handleSubmit(createfaq)} encType="multipart/form-data">
-      <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
-      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-       <Button btnText={"Soru ekle"} />
+    <form onSubmit={handleSubmit(createInformation)} encType="multipart/form-data">
+      <Input id="country" title="Ülke Giriniz" type="text" placeholder="Ülke Giriniz" register={register} errors={errors} required />
+      <Textarea id="code" title="Kodu Giriniz" type="text" placeholder="Kodu Giriniz" register={register} errors={errors} required />
+      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors}  />
+      <Button btnText={"Bilgi ekle"} />
     </form>
   )
 
   const updateElement = (
-    <form onSubmit={handleSubmit(updateFaq)} encType="multipart/form-data">
-       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
-      <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-   <Button btnText={"Soru Güncelle"} />
+    <form onSubmit={handleSubmit(updateInformation)} encType="multipart/form-data">
+      <Input id="country" title="Ülke Giriniz" type="text" placeholder="Ülke Giriniz" register={register} errors={errors} required />
+      <Textarea id="code" title="kodu Giriniz" type="text" placeholder="kodu Giriniz" register={register} errors={errors} required />
+      {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
+      {selectedCountry && selectedCountry.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedCountry.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
+    
+      <Button btnText={"Bilgi Güncelle"} />
     </form>
   )
 
@@ -146,6 +163,7 @@ const Faq = () => {
   return (
     <div>
       <AuthManage />
+
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -155,10 +173,13 @@ const Faq = () => {
                 id
               </th>
               <th scope="col" class="px-6 py-3">
-                Başlık
+                image
               </th>
               <th scope="col" class="px-6 py-3">
-                Açıklama
+                ülke
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Kodu
               </th>
               <th scope="col" class="px-6 py-3">
                 Güncelle
@@ -178,10 +199,15 @@ const Faq = () => {
                     {item._id}
                   </td>
                   <td class="px-6 py-4">
-                    {item.title}
+
+                    <img class="h-auto w-24" src={item.image} alt="image description" />
+                    {/* {item.image} */}
                   </td>
                   <td class="px-6 py-4">
-                    {item.description}
+                    {item.country}
+                  </td>
+                  <td class="px-6 py-4">
+                    {item.code}
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
                     <a href="#" class="font-medium text-textMain dark:text-blue-500 hover:underline"> <RxUpdate size={25} /> </a>
@@ -207,11 +233,11 @@ const Faq = () => {
           renderOnZeroPageCount={null}
         />
       </div>
-      <Button onClick={() => setIsCreateModalOpen(true)} btnText={"Soru Ekle"} />
+      <Button onClick={() => setIsCreateModalOpen(true)} btnText={"Ülke Ekle"} />
 
       <Modal
         isOpen={isCreateModalOpen}
-        title="Soru Olustur"
+        title="Ülke Olustur"
         bodyElement={createElement}
         onClose={() => setIsCreateModalOpen(!isCreateModalOpen)}
         btnNull
@@ -221,9 +247,9 @@ const Faq = () => {
 
       <Modal
         isOpen={isUpdateModalOpen}
-        title="Soru Güncelle"
+        title="Ülke Güncelle"
         bodyElement={updateElement}
-        onClose={() => setIsUpdateModalOpen(!isUpdateModalOpen)}
+        onClose={() => { setIsUpdateModalOpen(!isUpdateModalOpen) }}
         btnNull
         modals
 
@@ -233,4 +259,4 @@ const Faq = () => {
   )
 }
 
-export default Faq
+export default Country

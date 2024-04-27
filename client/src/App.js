@@ -21,6 +21,9 @@ import FaqAdminPage from './pages/FaqAdminPage';
 import InformationAdminPage from './pages/InformationAdminPage';
 import LogoAdminPage from './pages/LogoAdminPage';
 import LoginAdminPage from './pages/LoginAdminPage';
+import PasswordResetAdminaPage from './pages/PasswordResetAdminaPage';
+import CountryAdminPage from './pages/CountryAdminPage';
+
 
 
 
@@ -51,13 +54,13 @@ theme="light"
               <MainLayout>
                 <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/number/:id" element={<DetailPage />} />
-                <Route path="/deleteForm/:id" element={<CommentFeedbackPage />} />
+                <Route path="/telefon-numarasi/:id" element={<DetailPage />} />
+                <Route path="/form-sil/:id" element={<CommentFeedbackPage />} />
                 <Route path="/blog" element={<BlogPage />} />
-                <Route path="/detail/:id" element={<BlogDetailPage />} />
-                <Route path="/countrycode" element={<CountryCodePage />} />
-                <Route path="/faq" element={<FaqPage />} />
-                <Route path="/privacyPolicy" element={<PrivacyPolicyPage />} />
+                <Route path="/blog-detail/:id/:title" element={<BlogDetailPage />} />
+                <Route path="/ulke-alan-kodlari" element={<CountryCodePage />} />
+                <Route path="/sikca-sorulan-sorular" element={<FaqPage />} />
+                <Route path="/kisisel-verilerin-korunmasi" element={<PrivacyPolicyPage />} />
                 <Route path="/adminlogin" element={<LoginAdminPage />} />
 
 
@@ -85,6 +88,10 @@ theme="light"
                 <Route path="/faq" element={<FaqAdminPage />} />
                 <Route path="/information" element={<InformationAdminPage />} />
                 <Route path="/logo" element={<LogoAdminPage />} />
+                <Route path="/password" element={<PasswordResetAdminaPage />} />
+                <Route path="/country" element={<CountryAdminPage />} />
+
+
 
 
 

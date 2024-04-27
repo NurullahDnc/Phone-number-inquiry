@@ -26,7 +26,7 @@ const BlogCart = ({ id, image, title, description, btnText }) => {
                             <TextSub text={description} length={150} />
                         </p>
                     </div>
-                    <Button onClick={()=> router(`/detail/${id}`) } btnText={"Daha Fazla"} />
+                    <Button onClick={()=> router(`/blog-detail/${id}/${title}`) } btnText={"Daha Fazla"} />
                 </div>
             </div>
         </div>

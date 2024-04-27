@@ -1,8 +1,11 @@
 import React from 'react'
+import AuthManage from '../AuthManage'
 
 const Table = ({ titles, data }) => {
     return (
         <div >
+      <AuthManage />
+
             {data.map((item, index) => (
                 <div key={index}>
                     <h2>asdasd</h2>

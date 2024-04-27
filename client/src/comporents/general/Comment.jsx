@@ -16,13 +16,13 @@ const Comment = ({ id, number,numberId, country, status, description, onClick })
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className='flex items-center mb-4'>
-          <p onClick={()=> router(`/number/${number}`) } className=' text-[16px]  md:text-lg font-semibold cursor-pointer' >{number}</p>
+          <p onClick={()=> router(`/telefon-numarasi/${number}`) } className=' text-[16px]  md:text-lg font-semibold cursor-pointer' >{number}</p>
           <p className='ml-4 text-gray-600'>{country}</p>
           <div className="ml-auto flex justify-center">
             <p className={` font-bold ${status === "dangerous" ? "text-red-800" : status === "trustworthy" ? "text-green-800" : status == "uncertain" ? "text-gray-600" : ""}`}>
               {`${status == "dangerous" ? "Tehlikeli" : status == "trustworthy" ? "Güvenli" : status == "uncertain" ? "Belirsiz" : ""}`}
             </p>   
-            <span onClick={() => router(`/deleteForm/${id}`) } className={`px-2 cursor-pointer text-red-900 opacity-0 transition-opacity duration-300 ${isHovered ? 'opacity-100' : ''}`}>
+            <span onClick={() => router(`/form-sil//${id}`) } className={`px-2 cursor-pointer text-red-900 opacity-0 transition-opacity duration-300 ${isHovered ? 'opacity-100' : ''}`}>
               <FaTimes size={22} />
             </span> 
 

@@ -10,7 +10,7 @@ const Header = () => {
         e.preventDefault()
 
         setInputData(""); 
-        router(`/number/${inputData}`)
+        router(`/telefon-numarasi/${inputData}`)
         //page refresh
         window.location.reload(); 
 

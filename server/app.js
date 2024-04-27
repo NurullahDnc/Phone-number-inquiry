@@ -14,6 +14,9 @@ import CommentFeedbackRoute from './src/routes/commentFeedbackRoute.js'
 import LogoRoute from './src/routes/logoRoute.js'
 import InformationRoute from './src/routes/informationRoute.js'
 import AuthRoute from './src/routes/authRoute.js'
+import HeaderRoute from './src/routes/headerRoute.js'
+import CountryRoute from './src/routes/countryRoute.js'
+
 
 
 
@@ -60,10 +63,8 @@ app.use("/commentFeedback", CommentFeedbackRoute)
 app.use("/logo", LogoRoute)
 app.use("/information", InformationRoute)
 app.use("/auth", AuthRoute)
-
-
-
-
+app.use("/header", HeaderRoute)
+app.use("/country", CountryRoute)
 
 
 

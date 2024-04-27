@@ -8,6 +8,7 @@ import { IoNewspaper } from "react-icons/io5";
 import Comment from '../comment/Comment';
 import Feedback from '../feedback/Feedback';
 import Blog from '../blog/Blog';
+import AuthManage from '../AuthManage';
 
 
 
@@ -62,7 +63,7 @@ const Dashboard = () => {
 
   return (
     <div className='h-screen '>
-
+      <AuthManage />
 
       <div className='w-full h-auto flex flex-wrap'>
         {countData.map((item) => (
@@ -83,12 +84,7 @@ const Dashboard = () => {
         <Feedback initialData={feedbackStatus} title="Geri Bildirimler" /> 
         <Blog initialData={blogStatus} title="Blog" /> 
 
-
-
-
       </div>
-
-
 
     </div>
   )

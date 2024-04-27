@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import Textarea from '../../general/Textarea';
 import Input from '../../general/Input';
 import { useNavigate } from 'react-router-dom'
+import AuthManage from '../AuthManage';
 
 
 const PrivacyPolicy = () => {
@@ -60,7 +61,7 @@ const PrivacyPolicy = () => {
 
   const updatePrivacyPolicy = async (data) => {
 
-    
+
     const updatedata = {
       privacyStatement: data.privacyStatement,
       dataAccess: data.dataAccess,
@@ -112,6 +113,7 @@ const PrivacyPolicy = () => {
   return (
     <div>
 
+      <AuthManage />
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

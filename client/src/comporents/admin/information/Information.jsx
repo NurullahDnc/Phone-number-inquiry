@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import Textarea from '../../general/Textarea';
 import Input from '../../general/Input';
 import { useNavigate } from 'react-router-dom'
+import AuthManage from '../AuthManage';
 
 
 const Information = () => {
@@ -160,6 +161,7 @@ const Information = () => {
 
   return (
     <div>
+      <AuthManage />
 
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AiTwotoneDelete } from "react-icons/ai";
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
+import AuthManage from '../AuthManage';
 
 const Number = ({ initialData, title }) => {
     const [data, setData] = useState([]);
@@ -46,6 +47,8 @@ const Number = ({ initialData, title }) => {
 
     return (
         <div>
+      <AuthManage />
+
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
                 <p className='text-lg py-2 '>{initialData && title}</p>

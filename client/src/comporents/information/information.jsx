@@ -40,9 +40,9 @@ const Information = () => {
           {/* Veri dizisini map fonksiyonu ile dönerek liste öğelerini oluşturun */}
           <ol>
             {data.slice(0, 4).map((item, index) => (
-              <li key={index} className='text-[18px] dark:text-gray-400 text-gray-800 flex py-1'>
-                <FaLocationArrow size={20} className='text-textMain mx-1 mt-1' />
-                {item.description}
+              <li key={index} className='dark:text-gray-400 text-gray-800 flex items-center py-1'>
+                <FaLocationArrow size={19} className='text-textMain mr-2' />
+                <span className="flex-1">{item.description}</span>
               </li>
             ))}
           </ol>

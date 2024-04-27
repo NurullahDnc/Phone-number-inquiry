@@ -104,7 +104,7 @@ const Detail = () => {
   }, [selectedPhone]);
 
 
-  const handleClick = async (data) => {
+  const handleCreate = async (data) => {
     // Yorum verisi oluşturulur
     let commentData = {
       number: selectedPhone,
@@ -241,7 +241,7 @@ const Detail = () => {
               small
             />
 
-            <form onSubmit={handleSubmit(handleClick)}>
+            <form onSubmit={handleSubmit(handleCreate)}>
               <Textarea
                 id="comment"
                 type="text"

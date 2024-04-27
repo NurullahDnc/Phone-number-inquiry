@@ -70,7 +70,8 @@ const login = async (req, res) => {
 
         if (!isMatch) {
             return res.status(500).json({
-                message: 'Yanlış şifre'
+                succeded: false,
+                error: 'Yanlış şifre'
             })
         }
 
@@ -78,6 +79,7 @@ const login = async (req, res) => {
         const accessToken = createAccessToken({
             id: admin._id
         });
+
 
         res.status(201).json({
             succeded: true,
@@ -96,18 +98,26 @@ const login = async (req, res) => {
 
 const resetPassword = async (req, res) => {
 
+
+   try {
     var {
         oldPassword,
         password,
-        password2
+        password2,
+        id
     } = req.body;
-    const id = req.params.id;
-
-
+    
     const admin = await Admin.findOne({
         _id: id
     });
+    
 
+    if (!admin || !admin.password) {
+        return res.status(401).json({
+            succeded: false,
+            error: "Kullanıcı bulunamadı veya şifre bilgisi yok."
+        });
+    }
 
     const isMatch = await bcrypt.compare(oldPassword, admin.password)
 
@@ -117,7 +127,6 @@ const resetPassword = async (req, res) => {
             error: "Sifre Yanlış!"
         })
     }
-
     //------------ Checking required fields ------------//
     else if (!oldPassword || !password || !password2) {
         return res.status(401).json({
@@ -157,11 +166,36 @@ const resetPassword = async (req, res) => {
         succeded: true,
         message: "Şifre başarıyla güncellendi."
     })
+   } catch (error) {
+    res.status(500).json({
+        error: error.message
+    });
+   }
 }
 
+const getInfo = async (req, res) => {
+
+    try {
+        // kulanıcının sifreisni gonderme
+        const admin = await Admin.findById(req.admin.id).select('-password')
+
+        //kulanıcı yoksa
+        if (!admin) return res.status(400).json({
+            error: "Kullanıcı mevcut değil."
+        });
+
+        res.status(200).json(admin)
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message
+        })
+    }
+}
 
 export {
     login,
-    resetPassword,createUser
+    resetPassword,
+    createUser,
+    getInfo
 
 }
