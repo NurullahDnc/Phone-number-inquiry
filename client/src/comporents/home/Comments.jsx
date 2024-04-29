@@ -24,18 +24,23 @@ const Comments = () => {
 
     return (
         <div className='mt-3'>
+              <div className="shadow-lg flex justify-center items-center w-full md:w-full h-[250px] md:h-[400px] bg-red-600 rounded-lg dark:bg-gray-800 ">
+          Ads
+        </div>
+
             <HeadingTitle small title="Son Eklenen Yorumlar" center />
             <div className='md:flex justify-between  ' >
 
-                <div className='shadow-lg flex justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 '>
+                <div className='shadow-lg flex justify-center items-center bg-red-600 rounded-lg w-full md:w-1/6 h-[250px] md:h-[500px] dark:bg-gray-800 '>
                     Ads
                 </div>
 
                 <div className=' flex-1 md:px-4 '>
 
-                    {comment.slice(0, 5).map((item, index) => (
+                    {comment.slice(0, 6).map((item, index) => (
                         <Comment
                             key={index}
+                            length="70"
                             id={item._id}
                             number={item.number?.number}
                             numberId={item.number?._id}
@@ -48,7 +53,7 @@ const Comments = () => {
 
                 </div>
 
-                <div className='shadow-lg flex justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 '>
+                <div className='shadow-lg flex justify-center bg-red-600 rounded-lg items-center w-full md:w-1/6 h-[250px] md:h-[500px] dark:bg-gray-800 '>
                     Ads
                 </div>
             </div>

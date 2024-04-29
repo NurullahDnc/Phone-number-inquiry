@@ -1,4 +1,4 @@
-import Information from '../models/information.js';
+import Information from '../models/numberModel.js';
 import {
     v2 as cloudinary
 } from 'cloudinary';
@@ -107,6 +107,7 @@ const deleteInformation = async (req, res) => {
 
 
 const updateInformation = async (req, res) => {
+    console.log(req.bo);
     try {
 
         const {
@@ -122,6 +123,7 @@ const updateInformation = async (req, res) => {
         const photo = await Information.findById(req.params.id);
 
         let image = req.body.image;
+        console.log(image);
 
         if (!image) {
             //resim yukleme

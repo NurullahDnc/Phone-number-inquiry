@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Input from '../general/Input';
 import Textarea from '../general/Textarea';
@@ -11,6 +11,9 @@ const CommentFeedback = () => {
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const { id } = useParams()
+  const [selectedPhone, setSelectedPhone] = useState(null);
+  const [commentList, setCommentList] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState([]);
 
   const handleClick = async (data) => {
     const formData = {
@@ -34,11 +37,29 @@ const CommentFeedback = () => {
 
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment`);
+        //istenilen numarayı bul
+        const findNumber = res.data.data.find((item) => item._id == id);
+        setPhoneNumber("as", findNumber)
+
+        setSelectedPhone(findNumber?.number ?? id);
+
+      } catch (error) {
+        toast.error(error.response.data.error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-5">
       <div className=' text-center py-8 flex justify-center items-center'>
-        <h1 className='font-bold text-sm md:text-2xl dark:text-gray-400'>Telefon Numarası: </h1> <span className='text-sm md:text-2xl px-3 dark:text-gray-100'>{id}</span>
+        <h1 className='font-bold text-sm md:text-2xl dark:text-gray-400'>Telefon Numarası: </h1> <span className='text-sm md:text-2xl px-3 dark:text-gray-100'>{selectedPhone?.number} </span>
       </div>
 
       <form onSubmit={handleSubmit(handleClick)} encType="multipart/form-data">

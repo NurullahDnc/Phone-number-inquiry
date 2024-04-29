@@ -52,7 +52,7 @@ const Information = () => {
     setItemOffset(newOffset);
   };
 
-  
+
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const handleDelete = async (id) => {
@@ -76,24 +76,29 @@ const Information = () => {
 
   const updateInformation = async (data) => {
     const { title, description, image } = data;
-  
+
+    console.log("img", image);
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-  
+
     // Yeni resim seçildiyse veya güncelleme yapılıyorsa
-    if (image[0] || fileSelected) {
+    if (imageRef.current && imageRef.current.value) {
+      formData.append("image", imageRef.current.value);
+    }
+    else if (image[0]) {
       formData.append('image', image[0]);
     }
-  
+
     try {
       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/information/update/${selectedinformation._id}`, formData);
       toast.success(response.data.message);
-  
+
       // Veriyi güncelle
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
       setData(newData.data.data);
-  
+
       setIsUpdateModalOpen(false);
       setSelectedinformation(null);
       setFileSelected(false); // Dosyanın tekrar seçilmediğinden emin olun
@@ -101,7 +106,7 @@ const Information = () => {
       toast.error(error.response.data.error);
     }
   }
-  
+
 
   useEffect(() => {
     // Seçilen blog değiştiğinde formdaki inputların değerlerini set et, update icin
@@ -126,7 +131,7 @@ const Information = () => {
 
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/information/create`, formData);
       setIsCreateModalOpen(false);
-      toast.success(response.data.message) 
+      toast.success(response.data.message)
 
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/information`);
@@ -142,7 +147,7 @@ const Information = () => {
     <form onSubmit={handleSubmit(createInformation)} encType="multipart/form-data">
       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors}  />
+      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} />
       <Button btnText={"Bilgi ekle"} />
     </form>
   )
@@ -153,7 +158,7 @@ const Information = () => {
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
       {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
       {selectedinformation && selectedinformation.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedinformation.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
-    
+
       <Button btnText={"Bilgi Güncelle"} />
     </form>
   )

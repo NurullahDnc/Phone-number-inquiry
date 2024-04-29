@@ -19,7 +19,7 @@ import AuthManage from '../AuthManage';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(true);
-    const [isOpenItem, setIsOpenItem] = useState(true);
+    const [isOpenItem, setIsOpenItem] = useState(false);
 
     const data = [
         {
@@ -47,7 +47,7 @@ const Navbar = () => {
             title: "Blog",
             url: "/admin/blog",
             icon: IoNewspaper
-        },{
+        }, {
             id: "6",
             title: "Gizlilik Politikası",
             url: "/admin/privacyPolicy",
@@ -75,7 +75,7 @@ const Navbar = () => {
 
         window.location.reload(); // Sayfayı yenileyerek yeni oturumu başlatın
 
-        document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; 
+        document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     };
 
     const toggleMenuItem = () => {
@@ -84,7 +84,7 @@ const Navbar = () => {
 
     return (
         <nav className={` bg-gray-200 shadow-md h-[100vh] w-[270px] z-1000 ${isOpen ? "absolute  left-[-270px] " : ""} `}>
-      <AuthManage />
+            <AuthManage />
 
             <div className='relative'>
                 <div className="text-center py-5 font-bold text-xl border-b-2 border-textMain text-textMain	">
@@ -124,7 +124,7 @@ const Navbar = () => {
                             <Link to={"/admin/logo"}>
                                 <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Logo-Header Dunzele</p>
                             </Link>
-                           
+
                             <Link to={"/admin/logo"}>
                                 <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Seo Ayarı</p>
                             </Link>
@@ -139,7 +139,7 @@ const Navbar = () => {
                     </li>
 
                     <li >
-                        <Link  to={"/"} class="flex items-center   p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <Link to={"/"} class="flex items-center   p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                 <FaArrowLeft size={22} />
                             </svg>

@@ -30,15 +30,15 @@ const Detail = () => {
   const { register, handleSubmit, setValue, formState: { errors }, } = useForm();
   const { id } = useParams();
   const [countryList, setCountryList] = useState();
-  const [filterCountry, setFilterCountry] = useState();
+  // const [filterCountry, setFilterCountry] = useState();
 
   const { PhoneNumberUtil } = require('google-libphonenumber');
   const phoneNumberUtil = PhoneNumberUtil.getInstance();
   const [phoneNumberInfo, setPhoneNumberInfo] = useState(null);
 
-  const phoneNumbers = `+${id.trim()}`; 
+  const phoneNumbers = `+${id.trim()}`;
 
- 
+
 
   //db number getiriyor, params.id karsılastırıp numaranın id buluyor, alta numara id gore yorumları getiriyor
   useEffect(() => {
@@ -62,13 +62,14 @@ const Detail = () => {
         } else {
           // console.error("Numara bulunamadı veya tanımsız");
         }
-      } catch (error) {           
+      } catch (error) {
         toast.error(error.response.data.error);
       }
     };
 
     fetchData();
   }, [id]);
+
 
 
   useEffect(() => {
@@ -81,7 +82,7 @@ const Detail = () => {
         if (phoneNumber) {
           const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
           setCommentList(res.data.data)
-      
+
           //yorum bilgilerini state atıyoruz, yorum adet alıyoruz, uste de data state yorumlaı atıyoruz
           setCommentData([
             { title: "Yorum Sayısı", value: res.data.data?.length || 0 },
@@ -111,20 +112,20 @@ const Detail = () => {
       comment: data.comment,
       status: data.status,
     };
-  
+
     // Eğer filtre ülke seçilmişse, yorum verisine ülke bilgisi eklenir
-    if (filterCountry) {
-      commentData.countryName = filterCountry.name;
-      commentData.countryCode = filterCountry.callingCodes[0];
-    }
-  
+       commentData.countryName = phoneNumberInfo?.country == undefined ? "Belirsiz": phoneNumberInfo?.country ;
+      commentData.countryCode = phoneNumberInfo?.countryCode;
+    
+
+
     try {
       // Yorum verisi API'ye gönderilir
       const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/comment/create`, commentData);
       toast.success(res.data.message);
-  
+
       setValue('comment', '');
-  
+
       // Güncel veri yeniden getirilir
       try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
@@ -137,7 +138,7 @@ const Detail = () => {
       console.error(error);
     }
   };
-  
+
 
   const seleted = [
     { value: "uncertain", label: "Belirsiz" },
@@ -151,51 +152,64 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("https://restcountries.com/v2/all");
-        setCountryList(res.data);
+        const res1 = await axios.get("https://restcountries.com/v2/all");
+        const res2 = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
+        const mergedData = [...res1.data, ...res2.data.data];
 
-
+        setCountryList(mergedData);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [commentList]);
 
-  useEffect(() => {
-    try {
-      const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
-      const countryCode = parsedPhoneNumber.getCountryCode();
-      const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
+    useEffect(() => {
+      try {
+        const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
+        console.log("parsedPhoneNumber", parsedPhoneNumber);
+    
+        const countryCode = parsedPhoneNumber.getCountryCode();
+        console.log("countryCode", countryCode);
+    
+        const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
+        console.log("regionCode", regionCode);
 
-       if (regionCode === 'AR') {
-         const turkey = countryList.find(country => country.alpha2Code === 'TR');
-
-        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
-        setPhoneNumberInfo({
-          countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
-          regionCode: 'TR',  
-          country: turkey.name 
-        });
-      } else {
-
-        const foundCountry = countryList.find(country => country.alpha2Code === regionCode);
-
-        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet          
-        setPhoneNumberInfo({
-          countryCode,
-          regionCode,
-          country: foundCountry ? foundCountry.name : "Unknown" // Eğer ülke bulunamazsa "Unknown" olarak ayarla
-        });
+        
+    
+        if (regionCode === 'AR') {
+          const turkey = countryList.find(country => country.alpha2Code === 'TR');
+    
+          // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
+          setPhoneNumberInfo({
+            countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
+            regionCode: 'TR',
+            country: turkey.name
+          });
+        } else {
+          let foundCountry;
+          if (regionCode) {
+            foundCountry = countryList.find(country => country.alpha2Code === regionCode);
+          } else {
+            foundCountry = countryList.find(country => country.callingCodes.includes(countryCode));
+          }
+          
+          // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet          
+          setPhoneNumberInfo({
+            countryCode,
+            regionCode,
+            country: foundCountry ? foundCountry.name : "Belirsiz" // Eğer ülke bulunamazsa "Belirsiz" olarak ayarla
+          });
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }, [phoneNumber, countryList]);  
+    }, [phoneNumber, countryList]);
   
 
 
+  console.log("PhoneNumberInfo", phoneNumberInfo);
 
 
 
@@ -216,7 +230,7 @@ const Detail = () => {
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
-  
+
   return (
     <div>
       <div className=" text-center py-8 flex justify-center items-center">
@@ -262,12 +276,12 @@ const Detail = () => {
                 />
 
                 <Button btnText={"Yorum Yap"} />
-                
+
               </div>
             </form>
           </div>
 
-          <div className="w-full h-52 shadow-lg flex justify-center items-center dark:bg-gray-800 ">
+          <div className="w-full h-52 bg-red-600 rounded-lg shadow-lg flex justify-center items-center dark:bg-gray-800 ">
             Ads
           </div>
 
@@ -300,10 +314,10 @@ const Detail = () => {
             />
           </div>
 
-          <Faq />
+          {/* <Faq /> */}
         </div>
 
-        <div className="shadow-lg flex justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 ">
+        <div className="shadow-lg flex bg-red-600 rounded-lg justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 ">
           Ads
         </div>
       </div>

@@ -23,3 +23,23 @@ body, html {
     margin: 5px;
     font-size: 18px;
 }  
+
+.buttonShadow{
+
+    box-shadow: 0 0 10px 5px rgba(8, 15, 109, 0.5);
+
+}
+
+
+@keyframes glow {
+    0% {
+    }
+    100% {
+    }
+  }
+  
+  .shadow-glow {
+    animation: glow 1.5s infinite alternate;
+  }
+  
+

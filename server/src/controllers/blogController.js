@@ -124,7 +124,7 @@ const deleteBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
     try {
 
-        const {
+        const { 
             id
         } = req.params;
 

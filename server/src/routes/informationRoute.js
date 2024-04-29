@@ -1,5 +1,5 @@
 import  express  from "express";
-import * as informationController from '../controllers/informationController.js'
+import * as informationController from '../controllers/featurePresentationController.js'
  
 const route = express.Router();
 

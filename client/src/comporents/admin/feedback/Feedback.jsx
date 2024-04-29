@@ -25,6 +25,9 @@ const Feedback = ({initialData, title}) => {
     fetchData()
   }, [])
 
+
+  
+
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const [itemOffset, setItemOffset] = useState(0);

@@ -24,14 +24,16 @@ const createCountry = async (req, res) => {
         }
 
         const {
-            country,
-            code
+            name,
+            callingCodes,
+            alpha2Code
         } = req.body;
 
         const newCountry = await Country.create({
             image: image_url,
-            country,
-            code,
+            name,
+            callingCodes,
+            alpha2Code,
             image_id: image_id,
         });
 
@@ -111,8 +113,9 @@ const updateCountry = async (req, res) => {
         } = req.params;
 
         const {
-            country,
-            code,
+            name,
+            callingCodes,
+            alpha2Code,
         } = req.body;
 
 
@@ -130,8 +133,9 @@ const updateCountry = async (req, res) => {
 
         const updatedCountry = await Country.findByIdAndUpdate(
             id, {
-                country,
-                code,
+                name,
+                callingCodes,
+                alpha2Code,
                 image,
                 image_id: imagePublicId
 

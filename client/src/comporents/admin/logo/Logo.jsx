@@ -74,6 +74,13 @@ const Logo = () => {
         }
     }, [selectedLogo, setValue]);
 
+    useEffect(() => {
+        if (selectedHeader) {
+            setValue('image', selectedHeader.image);
+
+        }
+    }, [selectedHeader, setValue]);
+
     const updateLogo = async (data) => {
         const formData = new FormData();
         formData.append('logo', data.logo);
@@ -89,7 +96,8 @@ const Logo = () => {
             toast.success(response.data.message);
             const newData = await axios(`${process.env.REACT_APP_BASE_URL}/logo`);
             setLogo(newData.data.data);
-
+            setValue('logo', "");
+            setValue('image', "");
             setIsUpdateModalLogo(false);
             setSelectedLogo(null);
         } catch (error) {
@@ -111,6 +119,8 @@ const Logo = () => {
             toast.success(response.data.message);
             const newData = await axios(`${process.env.REACT_APP_BASE_URL}/header`);
             setHeader(newData.data.data);
+            setValue('image', "");
+
 
             setIsUpdateModalHeader(false);
         } catch (error) {
@@ -118,7 +128,7 @@ const Logo = () => {
         }
     };
 
-    const updateElement = (
+    const updateElementLogo = (
         <form onSubmit={handleSubmit(updateLogo)} encType="multipart/form-data">
             <Input id="logo" title="Logo Giriniz" type="text" placeholder="Logo Giriniz" register={register} errors={errors} required />
             {
@@ -133,7 +143,7 @@ const Logo = () => {
         <form onSubmit={handleSubmit(updateLogoHeader)} encType="multipart/form-data">
             {
                 <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
-            {selectedLogo && selectedLogo.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedLogo.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
+            {selectedHeader && selectedHeader.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedHeader.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
 
             <Button btnText={"Logo Güncelle"} />
         </form>
@@ -224,7 +234,7 @@ const Logo = () => {
             <Modal
                 isOpen={isUpdateModalLogo}
                 title="logo Güncelle"
-                bodyElement={updateElement}
+                bodyElement={updateElementLogo}
                 onClose={() => setIsUpdateModalLogo(!isUpdateModalLogo)}
                 btnNull
                 modals

@@ -77,6 +77,8 @@ const Blog = ({ initialData, title }) => {
 
     const { title, description, image } = data;
 
+    console.log(image);
+
     //guncellenmis verilier formData at 
     const formData = new FormData();
     formData.append('title', title);

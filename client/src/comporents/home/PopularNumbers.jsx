@@ -8,6 +8,8 @@ const PopularNumbers = () => {
   const router = useNavigate();
 
   const [data, setData] = useState([]);
+  const [hover, setHover] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,18 +44,22 @@ const PopularNumbers = () => {
   });
 
   const sortedNumbers = uniqueNumbers.sort((a, b) => b.commentCount - a.commentCount);
-
+   
+  const handleClick=(item)=>{
+    router(`/telefon-numarasi/${item}`)
+    
+  }
 
   return (
-    <div className='w-full   justify-between lg:flex my-10'>
+    <div className='w-full justify-between lg:flex my-10'>
 
-      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg rounded-lg'>
+      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg dark:bg-gray-800 rounded-lg'>
         <HeadingTitle small title="Son Yorum Yapılan Numaralar" />
 
         <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
-          {
+        {
             data.slice(0, 12).map((item, i) => (
-              <div key={i} onClick={() => router(`/number/${item.number?.number}`)} className='bg-blue-200 border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-semibold  w-1/3 md:w-1/4'>
+              <div key={i} onClick={()=> handleClick(item.number?.number)} className='w-[45%] md:w-[30%] border-[#D9D9D9] border-2 border-spacing-1 py-3 cursor-pointer text-center rounded-md font-semibold  '>
                 <p className='text-[15px] md:text-[18px]   '>
 
                   {item.number?.number}
@@ -67,14 +73,14 @@ const PopularNumbers = () => {
 
 
 
-      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg rounded-lg'>
+      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg rounded-lg dark:bg-gray-800 '>
         <HeadingTitle small title="En Çok Yorum Yapılan Numaralar" />
 
-        <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
-          {
+        <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4 '>
+        {
             sortedNumbers.slice(0, 12).map((item, i) => (
-              <div key={i} onClick={() => router(`/number/${item.number?.number}`)} className='bg-blue-200 border-spacing-1 py-3 cursor-pointer text-center rounded-lg font-semibold w-1/3 md:w-1/4'>
-                <p className='text-[15px] md:text-[18px]   '>
+              <div key={i} onClick={ ()=> handleClick(item.number?.number)} className='w-[45%] md:w-[30%] border-[#D9D9D9] border-2 border-spacing-1 py-3 cursor-pointer text-center rounded-md font-semibold  '>
+                <p className='text-[15px]  md:text-[18px]   '>
 
                   {item.number?.number}
                 </p>

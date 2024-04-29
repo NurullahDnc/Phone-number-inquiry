@@ -22,6 +22,8 @@ const Country = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(false);
+  
+  
 
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const Country = () => {
     setItemOffset(newOffset);
   };
 
-  
+
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const handleDelete = async (id) => {
@@ -74,21 +76,25 @@ const Country = () => {
   }
 
   const updateInformation = async (data) => {
-    const { country, code, image } = data;
-  
+    const { name, callingCodes, alpha2Code, image } = data;
+
     const formData = new FormData();
-    formData.append('country', country);
-    formData.append('code', code);
-  
+    formData.append('name', name);
+    formData.append('callingCodes', callingCodes);
+    formData.append('alpha2Code', alpha2Code);
+
     // Yeni resim seçildiyse veya güncelleme yapılıyorsa
-    if (image[0] || fileSelected) {
+    if (imageRef.current && imageRef.current.value) {
+      formData.append("image", imageRef.current.value);
+    }
+    else if (image[0]) {
       formData.append('image', image[0]);
     }
-  
+
     try {
       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/country/update/${selectedCountry._id}`, formData);
       toast.success(response.data.message);
-  
+
       // Veriyi güncelle
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
       setData(newData.data.data);
@@ -96,7 +102,7 @@ const Country = () => {
       setValue('country', "");
       setValue('code', "");
 
-  
+
       setIsUpdateModalOpen(false);
       setSelectedCountry(null);
       setFileSelected(false); // Dosyanın tekrar seçilmediğinden emin olun
@@ -104,15 +110,16 @@ const Country = () => {
       toast.error(error.response.data.error);
     }
   }
-  
+
 
   useEffect(() => {
     // Seçilen blog değiştiğinde formdaki inputların değerlerini set et, update icin
     if (selectedCountry) {
       setValue('id', selectedCountry.id);
       setValue('image', selectedCountry.image);
-      setValue('country', selectedCountry.country);
-      setValue('code', selectedCountry.code);
+      setValue('name', selectedCountry.name);
+      setValue('callingCodes', selectedCountry.callingCodes);
+      setValue('alpha2Code', selectedCountry.alpha2Code);
 
     }
   }, [selectedCountry, setValue]);
@@ -120,14 +127,15 @@ const Country = () => {
   const createInformation = async (data) => {
     const formData = new FormData();
     formData.append('image', data.image[0]);
-    formData.append('country', data.country);
-    formData.append('code', data.code);
+    formData.append('name', data.name);
+    formData.append('callingCodes', data.callingCodes);
+    formData.append('alpha2Code', data.alpha2Code);
 
     try {
 
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/country/create`, formData);
       setIsCreateModalOpen(false);
-      toast.success(response.data.message) 
+      toast.success(response.data.message)
 
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
@@ -138,23 +146,26 @@ const Country = () => {
       toast.error(error.response.data.error);
     }
   }
+
   //create elementi
   const createElement = (
     <form onSubmit={handleSubmit(createInformation)} encType="multipart/form-data">
-      <Input id="country" title="Ülke Giriniz" type="text" placeholder="Ülke Giriniz" register={register} errors={errors} required />
-      <Textarea id="code" title="Kodu Giriniz" type="text" placeholder="Kodu Giriniz" register={register} errors={errors} required />
-      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors}  />
+      <Input id="name" title="Ülke Giriniz" type="text" placeholder="Turkey" register={register} errors={errors} required />
+      <Input id="alpha2Code" title="Alfa Kodu Giriniz" type="text" placeholder="TR" register={register} errors={errors} required />
+      <Input id="callingCodes" title="Ülke Kodu Giriniz" type="text" placeholder="+90" register={register} errors={errors} required />
+      <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} />
       <Button btnText={"Bilgi ekle"} />
     </form>
   )
 
   const updateElement = (
     <form onSubmit={handleSubmit(updateInformation)} encType="multipart/form-data">
-      <Input id="country" title="Ülke Giriniz" type="text" placeholder="Ülke Giriniz" register={register} errors={errors} required />
-      <Textarea id="code" title="kodu Giriniz" type="text" placeholder="kodu Giriniz" register={register} errors={errors} required />
+      <Input id="name" title="Ülke Giriniz" type="text" placeholder="Turkey" register={register} errors={errors} required />
+      <Input id="alpha2Code" title="Alfa Kodu Giriniz" type="text" placeholder="TR" register={register} errors={errors} required />
+      <Input id="callingCodes" title="Ülke Kodu Giriniz" type="text" placeholder="+90" register={register} errors={errors} required />
       {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
       {selectedCountry && selectedCountry.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedCountry.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
-    
+
       <Button btnText={"Bilgi Güncelle"} />
     </form>
   )
@@ -179,7 +190,10 @@ const Country = () => {
                 ülke
               </th>
               <th scope="col" class="px-6 py-3">
-                Kodu
+                Alfa Kodu
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Ülke Kodu
               </th>
               <th scope="col" class="px-6 py-3">
                 Güncelle
@@ -204,10 +218,13 @@ const Country = () => {
                     {/* {item.image} */}
                   </td>
                   <td class="px-6 py-4">
-                    {item.country}
+                    {item.name}
                   </td>
                   <td class="px-6 py-4">
-                    {item.code}
+                    {item.alpha2Code}
+                  </td>
+                  <td class="px-6 py-4">
+                    {item.callingCodes}
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
                     <a href="#" class="font-medium text-textMain dark:text-blue-500 hover:underline"> <RxUpdate size={25} /> </a>

@@ -5,11 +5,15 @@ const {
 } = mongoose;
 
 const CountrySchema = new Schema({
-    country: {
+    name: {
+        type: String,
+        required: true
+    },  
+    alpha2Code: {
         type: String,
         required: true
     },
-    code: {
+    callingCodes: {
         type: String,
         required: true
     },

@@ -20,16 +20,14 @@ const Faqs = () => {
       fetchData()
     }, [])
 
+  const seeCount = 0;
+    
+
     return (
         <div className=' p-2 m-auto  md:my-3 '>
 
-            <HeadingTitle small title="Sık sorulan sorular" />
-            {
-                data.map((item, i) => (
+            <Faq count={"100"} seeCount={seeCount} />
 
-                    <Faq key={i} title={item.title} description={item.description} />
-                ))
-            }
 
 
         </div>
