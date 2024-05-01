@@ -16,13 +16,19 @@ const createHeader = async (req, res) => {
             }
         );
  
+        const {
+            title,
+            description,
+        } = req.body;
 
         await Header.create({
             image: result.secure_url,
+            title,
+            description,
             image_id: result.public_id,
 
         });
-
+ 
         //resim ekledikten sonra sil
         fs.unlinkSync(req.files.image.tempFilePath)
 
@@ -67,7 +73,10 @@ const updateHeader = async (req, res) => {
             id
         } = req.params;
 
-        console.log(req.body);
+        const {
+            title,
+            description,
+        } = req.body;
 
         const photo = await Header.findById(id);
 
@@ -83,6 +92,8 @@ const updateHeader = async (req, res) => {
 
         const updatedHeader = await Header.findByIdAndUpdate(
             id, {
+                title,
+                description,
                 image,
                 image_id: imagePublicId
 

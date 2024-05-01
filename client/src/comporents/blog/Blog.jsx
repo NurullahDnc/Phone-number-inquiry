@@ -20,17 +20,29 @@ const Blog = () => {
     fetchData()
   }, [])
 
+  const seoData =[
+    {
+      title: "Blog",
+      description: "Blog sayfası açıklaması buraya gelecek.",
+      keywords: "icerikler"
+    }
+  ]
+
   return (
     <div>
 
-      <MetaTags
-        title="Blog"
-        description="Blog sayfası açıklaması buraya gelecek."
-        keywords="blog, yazılar, içerik"
+    {
+      seoData.map((item, i)=>(
+        <MetaTags
+        title={item.title}
+        description={item.description}
+        keywords={item.keywords}
 
       />
+      ))
+    }
 
-      <div className='flex flex-wrap justify-center my-7 mx-5'>
+      <div className='flex flex-wrap justify-center my-7 md:mx-5'>
         {
           data.map((item, i) => (
 

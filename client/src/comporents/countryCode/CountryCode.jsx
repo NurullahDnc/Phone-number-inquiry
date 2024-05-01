@@ -2,6 +2,7 @@
     import axios from 'axios';
     import HeadingTitle from '../general/HeadingTitle';
     import ReactPaginate from 'react-paginate';
+import MetaTags from '../general/MetaTags';
 
     const CountryCode = () => {
         const [searchTerm, setSearchTerm] = useState('');
@@ -39,8 +40,30 @@
         const paginatedCountryCodes = filteredCountryCodes.slice(offset, offset + itemsPerPage);
         const pageCount = Math.ceil(filteredCountryCodes.length / itemsPerPage);
 
+
+        const seoData = [
+            {
+                title: "ulke-alan-kodlari",
+                description: "Blog sayfası açıklaması buraya gelecek.",
+                keywords: "icerikler"
+            }
+        ]
+
         return (
             <div className='w-full m-auto md:w-2/3 flex flex-col p-3'>
+
+{
+                seoData.map((item, i) => (
+                    <MetaTags
+                        key={i}
+                        title={item.title}
+                        description={item.description}
+                        keywords={item.keywords}
+
+                    />
+                ))
+            }
+
                 <div className="pb-4  dark:bg-gray-900">
                     <div className='w-full md:flex justify-between items-center'>
                         <div>

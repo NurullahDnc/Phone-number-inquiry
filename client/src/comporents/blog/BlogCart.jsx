@@ -7,7 +7,7 @@ const BlogCart = ({ id, image, title, description, btnText }) => {
     const router = useNavigate()
 
     return (
-        <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8">
+        <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 md:px-2 mb-8">
             <div className="bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col">
                     <div className="h-48 overflow-hidden rounded-t-lg">
                         <img className="object-cover w-full h-full" src={image} alt="" />
@@ -22,11 +22,11 @@ const BlogCart = ({ id, image, title, description, btnText }) => {
                         </div>
                      <div className="h-32 overflow-hidden rounded-t-lg">
 
-                        <p className="mb-3 text-sm lg:text-base font-normal indent-2 text-gray-700 dark:text-gray-400 flex-grow">
+                        <p className="mb-3 text-sm lg:text-base font-[500] leading-1.5 text-[14.5px] md:text-[15px] indent-3 text-gray-600 dark:text-gray-300">
                             <TextSub text={description} length={150} />
                         </p>
                     </div>
-                    <Button onClick={()=> router(`/blog-detail/${id}/${title}`) } btnText={"Daha Fazla"} />
+                    <Button url={`/blog-detail/${id}/${title}`} btnText={"Daha Fazla"} />
                 </div>
             </div>
         </div>

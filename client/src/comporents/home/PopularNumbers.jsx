@@ -44,26 +44,47 @@ const PopularNumbers = () => {
   });
 
   const sortedNumbers = uniqueNumbers.sort((a, b) => b.commentCount - a.commentCount);
-   
-  const handleClick=(item)=>{
-    router(`/telefon-numarasi/${item}`)
-    
-  }
+
+
 
   return (
-    <div className='w-full justify-between lg:flex my-10'>
+    <div className='w-full justify-between lg:flex my-7 '>
 
-      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg dark:bg-gray-800 rounded-lg'>
-        <HeadingTitle small title="Son Yorum Yapılan Numaralar" />
+      <div className='  w-full lg:w-[49%] mt-7 lg:my-0 md:px-12 py-8 flex-wrap p-3 bg-[#fffffc] dark:bg-gray-800 rounded-2xl'>
+        <div className=' ml-4 md:ml-7'>
 
-        <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4'>
-        {
-            data.slice(0, 12).map((item, i) => (
-              <div key={i} onClick={()=> handleClick(item.number?.number)} className='w-[45%] md:w-[30%] border-[#D9D9D9] border-2 border-spacing-1 py-3 cursor-pointer text-center rounded-md font-semibold  '>
-                <p className='text-[15px] md:text-[18px]   '>
+          <HeadingTitle small title="Son yapilan yorumlar" />
+        </div>
+
+        <div className='flex justify-around  md:justify-center flex-wrap gap-3 py-4'>
+          {
+            data.slice(0, 18).map((item, i) => (
+              <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
+                <a href={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
 
                   {item.number?.number}
-                </p>              
+                </a>
+              </div>
+            ))
+          }
+
+        </div>
+      </div>
+
+      <div className='  w-full lg:w-[49%] mt-7 lg:my-0 md:px-12 py-8 flex-wrap p-3 bg-[#fffffc] dark:bg-gray-800 rounded-2xl'>
+        <div className=' ml-4 md:ml-7'>
+
+          <HeadingTitle small title="En cok yorumyapilan numaralar" />
+        </div>
+
+        <div className='flex justify-around  md:justify-center flex-wrap gap-3 py-4'>
+          {
+            sortedNumbers.slice(0, 18).map((item, i) => (
+              <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
+                <a href={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
+
+                  {item.number?.number}
+                </a>
               </div>
             ))
           }
@@ -73,25 +94,7 @@ const PopularNumbers = () => {
 
 
 
-      <div className='  w-full lg:w-[48%] flex-wrap p-3 shadow-none lg:shadow-lg rounded-lg dark:bg-gray-800 '>
-        <HeadingTitle small title="En Çok Yorum Yapılan Numaralar" />
 
-        <div className='flex justify-around md:justify-between flex-wrap gap-4 py-4 '>
-        {
-            sortedNumbers.slice(0, 12).map((item, i) => (
-              <div key={i} onClick={ ()=> handleClick(item.number?.number)} className='w-[45%] md:w-[30%] border-[#D9D9D9] border-2 border-spacing-1 py-3 cursor-pointer text-center rounded-md font-semibold  '>
-                <p className='text-[15px]  md:text-[18px]   '>
-
-                  {item.number?.number}
-                </p>
-              </div>
-            ))
-          }
-
-        </div>
-
-
-      </div>
 
 
     </div>

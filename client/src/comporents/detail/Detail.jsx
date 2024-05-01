@@ -5,17 +5,25 @@ import Textarea from "../general/Textarea";
 import Select from "../general/Select";
 import Button from "../general/Button";
 import HeadingTitle from "../general/HeadingTitle";
-import Comment from "../general/Comment";
+import Comment from "./Comment";
 import ReactPaginate from "react-paginate";
-import Faq from "../faq/Faq";
-import { useParams } from "react-router-dom";
+import Faq from "../general/Faq";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import MetaTags from "../general/MetaTags";
+import { FaTimes } from "react-icons/fa";
 
 
 
 
 const Detail = () => {
+ 
+ 
+
+
+
+
   const [commentData, setCommentData] = useState([
     { title: "Yorum Sayısı", value: 0 },
     { title: "Belirsiz Yorum ", value: 0 },
@@ -114,9 +122,9 @@ const Detail = () => {
     };
 
     // Eğer filtre ülke seçilmişse, yorum verisine ülke bilgisi eklenir
-       commentData.countryName = phoneNumberInfo?.country == undefined ? "Belirsiz": phoneNumberInfo?.country ;
-      commentData.countryCode = phoneNumberInfo?.countryCode;
-    
+    commentData.countryName = phoneNumberInfo?.country == undefined ? "Belirsiz" : phoneNumberInfo?.country;
+    commentData.countryCode = phoneNumberInfo?.countryCode;
+
 
 
     try {
@@ -165,48 +173,48 @@ const Detail = () => {
     fetchData();
   }, [commentList]);
 
-    useEffect(() => {
-      try {
-        const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
-        console.log("parsedPhoneNumber", parsedPhoneNumber);
-    
-        const countryCode = parsedPhoneNumber.getCountryCode();
-        console.log("countryCode", countryCode);
-    
-        const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
-        console.log("regionCode", regionCode);
+  useEffect(() => {
+    try {
+      const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
+      console.log("parsedPhoneNumber", parsedPhoneNumber);
 
-        
-    
-        if (regionCode === 'AR') {
-          const turkey = countryList.find(country => country.alpha2Code === 'TR');
-    
-          // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
-          setPhoneNumberInfo({
-            countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
-            regionCode: 'TR',
-            country: turkey.name
-          });
+      const countryCode = parsedPhoneNumber.getCountryCode();
+      console.log("countryCode", countryCode);
+
+      const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
+      console.log("regionCode", regionCode);
+
+
+
+      if (regionCode === 'AR') {
+        const turkey = countryList.find(country => country.alpha2Code === 'TR');
+
+        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
+        setPhoneNumberInfo({
+          countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
+          regionCode: 'TR',
+          country: turkey.name
+        });
+      } else {
+        let foundCountry;
+        if (regionCode) {
+          foundCountry = countryList.find(country => country.alpha2Code === regionCode);
         } else {
-          let foundCountry;
-          if (regionCode) {
-            foundCountry = countryList.find(country => country.alpha2Code === regionCode);
-          } else {
-            foundCountry = countryList.find(country => country.callingCodes.includes(countryCode));
-          }
-          
-          // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet          
-          setPhoneNumberInfo({
-            countryCode,
-            regionCode,
-            country: foundCountry ? foundCountry.name : "Belirsiz" // Eğer ülke bulunamazsa "Belirsiz" olarak ayarla
-          });
+          foundCountry = countryList.find(country => country.callingCodes.includes(countryCode));
         }
-      } catch (error) {
-        console.error('Error:', error);
+
+        // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet          
+        setPhoneNumberInfo({
+          countryCode,
+          regionCode,
+          country: foundCountry ? foundCountry.name : "Belirsiz" // Eğer ülke bulunamazsa "Belirsiz" olarak ayarla
+        });
       }
-    }, [phoneNumber, countryList]);
-  
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }, [phoneNumber, countryList]);
+
 
 
   console.log("PhoneNumberInfo", phoneNumberInfo);
@@ -217,7 +225,7 @@ const Detail = () => {
 
   const [itemOffset, setItemOffset] = useState(0);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const endOffset = itemOffset + itemsPerPage;
   const comments = commentList.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(commentList.length / itemsPerPage);
@@ -230,14 +238,36 @@ const Detail = () => {
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
+  const seoData = [
+    {
+      title: selectedPhone,
+      description: "Blog sayfası açıklaması buraya gelecek.",
+      keywords: "icerikler"
+    }
+  ]
+
+  const seeCount = 2;
+
 
   return (
     <div>
+
+      {
+        seoData.map((item, i) => (
+          <MetaTags
+            title={item.title}
+            description={item.description}
+            keywords={item.keywords}
+
+          />
+        ))
+      }
+
       <div className=" text-center py-8 flex justify-center items-center">
         <h1 className="font-bold text-2xl dark:text-gray-400">
           Telefon Numarası:{" "}
         </h1>{" "}
-        <span className="text-2xl px-3 dark:text-gray-100 "> {id} </span>
+        <span className="text-2xl font-semibold px-3 dark:text-gray-100 "> {id} </span>
       </div>
       <div className="w-full md:flex md:px-5  ">
         <div className=" w-full md:w-3/4 px-3 md:mx-5 ">
@@ -252,7 +282,7 @@ const Detail = () => {
           <div className="my-5">
             <HeadingTitle
               title={`${id} Numarası hakkında bizi bilgilendirin`}
-              small
+              xSmall
             />
 
             <form onSubmit={handleSubmit(handleCreate)}>
@@ -260,7 +290,7 @@ const Detail = () => {
                 id="comment"
                 type="text"
                 placeholder={`${id} Numarası İle Yorum Yazınız `}
-                rows={7}
+                rows={9}
                 register={register}
                 errors={errors}
                 required
@@ -285,8 +315,12 @@ const Detail = () => {
             Ads
           </div>
 
-          <div>
 
+          <div className="   bg-gray-100 my-5 rounded-lg ">
+            <div className="pb-3 pl-5">
+              <HeadingTitle xSmall title={`${selectedPhone} Numaranın Yorumları`} />
+
+            </div>
             {comments.length > 0 ? (
               comments.map((item, i) => (
                 <Comment
@@ -295,7 +329,7 @@ const Detail = () => {
                   number={item.number?.number}
                   country={item.number?.countryName}
                   status={item.status}
-                  description={item.comment}
+                  comment={item.comment}
                 />
               ))
             ) : (
@@ -314,10 +348,17 @@ const Detail = () => {
             />
           </div>
 
-          {/* <Faq /> */}
+
+
+   
+
+          <div className="mb-7">
+            <Faq count={"3"} seeCount={seeCount} btn />
+
+          </div>
         </div>
 
-        <div className="shadow-lg flex bg-red-600 rounded-lg justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 ">
+        <div className="shadow-lg mb-7 flex bg-red-600 rounded-lg justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 ">
           Ads
         </div>
       </div>

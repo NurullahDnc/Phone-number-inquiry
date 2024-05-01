@@ -4,10 +4,8 @@ import { FiChevronDown } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
-
-
+import { RiTwitterXLine } from "react-icons/ri";
+import { TiSocialLinkedin } from "react-icons/ti";
 
 
 const Footer = () => {
@@ -50,19 +48,19 @@ const Footer = () => {
       label: "Resources",
       items: [
         {
-          href: 'javascript:void()',
-          name: 'contact'
+          href: '/ulke-alan-kodlari',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
+          href: '/sikca-sorulan-sorular',
           name: 'Support'
         },
         {
-          href: 'javascript:void()',
-          name: 'Documentation'
+          href: '/kisisel-verilerin-korunmasi',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
+          href: '',
           name: 'Pricing'
         },
       ],
@@ -71,19 +69,30 @@ const Footer = () => {
       label: "About",
       items: [
         {
-          href: 'javascript:void()',
-          name: 'Terms'
+          href: '',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
-          name: 'License'
+          href: '',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
+          href: '',
           name: 'Privacy'
         },
         {
-          href: 'javascript:void()',
+          href: '',
+          name: 'Download Truecaller US'
+        },
+        {
+          href: '',
+          name: 'About US'
+        },
+        {
+          href: '',
+          name: 'About US'
+        },  {
+          href: '',
           name: 'About US'
         },
       ]
@@ -92,20 +101,24 @@ const Footer = () => {
       label: "Explore",
       items: [
         {
-          href: 'javascript:void()',
-          name: 'Showcase'
+          href: '',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
-          name: 'Roadmap'
+          href: '',
+          name: 'Road Download Truecaller map'
         },
         {
-          href: 'javascript:void()',
+          href: '',
           name: 'Languages'
         },
         {
-          href: 'javascript:void()',
-          name: 'Blog'
+          href: '',
+          name: 'Download Truecaller '
+        },
+        {
+          href: '',
+          name: 'About US'
         },
       ]
     },
@@ -113,54 +126,92 @@ const Footer = () => {
       label: "Company",
       items: [
         {
-          href: 'javascript:void()',
+          href: '',
           name: 'Partners'
         },
         {
-          href: 'javascript:void()',
-          name: 'Team'
+          href: '',
+          name: 'Download Truecaller'
         },
         {
-          href: 'javascript:void()',
+          href: '',
           name: 'Careers'
+        },
+        {
+          href: '',
+          name: 'About Download Truecaller US'
+        },
+        {
+          href: '',
+          name: 'About US'
+        },
+        {
+          href: '',
+          name: 'Download Truecaller US'
+        },
+        {
+          href: '',
+          name: 'About US'
         },
       ],
     }
   ];
 
-  return (
-    <footer className="  md:pt-2 mb-5 bg-textMain">
-      <div className="  mx-auto ">
-        <div className={` flex-col-reverse max-w-screen-xl  mx-auto flex-1 mt-16 flex space-y-6 justify-between md:flex-row  ${isMobile ? 'flex' : 'md:flex-row'} md:space-y-0`}>
+  const social = [
+    {
+      _id: "234",
+      url: "",
+    }, {
+      _id: "234",
+      url: "",
+    }, {
+      _id: "234",
+      url: "",
+    }, {
+      _id: "234",
+      url: "",
+    }
+  ]
 
-          <div className=' flex-col md:mr-2 w-2/5 md:w-1/6  flex justify-start'> {/* Resimlerin saga yaslanması için 'justify-start' sınıfını ekledik */}
-            <Link >
+  const socialIcons = {
+    FaInstagram,
+    FaFacebookF,
+    RiTwitterXLine,
+    TiSocialLinkedin,
+  };
+
+
+  return (
+    <footer className="  md:pt-2 mb-5  bg-[#0549bf]  ">
+      <div className=" md:pt-7 mx-auto ">
+        <div className={` flex-col-reverse max-w-screen-xl px-1 md:px-0 py-3 md:py-12 mx-auto flex-1  flex space-y-6 justify-between md:flex-row  ${isMobile ? 'flex' : 'md:flex-row'} md:space-y-0`}>
+
+          <div className=' flex-col md:mr-2 w-2/5 sm:w-[30%] lg:w-1/6  flex justify-start'>
+            <Link className='py-1' >
               <img src={"https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"} className='w-full h-full p-1 object-contain ' alt="" />
             </Link>
             <Link >
-              <img src={"https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"} className='w-full h-full p-1 object-contain ' alt="" />
+              <img src={"https://www.truecaller.com/cms/f0e9ab987056bd8450279de7b6ddcf1a.avif"} className='w-full h-full p-1 object-contain ' alt="" />
             </Link>
-            <Link >
-              <img src={"https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"} className='w-full h-full p-1 object-contain ' alt="" />
-            </Link>
+           
           </div>
 
 
           {footerNavs.map((item, idx) => (
-            <div className='w-1/4 pl-3' key={idx}>
+            <div className=' w-full md:w-1/4 pl-2' key={idx}>
               <h4
                 onClick={() => toggleItem(idx)}
-                className="text-gray-200 flex text-2xl font-semibold sm:pb-1 cursor-pointer"
+                className="text-gray-50 flex text-lg md:text-3xl sm:pb-3 cursor-pointer"
               >
                 {item.label}
               </h4>
               {(expandedItem === idx || !isMobile) && ( // Mobil modda tüm öğeleri açık tut
-                <ul className="space-y-4 mt-5 md:ml-0 ml-2 text-gray-300">
+                <ul className="space-y-5 mt-5 w-full md:ml-0 ml-2 ">
                   {item.items.map((el, idx) => (
                     <li key={idx}>
                       <a
                         href={el.href}
-                        className="duration-150 text-[16px] hover:text-gray-400"
+                        className="duration-150 text-[14px] md:text-[16px] w-full text-white hover:text-gray-400"
                       >
                         {el.name}
                       </a>
@@ -172,11 +223,11 @@ const Footer = () => {
           ))}
 
         </div>
-        <div className="mt-10 py-2 md:px-10 text-center text-white  border-t bg-blue-900 border-gray-700 items-center justify-between md:flex">
-          <div className=' w-full md:w-2/12 text-left font-bold text-sm '>
-            © 2024 Logo 
+        <div className=" mt-2 md:mt-10 py-4 sm:px-8 lg:px-20 text-center text-white bg-[#003bad] items-center justify-between md:flex">
+          <div className=' w-full md:w-2/12 text-center md:text-left font-bold text-[13px] '>
+            © 2024 Logo
           </div>
-          <div className=' w-full md:w-10/12  my-3 text-[14px] '>
+          <div className=' w-full md:w-10/12 px-2 tracking-wide text-center md:text-left my-4 md:my-1 text-[12px] '>
             Privacy
             Terms of Service
             Cookies
@@ -189,14 +240,14 @@ const Footer = () => {
           </div>
           <div className=' w-full md:w-2/12 '>
             <div className='flex gap-2 md:justify-end justify-center text-textMain '>
-              <p> <FaInstagram size={30} className='bg-gray-200 p-1.5 rounded-full ' /> </p>
-              <p> <FaFacebookF size={30} className='bg-gray-200 p-1.5 rounded-full ' /> </p>
-              <p> <FaTwitter size={30} className='bg-gray-200 p-1.5 rounded-full ' /> </p>
-              <p> <FaYoutube size={30} className='bg-gray-200 p-1.5 rounded-full ' /> </p>
-
-
+              {Object.entries(socialIcons).map(([key, Icon], i) => (
+                <a href={social[i].url} key={i}>
+                  <Icon size={27} className='bg-gray-100 p-[4px] rounded-full cursor-pointer' />
+                </a>
+              ))}
             </div>
           </div>
+
 
 
         </div>

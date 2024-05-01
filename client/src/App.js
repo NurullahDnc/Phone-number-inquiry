@@ -23,14 +23,36 @@ import LogoAdminPage from './pages/LogoAdminPage';
 import LoginAdminPage from './pages/LoginAdminPage';
 import PasswordResetAdminaPage from './pages/PasswordResetAdminaPage';
 import CountryAdminPage from './pages/CountryAdminPage';
+import MetaTags from './comporents/general/MetaTags';
 
 
 
 
 
 function App() {
+
+  const seoData =[
+    {
+      title: "Logo",
+      description: "Blog sayfası açıklaması buraya gelecek.",
+      keywords: "icerikler"
+    }
+  ]
+
   return (
-    <div className="App">
+    <div className="App my-text">
+
+{
+      seoData.map((item, i)=>(
+        <MetaTags
+        title={item.title}
+        description={item.description}
+        keywords={item.keywords}
+
+      />
+      ))
+    }
+
 
 <ToastContainer
 position="top-right"

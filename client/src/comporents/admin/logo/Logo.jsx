@@ -12,6 +12,7 @@ import Input from '../../general/Input';
 import { useNavigate } from 'react-router-dom';
 import AuthManage from '../AuthManage';
 import HeadingTitle from '../../general/HeadingTitle';
+import TextClip from '../../general/TextClip';
 
 const Logo = () => {
     const [fileSelected, setFileSelected] = useState(false);
@@ -77,6 +78,9 @@ const Logo = () => {
     useEffect(() => {
         if (selectedHeader) {
             setValue('image', selectedHeader.image);
+            setValue('title', selectedHeader.title);
+            setValue('description', selectedHeader.description);
+
 
         }
     }, [selectedHeader, setValue]);
@@ -107,7 +111,8 @@ const Logo = () => {
 
     const updateLogoHeader = async (data) => {
         const formData = new FormData();
-
+        formData.append('title', data.title);
+        formData.append('description', data.description);
         if (imageRef.current && imageRef.current.value) {
             formData.append("image", imageRef.current.value);
         } else if (data.image[0]) {
@@ -141,8 +146,9 @@ const Logo = () => {
 
     const updateElementHeader = (
         <form onSubmit={handleSubmit(updateLogoHeader)} encType="multipart/form-data">
-            {
-                <Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
+            <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
+            <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
+            {<Input id="image" title="Gorsel Ekle" type="file" placeholder="Varsa Eklemek İstedikleriniz" register={register} errors={errors} onChange={() => setFileSelected(true)} />}
             {selectedHeader && selectedHeader.image && !fileSelected && <input ref={imageRef} id="image" title="Gorsel Ekle" type="hidden" value={selectedHeader.image || ""} placeholder="Varsa Eklemek İstedikleriniz" />}
 
             <Button btnText={"Logo Güncelle"} />
@@ -207,6 +213,12 @@ const Logo = () => {
                             <th scope="col" className="px-6 py-3">
                                 İmage
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                Title
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Text
+                            </th>
                             <th scope="col" className="px-6 py-3">
                                 Güncelle
                             </th>
@@ -221,6 +233,12 @@ const Logo = () => {
 
                                 <td className="px-6 py-4">
                                     <img className="h-auto w-24" src={item.image} alt="image description" />
+                                </td>
+                                <td class="px-6 py-4">
+                                    {item.title}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {item.description}
                                 </td>
                                 <td className="px-6 py-4" onClick={() => handleUpdateHeader(item._id)}>
                                     <a href="#" className="font-medium text-textMain dark:text-blue-500 hover:underline"> <RxUpdate size={25} /> </a>

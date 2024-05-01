@@ -14,28 +14,25 @@ const IOSAppIntroduction = () => {
       {
         url: "/url2",
         image: "https://www.truecaller.com/cms/f0e9ab987056bd8450279de7b6ddcf1a.avif"
-      },
-      {
-        url: "/url3",
-        image: "https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"
-      }
+      } 
     ]
   };
 
   return (
-    <div className='w-full h-auto my-12 md:flex '>
+    <div className='w-full h-auto px-3  pt-7 mt-7 bg-gray-100 dark:bg-gray-800 md:flex '>
+
       <div className='md:w-[40%] w-full flex items-end md:pr-10 justify-center md:justify-end'>
         <img src="https://www.truecaller.com/cms/85e363473f8c26721ecd461f79ac3630.avif" className='h-full w-2/3 object-contain' alt="" />
       </div>
 
       <div className='md:w-[60%] my-1 w-full md:px-8 flex flex-col justify-center'>
-        <h2 className='font-bold text-lg uppercase text-textMain'>{data.title1}</h2>
-        <h1 className='text-[36px] md:text-[40px] leading-10 font-bold dark:text-gray-200'>{data.title2}</h1>
+        <h2 className='font-bold py-1 text-lg uppercase text-textMain dark:text-gray-500'>{data.title1}</h2>
+        <h1 className='text-[30px] md:text-[42px] leading-8 md:leading-10 font-bold dark:text-gray-200'>{data.title2}</h1>
         <p className='leading-6 text-[15px] md:text-lg text-gray-800 my-2 dark:text-gray-400 '>{data.description}</p>
 
         <div className='w-full md:flex'>
           {data.images.map((item, index) => (
-            <div key={index} className='w-2/5 md:w-1/5 py-3 h-auto mr-2'>
+            <div key={index} className='w-2/5 sm:w-3/7 lg:w-1/5 py-3 h-auto mr-2'>
               <Link to={item.url}>
                 <img src={item.image} className='w-full h-full' alt="" />
               </Link>

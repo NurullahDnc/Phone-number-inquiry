@@ -6,7 +6,7 @@ import axios from 'axios';
 import { GoArrowRight } from "react-icons/go";
 
 
-const Faq = ({ faqss, count, btn, seeCount  }) => {
+const Faq = ({ faqss, count, btn, seeCount }) => {
   const route = useNavigate();
 
   console.log("seeCount", seeCount);
@@ -34,22 +34,25 @@ const Faq = ({ faqss, count, btn, seeCount  }) => {
   return (
     <div className='w-full block md:flex  '>
 
-      <div className='bg-[#fffffc] px-2 pb-5 md:px-5 w-3/3 md:w-2/3 md:mr-4 dark:bg-gray-800 rounded-lg'>
-        <HeadingTitle small title={"Sık Sorulan Sorular"} />
+      <div className='bg-[#fffffc] px-2  mb-7 md:mb-0 md:px-10 py-4 md:py-9 w-3/3 md:w-2/3 md:mr-4 dark:bg-gray-800 rounded-lg'>
+        <div className=' pl-3 '>
+          <HeadingTitle small title={"Sık Sorulan Sorular"} />
+
+        </div>
         {data?.slice(0, count).map((faq, index) => (
           <div key={index} className='rounded-lg' data-accordion="open">
             <h2 className=' ' id={`accordion-open-heading-${index}`}>
               <button
                 type="button"
-                className="flex items-center justify-between w-full py-5 md:py-5 px-1 font-medium text-left text-gray-600 rounded-t-xl dark:focus:ring-gray-800 dark:text-gray-400  gap-3"
+                className="flex items-center justify-between w-full py-5 md:py-5 md:px-1 font-medium text-left text-gray-600 rounded-t-xl dark:focus:ring-gray-800 dark:text-gray-400  gap-3"
                 data-accordion-target={`#accordion-open-body-${index}`}
                 aria-expanded={openIndex === index}
                 aria-controls={`accordion-open-body-${index}`}
                 onClick={() => toggleAccordion(index)}
               >
-                <span className="flex h-6 text-sm font-semibold dark:text-gray-400 text-[#4f4f4e] transition  delay-20 md:text-[16px] ">
+                <span className="flex text-[14px] h-auto font-semibold dark:text-gray-400 text-[#4f4f4e] transition  delay-20 sm:text-[14px] lg:text-[16px] ">
                   <p
-                    className={`${openIndex === index 
+                    className={`${openIndex === index
                       ? "w-3 md:w-4 h-2 md:h-3 mx-1"
                       : "w-5 sm:w-4 md:w-6 h-3 sm:h-3 md:h-4"
                       } mr-3 m-auto  `}
@@ -66,7 +69,7 @@ const Faq = ({ faqss, count, btn, seeCount  }) => {
                     </svg>
                   </p>
 
-                  <h1 className=' pl-2 text-gray-800 font-semibold md:pl-5'>
+                  <h1 className=' pl-2 sm:pl-1 text-gray-800 dark:text-gray-100 font-semibold lg:pl-5'>
 
                     {faq.title}?
                   </h1>
@@ -77,22 +80,22 @@ const Faq = ({ faqss, count, btn, seeCount  }) => {
             <div
               id={`accordion-open-body-${index}`}
               className={`${openIndex === index ? 'block' : 'hidden'
-                } md:px-4 pl-2  md:ml-8 border-gray-200 dark:border-gray-700  `}
+                } lg::px-4 pl-2  sm:ml-4 lg:ml-8 border-gray-200 dark:border-gray-700  `}
               aria-labelledby={`accordion-open-heading-${index}`}
             >
-              <div className="mb-2 leading-1.5 text-[16px] md:text-[15px] indent-3 text-[#656564] dark:text-gray-500">
+              <div className=" md:py-4 lg:py-0 leading-1.5 text-[14px] md:text-[15px] indent-3 text-[#656564] dark:text-gray-300">
                 {faq.description}
               </div>
               {
-  btn ? (
-    <Link to={"/sikca-sorulan-sorular"}>
-      <p style={{ borderBottomWidth: "2px" }} className='text-base pt-2 flex  w-full lg:w-1/2 items-center gap-2 text-gray-800 font-bold border-b border-gray-800'>
-        Butun sıkça sorulan soruları ve yanıtlarını okuyun <GoArrowRight size={25} />
-      </p>
-    </Link>
-  ) : ""
-}
- 
+                btn ? (
+                  <a href={"/sikca-sorulan-sorular"}>
+                    <p style={{ borderBottomWidth: "2.3px" }} className=' pt-5   leading-5 text-[14px] md:text-base w-full lg:w-auto inline-block items-center gap-2 text-gray-800 font-bold border-b dark:border-gray-300 dark:text-gray-300 border-gray-800'>
+                      Butun sıkça sorulan soruları ve yanıtlarını okuyun
+                    </p>
+                  </a>
+                ) : ""
+              }
+
 
 
             </div>

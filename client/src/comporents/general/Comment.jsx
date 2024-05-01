@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Maps from '../detail/Maps';
 import TextClip from '../general/TextClip';
 
-const Comment = ({ id, number, numberId, del, country, status, description, onClick, length }) => {
+const Comment = ({ id, number, numberId, del, country, status, description, onClick, minLength, maxLength }) => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useNavigate();
 
@@ -19,16 +19,16 @@ const Comment = ({ id, number, numberId, del, country, status, description, onCl
 
 
   return (
-    <a onClick={()=> router(`/telefon-numarasi/${number}`) } className='cursor-pointer' title={`Yorumlanan telefon numarası ${number}`}>
+    <a href={`/telefon-numarasi/${number}`}  className='cursor-pointer' title={`Yorumlanan telefon numarası ${number}`}>
       <div 
-        className={`comment flex w-full my-5 relative bg-gray-200 shadow-lg dark:bg-gray-300 rounded-lg h-auto `}
+        className={`comment flex w-full mb-5 mt-1 relative  dark:bg-gray-400  rounded-lg h-auto `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div className={`w-[16px] h-full absolute left-0 top-0 rounded-lg ${status === "dangerous" ? " bg-[#ff0100]" : status === "trustworthy" ? "bg-[#316f34]" : status === "uncertain" ? " bg-[#7b7b7b]" : ""}`}></div>
-        <div className='flex-1 m-auto ml-7'>
-          <h1 className='font-semibold text-textMain'>{number}</h1>
-          <p className='text-[13px] md:text-[14px] py-1'>{length?.length > 0 ? <TextClip length={length} text={description} /> : description}</p>
+        <div className='flex-1 m-auto ml-7 '>
+          <h1 className='font-bold text-textMain pt-1 font-poppins '>{number}</h1>
+          <p className='text-[13px] md:text-[14px] font-sans py-1 font-[400] text-[#000000] '>{minLength?.length > 0 ? <TextClip minLength={minLength} maxLength={maxLength} text={description} /> : description}</p>
         </div>
         <div className={`w-1/4 md:flex hidden justify-center items-center h-full m-auto`}>
           <button className={`commentBtn w-3/4 py-2 text-[16px] font-semibold rounded-[20px] transition  delay-20 ${  status === "dangerous" ? isHovered? "bg-[#ff0100] text-white ": "bg-[#ffb6b6]"  : status === "trustworthy" ?  isHovered? "bg-[#316f34] text-white ": "bg-[#bcf5be]"  : status === "uncertain" ? isHovered? "bg-[#7b7b7b] text-white ": "bg-[#d8d8d8]"  :""} `}>

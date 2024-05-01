@@ -1,10 +1,17 @@
-const TextClip = ({text , length}) => {
-  
-    //text uzunlıgı 55 az ise text return et
-    if(text?.length < 25 ) return text;
 
-    //text 0, 55 arasında ise sonuna ... koy return et
-    return text?.substring(0, length) +"..."
-}
 
-export default TextClip
+
+const TextClip = ({ text, minLength, maxLength }) => {
+    // Cihaz tipine göre uygun uzunluğu belirleyin
+    const lengthToShow = window.innerWidth < 768 ? minLength : maxLength;
+
+    // Metin minimum uzunluktan kısaysa tam metni döndür
+    if (text && text.length <= lengthToShow) {
+        return text;
+    }
+
+    // Metin maksimum uzunluktan uzunsa, kırpın ve üç nokta ekleyin
+    return text ? text.substring(0, lengthToShow) + "..." : "";
+};
+
+export default TextClip;

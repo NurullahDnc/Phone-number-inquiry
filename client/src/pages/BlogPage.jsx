@@ -1,11 +1,14 @@
 import React from 'react'
 import Blog from '../comporents/blog/Blog'
+import PageContainers from '../containers/PageContainers'
 
 const BlogPage = () => {
   return (
-    <div>
+    <PageContainers>
+      <div>
       <Blog />
     </div>
+    </PageContainers>
   )
 }
 

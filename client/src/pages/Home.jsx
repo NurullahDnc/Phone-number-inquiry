@@ -7,12 +7,14 @@ import IOSAppIntroduction from '../comporents/home/IOSAppIntroduction';
 
 const Home = () => {
     return (
+     <>
       <PageContainers>
             <Comments />
             <PopularNumbers />
             <Faqs />
-            <IOSAppIntroduction />
       </PageContainers>
+            <IOSAppIntroduction />
+     </>
     );
 };
 
