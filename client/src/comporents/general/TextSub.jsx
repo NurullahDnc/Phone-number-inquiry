@@ -2,11 +2,11 @@ import React from 'react'
 
 const TextSub = ({text, length}) => {
     return (
-        <div>
+        <span>
             {text.length > length ?
                 `${text.substring(0, length)}...` : text
             }
-        </div>
+        </span>
     )
 }
 

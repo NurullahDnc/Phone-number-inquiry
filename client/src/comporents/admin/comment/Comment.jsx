@@ -60,7 +60,7 @@ const Comment = ({ initialData, title }) => {
 
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <p className='text-lg py-2 '>{initialData && title}</p>
+        <p className='text-lg py-2 '>{initialData? title: "Yorumlar" }</p>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -102,11 +102,11 @@ const Comment = ({ initialData, title }) => {
                   <td class="px-6 py-4">
                     {item.number?.countryName}
                   </td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4 min-w-[170px] lg:w-auto">
                     {item.number?.number}
                   </td>
-                  <td class="px-6 py-4">
-                    <TextClip text={item.comment} />
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
+                    {item.comment} 
                   </td>
                   <td class={`px-6 py-4 ${item.status === "uncertain" ? "text-gray-500" : item.status === "trustworthy" ? "text-green-700" : item.status === "dangerous" ? "text-red-700" : ""} `}>
                     {item.status === "uncertain" ? "Belirsiz" : item.status === "trustworthy" ? "Güvenilir" : item.status === "dangerous" ? "Tehlikeli" : ""}
@@ -129,10 +129,10 @@ const Comment = ({ initialData, title }) => {
                   <td class="px-6 py-4">
                     {item.number?.countryName}
                   </td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4 min-w-[170px] lg:w-auto">
                     {item.number?.number}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 w-[500px] py-4">
                     {item.comment}
                   </td>
                   <td class={`px-6 py-4 ${item.status === "uncertain" ? "text-gray-500" : item.status === "trustworthy" ? "text-green-700" : item.status === "dangerous" ? "text-red-700" : ""} `}>

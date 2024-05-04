@@ -13,16 +13,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import MetaTags from "../general/MetaTags";
 import { FaTimes } from "react-icons/fa";
-
-
+import Breadcrumbs from "../general/Breadcrumbs";
 
 
 const Detail = () => {
- 
- 
-
-
-
 
   const [commentData, setCommentData] = useState([
     { title: "Yorum Sayısı", value: 0 },
@@ -38,7 +32,6 @@ const Detail = () => {
   const { register, handleSubmit, setValue, formState: { errors }, } = useForm();
   const { id } = useParams();
   const [countryList, setCountryList] = useState();
-  // const [filterCountry, setFilterCountry] = useState();
 
   const { PhoneNumberUtil } = require('google-libphonenumber');
   const phoneNumberUtil = PhoneNumberUtil.getInstance();
@@ -53,23 +46,19 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/number`);
-        //istenilen numarayı bul
+        //istenilen telefon numarayı bul
         const findNumber = res.data.data.find((item) => item.number == id);
         setPhoneNumber(findNumber)
 
-
-        // Eğer findNumber.number varsa, onu state at, yoksa params.id'yi at
-        // setSelectedPhone(findNumber?.number ?? id);
+        //telefon numarası varsa telefon numarasını  gonder yoksa id gonder
         setSelectedPhone(findNumber && findNumber.number ? findNumber.number : id);
 
-
-
-        if (findNumber) {
-          const comments = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${findNumber._id}`);
-          setCommentList(comments.data.data);
-        } else {
-          // console.error("Numara bulunamadı veya tanımsız");
-        }
+        // if (findNumber) {
+        //   const comments = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${findNumber._id}`);
+        //   setCommentList(comments.data.data);
+        // } else {
+        //   // console.error("Numara bulunamadı veya tanımsız");
+        // }
       } catch (error) {
         toast.error(error.response.data.error);
       }
@@ -83,12 +72,10 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!selectedPhone) {
-          return; // selectedPhone null ise, işlemi durdur
-        }
 
         if (phoneNumber) {
-          const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
+          //telefon numarasına gore yorumları getir
+          const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${id}`);
           setCommentList(res.data.data)
 
           //yorum bilgilerini state atıyoruz, yorum adet alıyoruz, uste de data state yorumlaı atıyoruz
@@ -103,14 +90,13 @@ const Detail = () => {
 
         }
 
-
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  }, [selectedPhone]);
+  }, [selectedPhone, commentList]);
 
 
   const handleCreate = async (data) => {
@@ -125,8 +111,6 @@ const Detail = () => {
     commentData.countryName = phoneNumberInfo?.country == undefined ? "Belirsiz" : phoneNumberInfo?.country;
     commentData.countryCode = phoneNumberInfo?.countryCode;
 
-
-
     try {
       // Yorum verisi API'ye gönderilir
       const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/comment/create`, commentData);
@@ -136,11 +120,13 @@ const Detail = () => {
 
       // Güncel veri yeniden getirilir
       try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${phoneNumber._id}`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/comment/${id}`);
         setCommentList(res.data.data)
+
       } catch (error) {
         console.error(error);
       }
+
     } catch (error) {
       toast.error(error.response.data.error);
       console.error(error);
@@ -176,19 +162,11 @@ const Detail = () => {
   useEffect(() => {
     try {
       const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
-      console.log("parsedPhoneNumber", parsedPhoneNumber);
-
       const countryCode = parsedPhoneNumber.getCountryCode();
-      console.log("countryCode", countryCode);
-
       const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
-      console.log("regionCode", regionCode);
-
-
 
       if (regionCode === 'AR') {
         const turkey = countryList.find(country => country.alpha2Code === 'TR');
-
         // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
         setPhoneNumberInfo({
           countryCode: turkey.callingCodes[0], // Türkiye'nin ülke kodu
@@ -217,7 +195,6 @@ const Detail = () => {
 
 
 
-  console.log("PhoneNumberInfo", phoneNumberInfo);
 
 
 
@@ -238,24 +215,41 @@ const Detail = () => {
 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
-  const seoData = [
-    {
-      title: selectedPhone,
-      description: "Blog sayfası açıklaması buraya gelecek.",
-      keywords: "icerikler"
-    }
-  ]
 
   const seeCount = 2;
 
+  const dataBreadcrumbs = [
+    { page1: 'Ana Sayfa', url1: '/', page2: "Numaralar", url2: '/telefon-numarasi/:id', page3: id, url3: '/', },
+
+  ];
+
+  const num = { "num": id }
+
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/seo/detail`);
+        const mergedData = [...res.data.data, num];
+
+        setData(mergedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
 
       {
-        seoData.map((item, i) => (
+        data.map((item, i) => (
           <MetaTags
-            title={item.title}
+          key={i}
+            title={item.num}
             description={item.description}
             keywords={item.keywords}
 
@@ -264,16 +258,28 @@ const Detail = () => {
       }
 
       <div className=" text-center py-8 flex justify-center items-center">
+
         <h1 className="font-bold text-2xl dark:text-gray-400">
           Telefon Numarası:{" "}
         </h1>{" "}
         <span className="text-2xl font-semibold px-3 dark:text-gray-100 "> {id} </span>
       </div>
       <div className="w-full md:flex md:px-5  ">
-        <div className=" w-full md:w-3/4 px-3 md:mx-5 ">
-          {commentData.map((item, i) => (
-            <Table key={i} title={item.title} text={item.value} />
-          ))}
+        <div className="shadow-lg mb-7 flex bg-red-600 rounded-lg justify-center items-center w-full md:w-1/5 h-[250px] md:h-[500px] dark:bg-gray-800 ">
+          Ads
+        </div>
+
+        <div className=" w-full md:w-3/4 px-3  ">
+          <div className="bg-white px-5 md:px-12 py-5 ">
+            {dataBreadcrumbs.map((item, index) => (
+              <Breadcrumbs key={index} page1={item.page1} url1={item.url1} page2={item.page2} ur2l={item.url2} page3={item.page3} ur3={item.url3} />
+            ))}
+
+            <HeadingTitle light title={`${id} Telefon Numarasının İstatislikleri`} />
+            {commentData.map((item, i) => (
+              <Table key={i} title={item.title} text={item.value} />
+            ))}
+          </div>
 
           {/* <p className="py-3 indent-3 text-lg dark:text-gray-300 ">
             05425972258 Veritabanımızda bu telefon numarasına ait 2 yorum bulunmaktadır. Telefon numarasının veritabanımızdaki yorumlara göre ortalama puanı Belirsiz'dir. 2 Kullanıcı bu telefon numarasına 1 Tehlikeli, 1 Güvenli, puana sahip yorum yapmıştır.
@@ -282,14 +288,14 @@ const Detail = () => {
           <div className="my-5">
             <HeadingTitle
               title={`${id} Numarası hakkında bizi bilgilendirin`}
-              xSmall
+              light
             />
 
-            <form onSubmit={handleSubmit(handleCreate)}>
+            <form className="bg-gray-50 rounded-md p-3 md:p-5" onSubmit={handleSubmit(handleCreate)}>
               <Textarea
                 id="comment"
                 type="text"
-                placeholder={`${id} Numarası İle Yorum Yazınız `}
+                placeholder={`${id} numarasi ile ilgili yorum yazın... `}
                 rows={9}
                 register={register}
                 errors={errors}
@@ -304,6 +310,7 @@ const Detail = () => {
                   errors={errors}
                   required
                 />
+
 
                 <Button btnText={"Yorum Yap"} />
 
@@ -347,10 +354,6 @@ const Detail = () => {
               renderOnZeroPageCount={null}
             />
           </div>
-
-
-
-   
 
           <div className="mb-7">
             <Faq count={"3"} seeCount={seeCount} btn />

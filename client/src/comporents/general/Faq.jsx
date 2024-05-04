@@ -9,7 +9,6 @@ import { GoArrowRight } from "react-icons/go";
 const Faq = ({ faqss, count, btn, seeCount }) => {
   const route = useNavigate();
 
-  console.log("seeCount", seeCount);
 
   const [openIndex, setOpenIndex] = useState(seeCount);
   const toggleAccordion = (index) => {
@@ -32,9 +31,9 @@ const Faq = ({ faqss, count, btn, seeCount }) => {
 
 
   return (
-    <div className='w-full block md:flex  '>
+    <div className='w-full block lg:flex  '>
 
-      <div className='bg-[#fffffc] px-2  mb-7 md:mb-0 md:px-10 py-4 md:py-9 w-3/3 md:w-2/3 md:mr-4 dark:bg-gray-800 rounded-lg'>
+      <div className='bg-[#fffffc] px-2  mb-7 md:mb-0 md:px-10 py-4 md:py-9 w-3/3 lg:w-2/3 lg:mr-4 dark:bg-gray-800 rounded-lg'>
         <div className=' pl-3 '>
           <HeadingTitle small title={"Sık Sorulan Sorular"} />
 
@@ -50,7 +49,7 @@ const Faq = ({ faqss, count, btn, seeCount }) => {
                 aria-controls={`accordion-open-body-${index}`}
                 onClick={() => toggleAccordion(index)}
               >
-                <span className="flex text-[14px] h-auto font-semibold dark:text-gray-400 text-[#4f4f4e] transition  delay-20 sm:text-[14px] lg:text-[16px] ">
+                <span className="flex text-[16px] h-auto font-semibold dark:text-gray-400 text-[#4f4f4e] transition  delay-20 sm:text-[14px] lg:text-[15px] ">
                   <p
                     className={`${openIndex === index
                       ? "w-3 md:w-4 h-2 md:h-3 mx-1"
@@ -86,7 +85,16 @@ const Faq = ({ faqss, count, btn, seeCount }) => {
               <div className=" md:py-4 lg:py-0 leading-1.5 text-[14px] md:text-[15px] indent-3 text-[#656564] dark:text-gray-300">
                 {faq.description}
               </div>
-              {
+           
+
+
+
+            </div>
+            
+          </div>
+        ))}
+        <div className='pl-3 sm:pl-7 lg:pl-10 '>
+        {
                 btn ? (
                   <a href={"/sikca-sorulan-sorular"}>
                     <p style={{ borderBottomWidth: "2.3px" }} className=' pt-5   leading-5 text-[14px] md:text-base w-full lg:w-auto inline-block items-center gap-2 text-gray-800 font-bold border-b dark:border-gray-300 dark:text-gray-300 border-gray-800'>
@@ -95,14 +103,9 @@ const Faq = ({ faqss, count, btn, seeCount }) => {
                   </a>
                 ) : ""
               }
-
-
-
-            </div>
-          </div>
-        ))}
+        </div>
       </div>
-      <div className=' w-3/3  md:w-1/3' >
+      <div className=' w-3/3  lg:w-1/3' >
         <img src="https://www.businessworldglobal.com/wp-content/uploads/2021/02/BMW-M5_CS___n.jpg" alt='Image' className='object-cover md:mt-0 mt-2 rounded-md  w-full h-full' />
 
       </div>

@@ -15,6 +15,14 @@ const LogoSchema = new Schema({
         type: String,
         required: true,
      },
+     description: {
+        type: String,
+        required: true,
+     },
+     keywords: {
+        type: String,
+        required: true,
+     },
     image_id: {
         type: String,
       },

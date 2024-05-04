@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MetaTags from '../general/MetaTags';
+import Breadcrumbs from '../general/Breadcrumbs';
 
 const Detail = () => {
     const { id } = useParams();
@@ -25,22 +26,36 @@ const Detail = () => {
         fetchData()
     }, [])
 
-    const seoData = [
-        {
-            title: title,
-            description: "Blog sayfası açıklaması buraya gelecek.",
-            keywords: "icerikler"
-        }
-    ]
 
+    const [seoData, setSeoData] = useState([]);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios(`${process.env.REACT_APP_BASE_URL}/seo/detail`);
+                setSeoData(res.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const page = [
+        { page1: 'Ana Sayfa', url1: '/', page2: "Blog", url2: '/blog', page3: title, },
+
+    ];
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
-
+            {page.map((item, index) => (
+                <Breadcrumbs key={index} page1={item.page1} url1={item.url1} page2={item.page2} url2={item.url2} page3={item.page3} />
+            ))}
             {
                 seoData.map((item, i) => (
                     <MetaTags
                         key={i}
-                        title={item.title}
+                        title={title}
                         description={item.description}
                         keywords={item.keywords}
 

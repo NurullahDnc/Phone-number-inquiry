@@ -77,7 +77,6 @@ const Blog = ({ initialData, title }) => {
 
     const { title, description, image } = data;
 
-    console.log(image);
 
     //guncellenmis verilier formData at 
     const formData = new FormData();
@@ -172,7 +171,7 @@ const Blog = ({ initialData, title }) => {
       <AuthManage />
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <p className='text-lg py-2 '>{initialData && title}</p>
+        <p className='text-lg py-2 '>{initialData? title : "Blog" }</p>
 
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -181,13 +180,13 @@ const Blog = ({ initialData, title }) => {
                 id
               </th>
               <th scope="col" class="px-6 py-3">
-                image
+                resim
               </th>
               <th scope="col" class="px-6 py-3">
-                Title
+                başlık
               </th>
               <th scope="col" class="px-6 py-3">
-                Text
+                acıklama
               </th>
               <th scope="col" class="px-6 py-3">
                 Güncelle
@@ -212,10 +211,10 @@ const Blog = ({ initialData, title }) => {
                     <img class="h-auto w-24" src={item.image} alt="image description" />
 
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[250px] lg:w-auto">
                     {item.title}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     <TextClip text={item.description} />
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
@@ -238,10 +237,10 @@ const Blog = ({ initialData, title }) => {
                     <img class="h-auto w-24" src={item.image} alt="image description" />
                     {/* {item.image} */}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[250px] lg:w-auto">
                     {item.title}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.description}
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
@@ -286,7 +285,7 @@ const Blog = ({ initialData, title }) => {
         isOpen={isUpdateModalOpen}
         title="Blog Güncelle"
         bodyElement={updateElement}
-        onClose={() => { setFileSelected(false); setIsUpdateModalOpen(!isUpdateModalOpen); }}
+        onClose={() => { setFileSelected(false); setIsUpdateModalOpen(false); }}
         btnNull
         modals
 

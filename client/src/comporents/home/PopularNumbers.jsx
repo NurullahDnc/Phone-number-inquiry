@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import HeadingTitle from '../general/HeadingTitle'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const PopularNumbers = () => {
@@ -45,8 +45,7 @@ const PopularNumbers = () => {
 
   const sortedNumbers = uniqueNumbers.sort((a, b) => b.commentCount - a.commentCount);
 
-
-
+ 
   return (
     <div className='w-full justify-between lg:flex my-7 '>
 
@@ -58,15 +57,19 @@ const PopularNumbers = () => {
 
         <div className='flex justify-around  md:justify-center flex-wrap gap-3 py-4'>
           {
-            data.slice(0, 18).map((item, i) => (
-              <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
-                <a href={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
+            data?.slice(0, 18).map((item, i) => (
+
+              item.number ? <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
+
+                
+                <Link to={`/telefon-numarasi/${item.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
 
                   {item.number?.number}
-                </a>
-              </div>
+                </Link>
+              </div> : null
+
             ))
-          }
+          } 
 
         </div>
       </div>
@@ -81,10 +84,10 @@ const PopularNumbers = () => {
           {
             sortedNumbers.slice(0, 18).map((item, i) => (
               <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
-                <a href={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
+                <Link to={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
 
                   {item.number?.number}
-                </a>
+                </Link>
               </div>
             ))
           }

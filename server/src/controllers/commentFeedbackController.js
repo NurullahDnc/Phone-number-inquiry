@@ -32,7 +32,7 @@ const createCommentFeedback = async (req, res) => {
 
         res.status(201).json({
             succeded: true,
-            message: "başarıyla oluşturuldu."
+            message: "Talebiniz oluşturuldu."
         })
 
     } catch (error) {

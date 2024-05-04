@@ -81,7 +81,7 @@ const PrivacyPolicy = () => {
 
     } catch (error) {
       toast.error(error.response.data.error);
-      console.log(Error);
+      console.log(error);
     }
   }
   useEffect(() => {
@@ -116,12 +116,12 @@ const PrivacyPolicy = () => {
       <AuthManage />
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <p className='text-lg py-2 '>Gizlili Politikası</p>
+
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="px-6 py-3">
-                id
-              </th>
+           
               <th scope="col" class="px-6 py-3">
                 Gizlilik Bildirimi
               </th>
@@ -145,19 +145,17 @@ const PrivacyPolicy = () => {
             {
               datas.map((item) => (
                 <tr key={item._id} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {item._id}
-                  </td>
-                  <td class="px-6 py-4">
+                 
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.privacyStatement}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.dataAccess}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.dataProtection}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.contact}
                   </td>
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>

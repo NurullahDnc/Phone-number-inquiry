@@ -14,7 +14,7 @@ import { FaComment } from "react-icons/fa";
 import { IoCall } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import AuthManage from '../AuthManage';
-
+import { GiModernCity } from "react-icons/gi";
 
 
 const Navbar = () => {
@@ -57,16 +57,18 @@ const Navbar = () => {
             title: "Sıkça Sorulan Sorular",
             url: "/admin/faq",
             icon: FaQuestionCircle
-        }, {
-            id: "8",
-            title: "Bilgi",
-            url: "/admin/information",
-            icon: FaInfoCircle
-        }, {
+        },
+        //  {
+        //     id: "8",
+        //     title: "Bilgi",
+        //     url: "/admin/information",
+        //     icon: FaInfoCircle
+        // }, 
+        {
             id: "8",
             title: "Ülke",
             url: "/admin/country",
-            icon: FaInfoCircle
+            icon: GiModernCity
         }
 
     ]
@@ -95,17 +97,17 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div class="py-4 ml-2 overflow-y-auto">
-                <ul class="space-y-2 font-medium">
+            <div className="py-4 ml-2 overflow-y-auto">
+                <ul className="space-y-2 font-medium">
 
                     {
                         data.map((item) => (
                             <li key={item.id}>
-                                <Link to={item.url} class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                                <Link to={item.url} onClick={()=> setIsOpen(!isOpen)  }  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <svg className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                         {item.icon && <item.icon size={22} />}
                                     </svg>
-                                    <span class="ms-3 text-[17px] "> {item.title} </span>
+                                    <span className="ms-3 text-[16px] "> {item.title} </span>
                                 </Link>
                             </li>
                         ))
@@ -121,14 +123,11 @@ const Navbar = () => {
                         </button>
 
                         <ul id="dropdown-example" className={`py-1 ${isOpenItem ? "" : "hidden"}`}>
-                            <Link to={"/admin/logo"}>
-                                <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Logo-Header Dunzele</p>
+                            <Link to={"/admin/logo"} onClick={()=> setIsOpen(!isOpen)  } >
+                                <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Duzenle </p>
                             </Link>
-
-                            <Link to={"/admin/logo"}>
-                                <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Seo Ayarı</p>
-                            </Link>
-                            <Link to={"/admin/password"}>
+ 
+                            <Link to={"/admin/password"} onClick={()=> setIsOpen(!isOpen)  }>
                                 <p className="flex items-center w-full p-1 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sifre Yenile</p>
                             </Link>
                             <Link onClick={handleLogout} >
@@ -139,11 +138,11 @@ const Navbar = () => {
                     </li>
 
                     <li >
-                        <Link to={"/"} class="flex items-center   p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                            <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                        <Link to={"/"} className="flex items-center   p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <svg className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                 <FaArrowLeft size={22} />
                             </svg>
-                            <span class="ms-3 text-[17px] "> Siteye Git </span>
+                            <span className="ms-3 text-[17px] "> Siteye Git </span>
                         </Link>
                     </li>
 

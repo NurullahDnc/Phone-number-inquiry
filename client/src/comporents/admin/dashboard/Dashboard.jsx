@@ -9,6 +9,7 @@ import Comment from '../comment/Comment';
 import Feedback from '../feedback/Feedback';
 import Blog from '../blog/Blog';
 import AuthManage from '../AuthManage';
+import axios from 'axios';
 
 
 
@@ -20,14 +21,39 @@ const Dashboard = () => {
   const feedbackStatus = "true"
   const blogStatus = "true"
 
+  const [number, setNumber] = useState([]);
+  const [comment, setComment] = useState([]);
+  const [feedback, setFeetback] = useState([]);
+  const [blog, setBlog] = useState([]);
+
+
   
 
+  //number get
+  useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const number = await axios.get(`${process.env.REACT_APP_BASE_URL}/number`);
+              setNumber(number.data.data.length);
+              const comment = await axios(`${process.env.REACT_APP_BASE_URL}/comment`);
+              setComment(comment.data.data.length);
+              const feedback = await axios(`${process.env.REACT_APP_BASE_URL}/commentFeedback`);
+              setFeetback(feedback.data.data.length);
+              const blog = await axios(`${process.env.REACT_APP_BASE_URL}/blog`);
+              setBlog(blog.data.data.length);
+
+            } catch (error) {
+              console.log(error);
+          }
+      }
+      fetchData();
+  }, []);
 
   const countData = [
     {
       _id: 1,
       title: "Numaralar",
-      count: "150",
+      count: number,
       icon: IoCall,
       bgColor: "yellow-500",
       url: "/admin/number"
@@ -36,7 +62,7 @@ const Dashboard = () => {
     {
       _id: 2,
       title: "Yorumlar",
-      count: "150",
+      count: comment,
       icon: FaComment,
       bgColor: "green-500",
       url: "/admin/number"
@@ -44,7 +70,7 @@ const Dashboard = () => {
     }, {
       _id: 3,
       title: "Geri Bildirim",
-      count: "150",
+      count: feedback,
       icon: MdFeedback,
       bgColor: "blue-500",
       url: "/admin/feedback",
@@ -52,7 +78,7 @@ const Dashboard = () => {
     }, {
       _id: 4,
       title: "Blog",
-      count: "150",
+      count: blog,
       icon: IoNewspaper,
       bgColor: "red-500",
       url: "/admin/blog"

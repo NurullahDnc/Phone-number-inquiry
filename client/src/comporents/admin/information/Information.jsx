@@ -36,7 +36,7 @@ const Information = () => {
     fetchData()
   }, [])
 
-
+//! iptallllllllllll 
   //*-------------------- react-paginate (sayfa sınırlandırma)
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -76,8 +76,6 @@ const Information = () => {
 
   const updateInformation = async (data) => {
     const { title, description, image } = data;
-
-    console.log("img", image);
 
     const formData = new FormData();
     formData.append('title', title);

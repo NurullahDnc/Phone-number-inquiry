@@ -24,6 +24,9 @@ import LoginAdminPage from './pages/LoginAdminPage';
 import PasswordResetAdminaPage from './pages/PasswordResetAdminaPage';
 import CountryAdminPage from './pages/CountryAdminPage';
 import MetaTags from './comporents/general/MetaTags';
+import { IoLogoApple } from "react-icons/io";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 
@@ -31,23 +34,31 @@ import MetaTags from './comporents/general/MetaTags';
 
 function App() {
 
-  const seoData =[
-    {
-      title: "Logo",
-      description: "Blog sayfası açıklaması buraya gelecek.",
-      keywords: "icerikler"
-    }
-  ]
+  const [logo, setLogo] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const res = await axios(`${process.env.REACT_APP_BASE_URL}/logo`);
+            setLogo(res.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchData();
+}, []);
 
   return (
     <div className="App my-text">
 
-{
-      seoData.map((item, i)=>(
+  {
+      logo.map((item, i)=>(
         <MetaTags
-        title={item.title}
+        key={i}
+        title={item.logo}
         description={item.description}
         keywords={item.keywords}
+        faviconUrl={item.image}
 
       />
       ))

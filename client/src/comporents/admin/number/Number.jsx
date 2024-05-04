@@ -4,6 +4,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-toastify';
 import AuthManage from '../AuthManage';
+import HeadingTitle from '../../general/HeadingTitle';
 
 const Number = ({ initialData, title }) => {
     const [data, setData] = useState([]);
@@ -48,10 +49,10 @@ const Number = ({ initialData, title }) => {
     return (
         <div>
       <AuthManage />
-
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
-                <p className='text-lg py-2 '>{initialData && title}</p>
+                <p className='text-lg py-2 '>{initialData? title: "Numaralar"}</p>
+
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -86,7 +87,7 @@ const Number = ({ initialData, title }) => {
                                     <td className="px-6 py-4">
                                         {item.countryName}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 min-w-[170px] lg:w-auto">
                                         {item.number}
                                     </td>
                                     <td className="px-6 py-4" onClick={() => handleDelete(item._id)}>
@@ -106,7 +107,7 @@ const Number = ({ initialData, title }) => {
                                     <td className="px-6 py-4">
                                         {item.countryName}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-6 py-4 min-w-[170px] lg:w-auto">
                                         {item.number}
                                     </td>
                                     <td className="px-6 py-4" onClick={() => handleDelete(item._id)}>

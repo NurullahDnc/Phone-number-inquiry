@@ -2,10 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from 'react-router-dom';
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import { TiSocialLinkedin } from "react-icons/ti";
+import TextClip from '../general/TextClip';
 
 
 const Footer = () => {
@@ -13,6 +14,34 @@ const Footer = () => {
   const [data, setData] = useState([]);
   const [expandedItem, setExpandedItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false); // Mobil modu belirlemek için durum ekledik
+
+  const [download, setDownload] = useState([]);
+  const [social, setSocial] = useState([]);
+
+  //dow get useffect
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/downloadSection`);
+        setDownload(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/social`);
+        setSocial(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +53,6 @@ const Footer = () => {
       }
     }
     fetchData();
-
 
     // Ekran genişliğine göre mobil modu belirleme
     const handleResize = () => {
@@ -43,21 +71,36 @@ const Footer = () => {
     setExpandedItem(expandedItem === idx ? null : idx);
   };
 
+  const [blog, setBlog] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios(`${process.env.REACT_APP_BASE_URL}/blog`);
+        setBlog(res.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData()
+  }, [])
+
+
   const footerNavs = [
     {
-      label: "Resources",
+      label: "About us",
       items: [
         {
-          href: '/ulke-alan-kodlari',
-          name: 'Download Truecaller'
+          href: '',
+          name: 'Download '
         },
         {
-          href: '/sikca-sorulan-sorular',
+          href: '',
           name: 'Support'
         },
         {
-          href: '/kisisel-verilerin-korunmasi',
-          name: 'Download Truecaller'
+          href: '',
+          name: 'Download '
         },
         {
           href: '',
@@ -66,119 +109,67 @@ const Footer = () => {
       ],
     },
     {
-      label: "About",
-      items: [
-        {
-          href: '',
-          name: 'Download Truecaller'
-        },
-        {
-          href: '',
-          name: 'Download Truecaller'
-        },
-        {
-          href: '',
-          name: 'Privacy'
-        },
-        {
-          href: '',
-          name: 'Download Truecaller US'
-        },
-        {
-          href: '',
-          name: 'About US'
-        },
-        {
-          href: '',
-          name: 'About US'
-        },  {
-          href: '',
-          name: 'About US'
-        },
-      ]
+      label: "İletişim",
+      items: Object.entries(social).flatMap(([id, item]) => (
+        [
+          {
+            href: item.facebook,
+            name: "Facebook"
+          },
+          {
+            href: item.instagram,
+            name: "Instagram"
+          },
+          {
+            href: item.twitter,
+            name: "twitter"
+          },
+          {
+            href: item.linkedin,
+            name: "linkedin"
+          }
+        ]
+      )),
     },
+                                                                                                                                         
     {
-      label: "Explore",
+      label: "Keşfet",
       items: [
         {
-          href: '',
-          name: 'Download Truecaller'
+          href: '/sikca-sorulan-sorular',
+          name: 'Ülke Kodu'
         },
         {
-          href: '',
-          name: 'Road Download Truecaller map'
+          href: '/ulke-alan-kodlari',
+          name: 'Sık Sorulan Sorular'
         },
         {
-          href: '',
-          name: 'Languages'
+          href: '/kisisel-verilerin-korunmasi',
+          name: 'kisisel verilerin korunmasi'
         },
-        {
-          href: '',
-          name: 'Download Truecaller '
-        },
-        {
-          href: '',
-          name: 'About US'
-        },
+
       ]
+
     },
+    
     {
-      label: "Company",
-      items: [
-        {
-          href: '',
-          name: 'Partners'
-        },
-        {
-          href: '',
-          name: 'Download Truecaller'
-        },
-        {
-          href: '',
-          name: 'Careers'
-        },
-        {
-          href: '',
-          name: 'About Download Truecaller US'
-        },
-        {
-          href: '',
-          name: 'About US'
-        },
-        {
-          href: '',
-          name: 'Download Truecaller US'
-        },
-        {
-          href: '',
-          name: 'About US'
-        },
-      ],
+      label: "Blog",
+      items: blog.slice(0, 6).map((item) => ({ href: `/blog-detail/${item._id}/${item.title}`, name: item.title })),
+
     }
   ];
 
-  const social = [
-    {
-      _id: "234",
-      url: "",
-    }, {
-      _id: "234",
-      url: "",
-    }, {
-      _id: "234",
-      url: "",
-    }, {
-      _id: "234",
-      url: "",
-    }
-  ]
+  const socialUrl = {
+  }
 
-  const socialIcons = {
-    FaInstagram,
-    FaFacebookF,
-    RiTwitterXLine,
-    TiSocialLinkedin,
-  };
+  social.forEach(item => {
+    socialUrl[item._id] = item;
+  });
+
+
+
+  const appİmage = "https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"
+  const iosİmage = "https://www.truecaller.com/cms/f0e9ab987056bd8450279de7b6ddcf1a.avif"
 
 
   return (
@@ -186,15 +177,19 @@ const Footer = () => {
       <div className=" md:pt-7 mx-auto ">
         <div className={` flex-col-reverse max-w-screen-xl px-1 md:px-0 py-3 md:py-12 mx-auto flex-1  flex space-y-6 justify-between md:flex-row  ${isMobile ? 'flex' : 'md:flex-row'} md:space-y-0`}>
 
-          <div className=' flex-col md:mr-2 w-2/5 sm:w-[30%] lg:w-1/6  flex justify-start'>
-            <Link className='py-1' >
-              <img src={"https://www.truecaller.com/cms/63a42faf0b4e8344cb601acb312d97c1.avif"} className='w-full h-full p-1 object-contain ' alt="" />
-            </Link>
-            <Link >
-              <img src={"https://www.truecaller.com/cms/f0e9ab987056bd8450279de7b6ddcf1a.avif"} className='w-full h-full p-1 object-contain ' alt="" />
-            </Link>
-           
-          </div>
+          {
+            download.map((item, i) => (
+              <div key={i} className=' flex-col md:mr-2 w-2/5 sm:w-[30%] lg:w-1/6  flex justify-start'>
+                <Link to={item.appUrl} className='py-1' >
+                  <img src={appİmage} className='w-full h-full p-1 object-contain ' alt="" />
+                </Link>
+                <Link to={item.iosUrl} >
+                  <img src={iosİmage} className='w-full h-full p-1 object-contain ' alt="" />
+                </Link>
+
+              </div>
+            ))
+          }
 
 
           {footerNavs.map((item, idx) => (
@@ -211,9 +206,9 @@ const Footer = () => {
                     <li key={idx}>
                       <a
                         href={el.href}
-                        className="duration-150 text-[14px] md:text-[16px] w-full text-white hover:text-gray-400"
+                        className="duration-150 text-[14px] md:text-[16px] w-full cursor-pointer text-white hover:text-gray-400"
                       >
-                        {el.name}
+                        {<TextClip text={el.name} maxLength={30} />}
                       </a>
                     </li>
                   ))}
@@ -238,13 +233,36 @@ const Footer = () => {
             Edit cookies
             Code of Conduct
           </div>
+
           <div className=' w-full md:w-2/12 '>
             <div className='flex gap-2 md:justify-end justify-center text-textMain '>
-              {Object.entries(socialIcons).map(([key, Icon], i) => (
-                <a href={social[i].url} key={i}>
-                  <Icon size={27} className='bg-gray-100 p-[4px] rounded-full cursor-pointer' />
-                </a>
+              {Object.entries(socialUrl).map(([id, item]) => (
+
+
+                <p key={id} className='flex gap-2'>
+                  <a href={item.instagram} target="_blank" key={id}>
+
+                    <FaInstagram size={27} className=' bg-gray-100 p-[4px] rounded-full cursor-pointer' />
+                  </a>
+
+                  <a href={item.facebook} target="_blank" >
+
+                    <FaFacebookF size={27} className='bg-gray-100 p-[4px] rounded-full cursor-pointer' />
+                  </a>
+
+                  <a href={item.linkedin} target="_blank" >
+
+                    <TiSocialLinkedin size={27} className='bg-gray-100 p-[4px] rounded-full cursor-pointer' />
+                  </a>
+
+                  <a href={item.twitter} target="_blank" >
+
+                    <RiTwitterXLine size={27} className='bg-gray-100 p-[4px] rounded-full cursor-pointer' />
+                  </a>
+                </p>
               ))}
+
+
             </div>
           </div>
 
@@ -258,24 +276,3 @@ const Footer = () => {
 
 export default Footer;
 
-
-<div>
-  <p className="text-gray-300">© 2022 Float UI Inc. All rights reserved.</p>
-  <div className="flex items-center gap-x-6 text-gray-400 mt-6">
-    <a href="javascript:void()">
-      <svg className="w-6 h-6 hover:text-gray-500 duration-150" fill="none" viewBox="0 0 48 48">
-        {/* Facebook icon */}
-      </svg>
-    </a>
-    <a href="javascript:void()">
-      <svg className="w-6 h-6 hover:text-gray-500 duration-150" fill="none" viewBox="0 0 48 48">
-        {/* Twitter icon */}
-      </svg>
-    </a>
-    <a href="javascript:void()">
-      <svg className="w-6 h-6 hover:text-gray-500 duration-150" fill="currentColor" viewBox="0 0 48 48">
-        {/* LinkedIn icon */}
-      </svg>
-    </a>
-  </div>
-</div>

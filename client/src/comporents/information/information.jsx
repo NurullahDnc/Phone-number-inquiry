@@ -49,8 +49,8 @@ const Information = () => {
           {/* <Button btnText="Daha Fazla" /> */}
         </div>
         {
-          data.slice(0, 1).map((item) => (
-            <div className=' w-2/2 md:w-1/2 h-[300px] md:h-[400px] '>
+          data.slice(0, 1).map((item, i) => (
+            <div key={i} className=' w-2/2 md:w-1/2 h-[300px] md:h-[400px] '>
             <img src={item.image} alt='Image' className='object-contain p-5 md:p-1 w-full h-full' />
           </div>
           ))

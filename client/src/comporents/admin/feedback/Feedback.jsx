@@ -77,7 +77,7 @@ const Feedback = ({initialData, title}) => {
 
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <p className='text-lg py-2 '>{initialData && title}</p>
+      <p className='text-lg py-2 '>{initialData? title: "Geri Bildirimler" }</p>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -86,7 +86,7 @@ const Feedback = ({initialData, title}) => {
                 Adı Soyad
               </th>
               <th scope="col" class="px-6 py-3">
-                Email
+                E-posta
               </th>
               <th scope="col" class="px-6 py-3">
                 Acıklama
@@ -95,7 +95,7 @@ const Feedback = ({initialData, title}) => {
                 Numara
               </th>
               <th scope="col" class="px-6 py-3">
-                Numara Yorum
+                numaranın Yorumu
               </th>
               <th scope="col" class="px-6 py-3">
                 Durumu
@@ -110,21 +110,21 @@ const Feedback = ({initialData, title}) => {
              
               datas.slice(0, 4).map((item) => (
                 <tr key={item?._id} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[180px] lg:w-auto">
                     {item.surname}
                   </td>
                   <td class="px-6 py-4">
                     {item.mail}
                   </td>
-                  <td class="px-6 py-4">
-                  <TextClip text={item.description} />
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto ">
+                  {item.description} 
                   </td>
 
                   <td class="px-6 py-4">
                     {item.comment?.number? item.number?.number: "Yorum Bulunamadı"}
                   </td>
-                  <td class="px-6 py-4">
-                     <TextClip text={item.comment?.number? item.number?.number: "Yorum Bulunamadı"} />
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto ">
+                  {item.comment?.comment? item.comment?.comment: "Yorum Bulunamadı" }
 
                   </td>
 
@@ -142,20 +142,20 @@ const Feedback = ({initialData, title}) => {
             
               datas.map((item) => (
                 <tr key={item?._id} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[180px] lg:w-auto">
                     {item.surname}
                   </td>
                   <td class="px-6 py-4">
                     {item.mail}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] lg:w-auto">
                     {item.description}
                   </td>
 
                   <td class="px-6 py-4">
                     {item.comment?.number? item.number?.number: "Yorum Bulunamadı"}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[500px] w-auto lg:w-auto">
                     {item.comment?.comment? item.comment?.comment: "Yorum Bulunamadı" }
                   </td>
 

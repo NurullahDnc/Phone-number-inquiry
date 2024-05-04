@@ -3,7 +3,7 @@ import Comments from '../comporents/home/Comments';
 import PageContainers from '../containers/PageContainers';
 import Faqs from '../comporents/home/Faqs';
 import PopularNumbers from '../comporents/home/PopularNumbers';
-import IOSAppIntroduction from '../comporents/home/IOSAppIntroduction';
+import IOSAppIntroduction from '../comporents/home/DownloadSection';
 
 const Home = () => {
     return (

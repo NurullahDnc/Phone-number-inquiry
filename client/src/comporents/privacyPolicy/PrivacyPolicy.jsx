@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import HeadingTitle from '../general/HeadingTitle'
 import axios from 'axios';
 import MetaTags from '../general/MetaTags';
+import Breadcrumbs from '../general/Breadcrumbs';
 
 const PrivacyPolicy = () => {
 
@@ -28,9 +29,16 @@ const PrivacyPolicy = () => {
       keywords: "icerikler"
     }
   ]
-  return (
-    <div className='md:w-2/3 p-2 m-auto '>
 
+  const page = [
+    { page1: 'Ana Sayfa', url1: '/', page2: "Kisisel Verilerin Korunması" },
+
+  ];
+  return (
+    <div className='md:w-2/3 p-2 my-7 m-auto '>
+      {page.map((item, index) => (
+        <Breadcrumbs key={index} page1={item.page1} url1={item.url1} page2={item.page2} />
+      ))}
       {
         seoData.map((item, i) => (
           <MetaTags
@@ -48,7 +56,7 @@ const PrivacyPolicy = () => {
 
       {
         data.map((item, i) => (
-          <div class="bg-gray-100 dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-md">
+          <div key={i} class="bg-gray-100 dark:bg-gray-800 p-3 md:p-6 rounded-lg shadow-md">
             <HeadingTitle xSmall title={"Gizlilik Politikası"} />
             <p class="text-sm text-gray-800 leading-[21px] dark:text-gray-300 mb-2">
               {item.privacyStatement}

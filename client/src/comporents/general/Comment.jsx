@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Maps from '../detail/Maps';
 import TextClip from '../general/TextClip';
 
@@ -19,9 +19,9 @@ const Comment = ({ id, number, numberId, del, country, status, description, onCl
 
 
   return (
-    <a href={`/telefon-numarasi/${number}`}  className='cursor-pointer' title={`Yorumlanan telefon numarası ${number}`}>
+    <Link to={`/telefon-numarasi/${number}`}  className='cursor-pointer' title={`Yorumlanan telefon numarası ${number}`}>
       <div 
-        className={`comment flex w-full mb-5 mt-1 relative  dark:bg-gray-400  rounded-lg h-auto `}
+        className={`comment flex w-full mb-5 mt-1 relative shadow-lg dark:bg-gray-400  rounded-lg h-auto `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -36,7 +36,7 @@ const Comment = ({ id, number, numberId, del, country, status, description, onCl
           </button>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

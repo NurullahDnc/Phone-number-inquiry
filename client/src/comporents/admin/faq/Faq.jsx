@@ -73,11 +73,11 @@ const Faq = () => {
   const updateFaq = async (data) => {
 
     const updatedata = {
-        title: data.title,
-        description: data.description,
-   
+      title: data.title,
+      description: data.description,
+
     };
-  
+
     try {
       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/faq/update/${selectedFaq._id}`, updatedata);
       toast.success(response.data.message);
@@ -88,9 +88,9 @@ const Faq = () => {
       setSelectedFaq(null);
 
     } catch (error) {
-        console.error(error);
-        toast.error(error.response.data.error);
-      }
+      console.error(error);
+      toast.error(error.response.data.error);
+    }
   }
 
   useEffect(() => {
@@ -107,9 +107,9 @@ const Faq = () => {
   const createfaq = async (data) => {
 
     const createdata = {
-        title: data.title,
-        description: data.description,
-   
+      title: data.title,
+      description: data.description,
+
     };
 
     try {
@@ -130,15 +130,15 @@ const Faq = () => {
     <form onSubmit={handleSubmit(createfaq)} encType="multipart/form-data">
       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-       <Button btnText={"Soru ekle"} />
+      <Button btnText={"Soru ekle"} />
     </form>
   )
 
   const updateElement = (
     <form onSubmit={handleSubmit(updateFaq)} encType="multipart/form-data">
-       <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
+      <Input id="title" title="Başlık Giriniz" type="text" placeholder="Başlık Giriniz" register={register} errors={errors} required />
       <Textarea id="description" title="Açıklama Giriniz" type="text" placeholder="Açıklama Giriniz" register={register} errors={errors} required />
-   <Button btnText={"Soru Güncelle"} />
+      <Button btnText={"Soru Güncelle"} />
     </form>
   )
 
@@ -148,6 +148,8 @@ const Faq = () => {
       <AuthManage />
 
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <p className='text-lg py-2 '>sıkça sorulan sorular</p>
+
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -177,12 +179,13 @@ const Faq = () => {
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {item._id}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 min-w-[250px] lg:w-auto">
                     {item.title}
                   </td>
-                  <td class="px-6 py-4">
+                  <td class="px-6 py-4 text-sm text-gray-500 min-w-[500px] lg:w-auto">
                     {item.description}
                   </td>
+
                   <td class="px-6 py-4" onClick={() => handleUpdate(item._id)}>
                     <a href="#" class="font-medium text-textMain dark:text-blue-500 hover:underline"> <RxUpdate size={25} /> </a>
                   </td>

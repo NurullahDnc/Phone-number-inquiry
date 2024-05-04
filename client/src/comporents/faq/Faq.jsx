@@ -3,6 +3,7 @@ import Faq from '../general/Faq'
 import HeadingTitle from '../general/HeadingTitle';
 import axios from 'axios';
 import MetaTags from '../general/MetaTags';
+import Breadcrumbs from '../general/Breadcrumbs';
 
 const Faqs = () => {
 
@@ -31,9 +32,16 @@ const Faqs = () => {
     }
   ]
 
+  const page = [
+    { page1: 'Ana Sayfa', url1: '/', page2: "Sıkca Sorulan sorular" },
+
+  ];
 
   return (
-    <div className=' p-2 m-auto  md:my-3 '>
+    <div className=' p-2  m-auto  md:my-7 '>
+      {page.map((item, index) => (
+        <Breadcrumbs key={index} page1={item.page1} url1={item.url1} page2={item.page2} />
+      ))}
 
       {
         seoData.map((item, i) => (

@@ -36,9 +36,6 @@ const Navbar = () => {
       fetchData()
     }, [])
 
-    console.log(headerImage);
-
-
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -99,8 +96,8 @@ const Navbar = () => {
                     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                         {
                             data.map((item, i) => (
-                                <a key={i} href="/" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                                    <span class="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">{item.logo} </span>
+                                <a key={i} href="/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">{item.logo} </span>
                                 </a>
                             ))
                         }
@@ -114,7 +111,7 @@ const Navbar = () => {
                         <div className={`w-full md:block md:w-auto ${isOpen ? '' : 'hidden'}`} id="navbar-default">
                             <ul onClick={toggleDropdown} class="font-medium flex text-gray-900 md:text-gray-100 flex-col p-4 md:p-0 mt-4 border bg-gray-200 opacity-[0.9] md:bg-transparent border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0" >
                                 <li className='cursor-pointer '>
-                                    <Link class="block py-2 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white   dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" to={"/blog"} >Blog</Link>
+                                    <Link className="block py-2 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white   dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" to={"/blog"} >Blog</Link>
                                 </li>
                                 <li className='cursor-pointer ' onClick={changeTheme}>
                                     <MdOutlineDarkMode className=' dark:text-gray-100 ' size={25} />

@@ -91,41 +91,60 @@ const getComment = async (req, res) => {
 
 //objectId hatasi var
 const getCommentNumber = async (req, res) => {
-
     try {
         const id = req.params.id;
-        const comments = (await Comment.find({
-            number: id
-        }).populate("number")).reverse();
 
-        if (comments.length === 0) {
+        const lastEightDigits = id.slice(-8);
+
+        // Tam olarak numaranın eşleştiği bir numara var mı kontrol etme
+        let numbers = await Number.find({ number: lastEightDigits });
+
+        // Eğer tam eşleşen bir numara bulunamazsa, son 8 karakterle eşleşen numaraları ara
+        if (!numbers || numbers.length === 0) {
+            numbers = await Number.find({ number: { $regex: lastEightDigits } });
+        }
+
+        if (!numbers || numbers.length === 0) {
+            return res.status(404).json({
+                success: false,
+                // error: "Numara bulunamadı"
+            });
+        }
+
+        // Her bir numaraya ait yorumları bul ve dizi icerisine at
+        const allComments = [];
+        for (const number of numbers) {
+            const comments = (await Comment.find({ number: number._id }).populate("number")).reverse();
+            allComments.push(...comments);
+        }
+
+        if (allComments.length === 0) {
             return res.status(404).json({
                 success: false,
                 error: "Yorum bulunamadı"
             });
         }
 
-
-        const formattedComments = comments.map(comment => ({
+        // Yorumları düzenleme ve tarih formatlama
+        const formattedComments = allComments.map(comment => ({
             ...comment.toObject(),
             createdAt: comment.createdAt.toLocaleDateString("tr-TR")
         }));
 
-
-        if (formattedComments.length > 0) {
-            res.status(200).json({
-                success: true,
-                data: formattedComments
-            });
-        }
+        res.status(200).json({
+            success: true,
+            data: formattedComments
+        });
     } catch (error) {
-        // console.error(error);
+        console.error(error);
         res.status(500).json({
             success: false,
             error: "Sunucu hatası"
         });
     }
 };
+
+
 
 
 

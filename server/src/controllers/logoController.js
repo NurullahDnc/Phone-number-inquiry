@@ -18,12 +18,16 @@ const createLogo = async (req, res) => {
 
         const {
             logo,
+            description,
+            keywords,
 
         } = req.body;
 
         await Logo.create({
             image: result.secure_url,
             logo,
+            description,
+            keywords,
             image_id: result.public_id,
 
         });
@@ -66,7 +70,7 @@ const getLogo = async (req, res) => {
 
 
 const updateLogo = async (req, res) => {
-    try {
+     try {
 
         const {
             id
@@ -74,6 +78,8 @@ const updateLogo = async (req, res) => {
 
         const {
             logo,
+            description,
+            keywords,
         } = req.body;
 
 
@@ -93,6 +99,8 @@ const updateLogo = async (req, res) => {
             id, {
                 logo,
                 image,
+                description,
+                keywords,
                 image_id: imagePublicId
 
             }, {
@@ -121,7 +129,7 @@ const updateLogo = async (req, res) => {
 
 
 export {
-    // createLogo,
+    createLogo,
     updateLogo,
     getLogo,
 

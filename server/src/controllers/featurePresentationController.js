@@ -107,7 +107,6 @@ const deleteInformation = async (req, res) => {
 
 
 const updateInformation = async (req, res) => {
-    console.log(req.bo);
     try {
 
         const {
@@ -123,7 +122,6 @@ const updateInformation = async (req, res) => {
         const photo = await Information.findById(req.params.id);
 
         let image = req.body.image;
-        console.log(image);
 
         if (!image) {
             //resim yukleme

@@ -1,8 +1,7 @@
-import Admin from "../models/adminModal.js"
+import Admin from "../models/adminModel.js"
 import {createAccessToken} from '../helpers/GenerateToken.js'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-
+ 
 
 
 const createUser = async (req, res) => {
