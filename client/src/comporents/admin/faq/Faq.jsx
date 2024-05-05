@@ -116,6 +116,10 @@ const Faq = () => {
       setIsCreateModalOpen(false);
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/faq/create`, createdata);
       toast.success(response.data.message)
+      setValue('image', "");
+      setValue('description', "");
+      setValue('title', "");
+
 
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/faq`);

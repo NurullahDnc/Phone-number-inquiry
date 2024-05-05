@@ -99,8 +99,10 @@ const Country = () => {
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);
       setData(newData.data.data);
 
-      setValue('country', "");
-      setValue('code', "");
+      setValue('image', "");
+      setValue('name', "");
+      setValue('callingCodes', "");
+      setValue('alpha2Code', "");
 
 
       setIsUpdateModalOpen(false);
@@ -136,6 +138,11 @@ const Country = () => {
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/country/create`, formData);
       setIsCreateModalOpen(false);
       toast.success(response.data.message)
+      setValue('image', "");
+      setValue('name', "");
+      setValue('callingCodes', "");
+      setValue('alpha2Code', "");
+
 
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/country`);

@@ -77,7 +77,7 @@ const PopularNumbers = () => {
       <div className='  w-full lg:w-[49%] mt-7 lg:my-0 md:px-12 py-8 flex-wrap p-3 bg-[#fffffc] dark:bg-gray-800 rounded-2xl'>
         <div className=' ml-4 md:ml-7'>
 
-          <HeadingTitle small title="En cok yorumyapilan numaralar" />
+          <HeadingTitle small title="En cok yorum yapilan numaralar" />
         </div>
 
         <div className='flex justify-around  md:justify-center flex-wrap gap-3 py-4'>

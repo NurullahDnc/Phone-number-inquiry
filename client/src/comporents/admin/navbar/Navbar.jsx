@@ -15,6 +15,7 @@ import { IoCall } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import AuthManage from '../AuthManage';
 import { GiModernCity } from "react-icons/gi";
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
@@ -76,7 +77,7 @@ const Navbar = () => {
     const handleLogout = () => {
 
         window.location.reload(); // Sayfayı yenileyerek yeni oturumu başlatın
-
+        toast.success("Çıkış Yapıldı")
         document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     };
 

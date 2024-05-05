@@ -89,16 +89,16 @@ const Blog = ({ initialData, title }) => {
       formData.append('image', image[0]);
     }
 
-
+    setValue('title', '');
+    setValue('image', '');
+    setValue('description', '');
+    
 
     try {
       // const response = await axios.put(`http://localhost:5000/blog/update/662250965b8d666b7848ec8b`, formData);
       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/blog/update/${selectedBlog._id}`, formData);
       toast.success(response.data.message);
-
-      setValue('title', '');
-      setValue('image', '');
-      setValue('description', '');
+      
 
       const newData = await axios('http://localhost:5000/blog');
       setData(newData.data.data);
@@ -135,9 +135,13 @@ const Blog = ({ initialData, title }) => {
       setIsCreateModalOpen(false);
       toast.success(response.data.message)
 
+      
       //create isleimden sonra guncel veriyi al
       const newData = await axios(`${process.env.REACT_APP_BASE_URL}/blog`);
       setData(newData.data.data);
+      setValue('title', '');
+      setValue('image', '');
+      setValue('description', '');
 
     } catch (error) {
       toast.error(error.response.data.error);

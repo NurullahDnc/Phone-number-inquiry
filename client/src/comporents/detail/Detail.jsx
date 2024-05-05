@@ -269,8 +269,8 @@ const Detail = () => {
           Ads
         </div>
 
-        <div className=" w-full md:w-3/4 px-3  ">
-          <div className="bg-white px-5 md:px-12 py-5 ">
+        <div className=" w-full md:w-3/4 px-3   ">
+          <div className="bg-white px-5 md:px-12 dark:bg-gray-600 py-5 ">
             {dataBreadcrumbs.map((item, index) => (
               <Breadcrumbs key={index} page1={item.page1} url1={item.url1} page2={item.page2} ur2l={item.url2} page3={item.page3} ur3={item.url3} />
             ))}
@@ -291,7 +291,7 @@ const Detail = () => {
               light
             />
 
-            <form className="bg-gray-50 rounded-md p-3 md:p-5" onSubmit={handleSubmit(handleCreate)}>
+            <form className="bg-gray-50 dark:bg-gray-600 rounded-md p-3 md:p-5" onSubmit={handleSubmit(handleCreate)}>
               <Textarea
                 id="comment"
                 type="text"
@@ -323,7 +323,7 @@ const Detail = () => {
           </div>
 
 
-          <div className="   bg-gray-100 my-5 rounded-lg ">
+          <div className="   bg-gray-100 my-5 rounded-lg dark:bg-gray-600 ">
             <div className="pb-3 pl-5">
               <HeadingTitle xSmall title={`${selectedPhone} Numaranın Yorumları`} />
 

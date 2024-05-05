@@ -11,7 +11,7 @@ import TextClip from '../general/TextClip';
 
 const Footer = () => {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState("");
   const [expandedItem, setExpandedItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false); // Mobil modu belirlemek için durum ekledik
 
@@ -47,7 +47,7 @@ const Footer = () => {
     const fetchData = async () => {
       try {
         const res = await axios(`${process.env.REACT_APP_BASE_URL}/logo`);
-        setData(res.data.data)
+        setData((res.data.data.map((item)=>(item.logo))))
       } catch (error) {
         console.log(error);
       }
@@ -73,6 +73,7 @@ const Footer = () => {
 
   const [blog, setBlog] = useState([]);
 
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -136,11 +137,11 @@ const Footer = () => {
       label: "Keşfet",
       items: [
         {
-          href: '/sikca-sorulan-sorular',
+          href: '/ulke-alan-kodlari',
           name: 'Ülke Kodu'
         },
         {
-          href: '/ulke-alan-kodlari',
+          href: '/sikca-sorulan-sorular',
           name: 'Sık Sorulan Sorular'
         },
         {
@@ -208,7 +209,7 @@ const Footer = () => {
                         href={el.href}
                         className="duration-150 text-[14px] md:text-[16px] w-full cursor-pointer text-white hover:text-gray-400"
                       >
-                        {<TextClip text={el.name} maxLength={30} />}
+                        {<TextClip text={el.name} minLength={30} maxLength={30} />}
                       </a>
                     </li>
                   ))}
@@ -220,7 +221,7 @@ const Footer = () => {
         </div>
         <div className=" mt-2 md:mt-10 py-4 sm:px-8 lg:px-20 text-center text-white bg-[#003bad] items-center justify-between md:flex">
           <div className=' w-full md:w-2/12 text-center md:text-left font-bold text-[13px] '>
-            © 2024 Logo
+            © 2024 {data && data }
           </div>
           <div className=' w-full md:w-10/12 px-2 tracking-wide text-center md:text-left my-4 md:my-1 text-[12px] '>
             Privacy
