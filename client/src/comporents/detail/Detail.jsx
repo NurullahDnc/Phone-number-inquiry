@@ -164,7 +164,6 @@ const Detail = () => {
       const parsedPhoneNumber = phoneNumberUtil.parseAndKeepRawInput(phoneNumbers, 'TR');
       const countryCode = parsedPhoneNumber.getCountryCode();
       const regionCode = phoneNumberUtil.getRegionCodeForNumber(parsedPhoneNumber);
-
       if (regionCode === 'AR') {
         const turkey = countryList.find(country => country.alpha2Code === 'TR');
         // Telefon numarasının ülke bilgisini phoneNumberInfo state'ine kaydet
@@ -192,7 +191,6 @@ const Detail = () => {
       console.error('Error:', error);
     }
   }, [phoneNumber, countryList]);
-
 
 
 

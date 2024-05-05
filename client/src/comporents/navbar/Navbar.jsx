@@ -67,9 +67,9 @@ const Navbar = () => {
     }, []);
 
     const changeTheme = () => {
-        // Temayı değiştir (light ise dark, dark ise light)
-        setTheme(theme === "light" ? "dark" : "light");
-        if (theme === "dark") {
+ 
+        const newTheme = theme === "light" ? "dark" : "light";
+        if (newTheme === "dark") {
             // "dark" sınıfını ekle ve localStorage'da tema "dark" olarak ayarla
             document.documentElement.classList.add("dark");
             localStorage.setItem("theme", "dark")
@@ -78,9 +78,10 @@ const Navbar = () => {
             document.documentElement.classList.remove("dark");
             localStorage.setItem("theme", "light");
         }
+        // Temayı değiştir
+        setTheme(newTheme);
     };
-
-
+    
 
 
     return (

@@ -24,13 +24,15 @@ const Header = () => {
     }, [])
 
     const HandleClick = (e) => {
-        e.preventDefault()
-
-        setInputData("");
-        router(`/telefon-numarasi/${inputData}`)
-        window.location.reload()
-        
-    }
+        e.preventDefault();
+    
+        const cleanedInputData = inputData.trim().replace(/^0+/, ''); // Başındaki 0 karakterleri kaldır
+             
+        setInputData(""); 
+        router(`/telefon-numarasi/${cleanedInputData}`); 
+        window.location.reload();  
+    };
+    
 
     return (
 
@@ -55,9 +57,9 @@ const Header = () => {
                             </svg>
                         </div>
 
-                        <input type="tel"
+                        <input type="number"
                             value={inputData}
-                            onChange={(e) => setInputData(e.target.value)}
+                            onChange={(e) => setInputData(e.target.value.trim())}
                             id="default-search"
                             class="block w-[95%] mx-auto md:w-full p-[11px]  sm:p-3 md:p-3 ps-8 md:ps-10 text-[17px] md:text-xl text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold "
                             placeholder="+31612345678"

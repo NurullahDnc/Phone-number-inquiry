@@ -28,24 +28,16 @@ const PopularNumbers = () => {
     fetchData()
   }, [])
 
-  // Numaraları yorum sayısına göre sıralama
-  const numberOfComments = data.map(item => ({
-    number: item.number,
-    commentCount: item.comment?.length
-  }));
+  const countMap = {};
 
-  // Her numaradan yalnızca bir tane göster
-  const uniqueNumbers = [];
-  numberOfComments.forEach(item => {
-    // Eğer uniqueNumbers içinde bu numara yoksa ekleyelim
-    if (!uniqueNumbers.some(num => num.number?.number === item.number?.number)) {
-      uniqueNumbers.push(item);
-    }
+  data.forEach(item => {
+    const number = item.number.number;
+    countMap[number] = (countMap[number] || 0) + 1;
   });
+  
+  const sortedNumbers = Object.keys(countMap).sort((a, b) => countMap[b] - countMap[a]);
+  
 
-  const sortedNumbers = uniqueNumbers.sort((a, b) => b.commentCount - a.commentCount);
-
- 
   return (
     <div className='w-full justify-between lg:flex my-7 '>
 
@@ -62,7 +54,7 @@ const PopularNumbers = () => {
               item.number ? <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
 
                 
-                <Link to={`/telefon-numarasi/${item.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
+                <Link to={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
 
                   {item.number?.number}
                 </Link>
@@ -84,9 +76,9 @@ const PopularNumbers = () => {
           {
             sortedNumbers.slice(0, 18).map((item, i) => (
               <div key={i} className='w-[45%] md:w-[30%] py-1  cursor-pointer text-left rounded-md font-semibold  '>
-                <Link to={`/telefon-numarasi/${item.number?.number}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
+                <Link to={`/telefon-numarasi/${item}`} className='text-[15px] font-poppins font-semibold hover:bg-red-300 hover:text-red-800 py-2 px-4 hover:rounded-2xl dark:text-gray-300  md:text-[17px]   '>
 
-                  {item.number?.number}
+                  {item}
                 </Link>
               </div>
             ))

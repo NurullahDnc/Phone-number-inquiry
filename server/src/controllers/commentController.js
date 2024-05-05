@@ -94,7 +94,7 @@ const getCommentNumber = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const lastEightDigits = id.slice(-8);
+        const lastEightDigits = id.slice(-7);
 
         // Tam olarak numaranın eşleştiği bir numara var mı kontrol etme
         let numbers = await Number.find({ number: lastEightDigits });
