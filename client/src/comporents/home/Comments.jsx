@@ -35,7 +35,7 @@ const Comments = () => {
                     Ads
                 </div>
 
-                <div className=' flex-1 md:mx-3 lg:mx-6 my-7 md:my-0 p-2 bg-gray-50 dark:bg-gray-700 '>
+                <div className=' flex-1 md:mx-3 lg:mx-6 my-7 md:my-0 p-2 dark:bg-gray-700 '>
 
                     {comment.slice(0, 10).map((item, index) => (
                         <Comment

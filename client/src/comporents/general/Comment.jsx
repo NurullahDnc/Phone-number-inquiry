@@ -21,7 +21,7 @@ const Comment = ({ id, number, numberId, del, country, status, description, onCl
   return (
     <Link to={`/telefon-numarasi/${number}`}  className='cursor-pointer' title={`Yorumlanan telefon numarası ${number}`}>
       <div 
-        className={`comment flex w-full mb-5 mt-1 relative shadow-lg dark:bg-gray-400  rounded-lg h-auto `}
+        className={`comment flex w-full mb-5 mt-1 relative shadow-xl dark:bg-gray-400  rounded-lg h-auto `}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
