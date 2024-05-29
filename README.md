@@ -31,6 +31,11 @@
 
   <hr/>
 
+![Ekran görüntüsü 2024-05-29 185740](https://github.com/NurullahDnc/Phone-number-inquiry/assets/150585098/ae661c9f-866d-4501-a37c-c50c2320754d)
+ 
+
+  <hr/>
+
    ## Build
    - React.js
    - Node.js
